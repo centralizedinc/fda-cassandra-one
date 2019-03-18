@@ -1,4 +1,5 @@
 # fda-cassandra-one
+Case Management for FDA
 
 ## Project setup
 ```
@@ -19,3 +20,4 @@ npm run build
 ```
 npm run test:unit
 ```
+
