@@ -1,46 +1,46 @@
 <template>
     <v-layout row wrap>
-        <v-flex xs4 pa-2>
-            <dashboard-card color="success" icon="folder_open" title="Open Cases" count="100"
+        <v-flex xs12 md4 pa-3>
+            <dashboard-card color="success" icon="folder_open" title="Open" count="100"
             subtitle="As of March 21, 2019 1:33 PM"></dashboard-card>            
         </v-flex>
-        <v-flex xs4 pa-2>
-            <dashboard-card color="warning" icon="sync" title="Pending Cases" count="100"
+        <v-flex xs12 md4 pa-3>
+            <dashboard-card color="warning" icon="sync" title="Pending" count="100"
             subtitle="As of March 21, 2019 1:33 PM"></dashboard-card>            
         </v-flex>
-         <v-flex xs4 pa-2>
-            <dashboard-card color="error" icon="not_interested" title="Closed Cases" count="100"
+         <v-flex xs12 md4 pa-3>
+            <dashboard-card color="error" icon="not_interested" title="Closed" count="100"
             subtitle="As of March 21, 2019 1:33 PM"></dashboard-card>            
         </v-flex>
         <v-flex xs3 pa-2>
             <v-card>
-                <v-card-title primary-title>
-                    Cases
-                </v-card-title>
+                <v-toolbar dark color="primary">
+                    <span class='title font-weight-light'>Case Dockets</span>                    
+                </v-toolbar>
                 <pie-chart :chartdata="chartdata" ></pie-chart>
             </v-card>
         </v-flex>
         <v-flex xs3 pa-2>
             <v-card>
-                <v-card-title primary-title>
-                    Dokets
-                </v-card-title>
+                <v-toolbar dark color="primary">
+                    <span class='title font-weight-light'>Case Dockets</span>                    
+                </v-toolbar>
                 <pie-chart :chartdata="chartdata" ></pie-chart>
             </v-card>
         </v-flex>
          <v-flex xs3 pa-2>
             <v-card>
-                <v-card-title primary-title>
-                    Dokets
-                </v-card-title>
+                <v-toolbar dark color="primary">
+                    <span class='title font-weight-light'>Case Dockets</span>                    
+                </v-toolbar>
                 <bar-chart :chartdata="chartdata" ></bar-chart>
             </v-card>
         </v-flex>
         <v-flex xs3 pa-2>
             <v-card>
-                <v-card-title primary-title>
-                    Dokets
-                </v-card-title>
+                <v-toolbar dark color="primary">
+                    <span class='title font-weight-light'>Case Dockets</span>                    
+                </v-toolbar>
                 <line-chart :chartdata="chartdata" ></line-chart>
             </v-card>
         </v-flex>
@@ -59,12 +59,11 @@ export default {
     data(){
         return{
             chartdata:{
-                labels: ['Closed','Open','Inprogress'],
+                labels: ['Closed','Open','Evaluation','Review', 'Execution' ],
                 datasets: [
                     {
-                    label: 'Data One',
-                    backgroundColor: ['success'],
-                    data: [7, 1, 3]
+                    label: 'Case',
+                    data: [1, 5, 10, 20, 30]
                     }
                 ]
             }

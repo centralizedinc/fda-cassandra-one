@@ -58,6 +58,21 @@ export default new Router({
           path: 'cases/new',
           name: 'New Case',
           component: ()=> import('@/views/app/case/NewCase.vue')
+        },
+        {
+          path: 'cases/board',
+          name: 'Case Board',
+          component: ()=> import('@/views/app/case/CaseBoard.vue')
+        },
+        {
+          path: 'profile',
+          name: 'My Profile',
+          component: ()=> import('@/views/app/profile/Profile.vue')
+        },
+        {
+          path: 'security',
+          name: 'Change Password',
+          component: ()=> import('@/views/app/profile/Password.vue')
         }
       ]
     },

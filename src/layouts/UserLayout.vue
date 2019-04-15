@@ -1,8 +1,25 @@
 <template>
     <v-layout row wrap>
-        <v-toolbar dark app color="primary">
-            <span class="headline font-weight-light"></span>
-            <v-spacer></v-spacer>
+        <v-toolbar height="80" dark app color="primary" style="background-image: url('https://pixinvent.com/materialize-material-design-admin-template/app-assets/images/gallery/breadcrumb-bg.jpg');  background-size: cover">
+            
+            <v-layout row wrap >
+                <v-flex xs12 mt-4>
+                    
+                    <span class="headline font-weight-light pa-2">{{page_name}}</span>
+                </v-flex>
+                <v-flex xs12>
+            <v-breadcrumbs divider=">" :items="breadcrumbs">
+                        <v-breadcrumbs-item
+                            v-for="(item, index) in breadcrumbs"
+                            :key="index"
+                            @click="goTo(item.href)"
+                        >
+                            <span class="caption font-weight-regular white--text">{{item.name}}</span>
+                        </v-breadcrumbs-item>
+                    </v-breadcrumbs>
+                </v-flex>
+            </v-layout>
+            
             <v-menu offset-y>
         <v-btn icon slot="activator">
           <v-avatar size="40" color="teal">
@@ -35,8 +52,12 @@
           </v-list-tile>
         </v-list>
       </v-menu>
+      <v-btn flat icon v-if="isMiniView" @click="showNav=!showNav">
+            <v-icon>menu</v-icon>
+        </v-btn>
         </v-toolbar>
-        <v-navigation-drawer app :mini-variant="mini" width="250">
+
+        <v-navigation-drawer  dark app :mini-variant="mini" width="250" v-model="showNav">
             <v-toolbar dark color="primary" v-if="!mini">
                 <span class="title font-weight-light">Cassandra One</span>
                 <v-spacer></v-spacer>
@@ -53,7 +74,7 @@
             <v-list >
                 <v-list-tile class="ma-2" @click="goTo('/app')" :style="activeRoute(['Dashboard'])">
                     <v-list-tile-action>
-                        <v-icon :style="activeRoute(['Dashboard'])">dashboard</v-icon>
+                        <v-icon>dashboard</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
                         <v-list-tile-title class="body-1 font-weight-light">Dashboard</v-list-tile-title>
@@ -61,7 +82,7 @@
                 </v-list-tile>
                 <v-list-tile class="ma-2" @click="goTo('/app/cases')" :style="activeRoute(['Cases', 'Case Details', 'New Case'])">
                     <v-list-tile-action>
-                        <v-icon :style="activeRoute(['Cases', 'Case Details', 'New Case'])">gavel</v-icon>
+                        <v-icon >gavel</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
                         <v-list-tile-title class="body-1 font-weight-light">Case Management</v-list-tile-title>
@@ -69,14 +90,14 @@
                 </v-list-tile>
                 <v-list-tile class="ma-2" @click="goTo('/app/dockets')" :style="activeRoute(['Dockets', 'Docket Details', 'New Docket'])">
                     <v-list-tile-action>
-                        <v-icon :style="activeRoute(['Dockets', 'Docket Details', 'New Docket'])">inbox</v-icon>
+                        <v-icon>inbox</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
                         <v-list-tile-title class="body-1 font-weight-light">Docket Management</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
                 <v-divider class="mt-5"></v-divider>
-                <v-list-tile class="ma-2">
+                <v-list-tile class="ma-2" @click="goTo('/app/profile')" :style="activeRoute(['My Profile'])">
                     <v-list-tile-action>
                         <v-icon>account_circle</v-icon>
                     </v-list-tile-action>
@@ -84,7 +105,7 @@
                         <v-list-tile-title class="body-1 font-weight-light">My Profile</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile >
-                <v-list-tile class="ma-2">
+                <v-list-tile class="ma-2" @click="goTo('/app/security')" :style="activeRoute(['Change Password'])">
                     <v-list-tile-action>
                         <v-icon>vpn_key</v-icon>
                     </v-list-tile-action>
@@ -103,28 +124,10 @@
             </v-list>
 
         </v-navigation-drawer>
-        <v-container fluid>
-            <v-sheet
-                class="v-sheet--offset pa-2"
-                elevation="10"
-                width="calc(100% - 5px)"
-                height="80"
-            >
-             <span class="title font-weight-light">{{page_name}}</span>
-             <v-breadcrumbs divider="/" :items="breadcrumbs">
-                <v-breadcrumbs-item
-                    v-for="(item, index) in breadcrumbs"
-                    :key="index"
-                    @click="goTo(item.href)"
-                >
-                    <v-icon color="fdaGreen">{{item.icon}}</v-icon>
-                    <span class="caption font-weight-light">{{item.name}}</span>
-                </v-breadcrumbs-item>
-            </v-breadcrumbs>
-            </v-sheet>
+        <v-container fluid>            
             <router-view></router-view>
         </v-container>
-        <v-footer app dark color="primary" class="pa-1">
+        <v-footer app dark color="primary" class="pa-1" style="background-image: url('https://pixinvent.com/materialize-material-design-admin-template/app-assets/images/gallery/breadcrumb-bg.jpg');  background-size: cover">
             <span class="caption">FDA Cassandra One</span>
             <v-spacer></v-spacer>
             <span class="caption">All rights reserved 2019</span>
@@ -138,6 +141,8 @@
 export default {
     data(){
         return {
+            miniNav:false,
+            showNav:true,
             mini: false,
             user:{
                 first_name:"Ariel",
@@ -149,7 +154,7 @@ export default {
         activeRoute(route) {
             for(var i=0;i<route.length;i++){
                  if (this.$route.name === route[i]) {
-                    return "background-color:#275FD4; color:white";
+                    return "background-image:linear-gradient(45deg, #0288d1, #26c6da); color:white";
                 } 
             }
             return;               
@@ -165,6 +170,11 @@ export default {
         },
         breadcrumbs(){
             return[{name:'Dashboard'}, {name:'Cases'}]
+        },
+        isMiniView(){
+            console.log("smAndDown: " + this.$vuetify.breakpoint.smAndDown)
+            this.showNav = false;
+            return this.$vuetify.breakpoint.smAndDown
         }
     }
 
@@ -174,7 +184,7 @@ export default {
 <style>
 .bg {
   /* The image used */
-  background-image: url("https://i.pinimg.com/originals/01/67/e9/0167e9df8103435b37b166aea72d57b3.jpg");
+  background-image: url("https://pixinvent.com/materialize-material-design-admin-template/app-assets/images/gallery/breadcrumb-bg.jpg");
 
   /* Full height */
   height: 100%;
