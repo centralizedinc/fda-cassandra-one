@@ -43,6 +43,11 @@ export default new Router({
           name: 'New Docket',
           component: ()=> import('@/views/app/dockets/NewDocket.vue')
         },
+        {
+          path: 'dockets/decking',
+          name: 'Decking',
+          component: ()=> import('@/views/app/dockets/Decking.vue')
+        },
         ,
         {
           path: 'cases',
