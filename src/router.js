@@ -50,6 +50,12 @@ export default new Router({
         },
         ,
         {
+          path: 'motion',
+          name: 'Motion for Reconsideration',
+          component: ()=> import('@/views/app/motion/MotionForRecon.vue')
+        },
+        ,
+        {
           path: 'cases',
           name: 'Cases',
           component: ()=> import('@/views/app/case/CaseList.vue')
