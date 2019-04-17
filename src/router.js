@@ -70,6 +70,16 @@ export default new Router({
           component: ()=> import('@/views/app/case/CaseBoard.vue')
         },
         {
+          path: 'desicion',
+          name: 'Desicion',
+          component: ()=> import('@/views/app/desicion/desicion.vue')
+        },
+        {
+          path: 'Viewdesicion',
+          name: 'ViewDesicion',
+          component: ()=> import('@/views/app/desicion/ViewDesicion.vue')
+        },
+        {
           path: 'profile',
           name: 'My Profile',
           component: ()=> import('@/views/app/profile/Profile.vue')
