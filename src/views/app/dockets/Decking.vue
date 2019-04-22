@@ -30,8 +30,9 @@
                                     <v-btn flat color="primary" @click="$refs.dialogRef.save(date)">OK</v-btn>
                                 </v-date-picker>
                             </v-dialog>
-<v-text-field
+                            <v-text-field
                                 name="inspector"
+                                v-model="decking.ISevaluator"
                                 label="IS Evaluator"
                                 id="evaluator"
                             ></v-text-field>
@@ -81,6 +82,7 @@
                             </v-dialog>
                             <v-text-field
                                 name="inspector"
+                                v-model="decking.actionTakenBySL"
                                 label="Action taken by SL"
                                 id="inspector"
                             ></v-text-field>
@@ -96,6 +98,7 @@
                         <v-card-text>
                             <v-text-field
                                 name="inspector"
+                                v-model="docket.docketNumber"
                                 label="Docket Number"
                                 id="inspector"
                             ></v-text-field>
@@ -145,11 +148,12 @@
                             </v-dialog>
                             <v-text-field
                                 name="inspector"
+                                v-model="docket.productInvolve"
                                 label="Products Involve"
                                 id="inspector"
                             ></v-text-field>
                             <v-textarea
-                                v-model="value"
+                                v-model="docket.lawsViolated"
                                 label="Laws Violated"
                             ></v-textarea>
                         </v-card-text>
@@ -164,11 +168,12 @@
                         <v-card-text>
                            <v-select
                                 :items="items"
-                                v-model="value"
+                                v-model="lto.lto"
                                 label="LTO"
                             ></v-select>
                             <v-text-field
                                 name="ltoNumber"
+                                v-model="lto.number"
                                 label="LTO number"
                                 id="inspector"
                             ></v-text-field>
@@ -196,7 +201,7 @@
                             </v-dialog>
                             <v-select
                                 :items="items"
-                                v-model="value"
+                                v-model="lto.centerInvolve"
                                 label="Center Involved"
                             ></v-select>
                         </v-card-text>
@@ -211,16 +216,17 @@
                         <v-card-text>
                             <v-select
                                 :items="items"
-                                v-model="value"
+                                v-model="violation.product"
                                 label="Violative Products"
                             ></v-select>
                             <v-select
                                 :items="items"
-                                v-model="value"
+                                v-model="violation.qualifiedPersonnel"
                                 label="Qualified Personnel"
                             ></v-select>
                             <v-text-field
-                                name="ltoNumber"
+                                name="others"
+                                v-model="violation.others"
                                 label="Others"
                                 id="inspector"
                             ></v-text-field>
@@ -228,7 +234,7 @@
                     </v-card>
                 </v-flex>
 
-                <v-flex xs12 md4 pa-2 d-flex>
+                <!-- <v-flex xs12 md4 pa-2 d-flex>
                     <v-card>
                         <v-toolbar dark color="primary">
                             <span class="font-weight-light">Evaluation</span>
@@ -282,9 +288,9 @@
                             ></v-textarea>
                         </v-card-text>
                     </v-card>
-                </v-flex>
+                </v-flex> -->
 
-                <v-flex xs12 md4 pa-2 d-flex>
+                <!-- <v-flex xs12 md4 pa-2 d-flex>
                     <v-card>
                         <v-toolbar dark color="primary">
                             <span class="font-weight-light">Review of Supervising Lawyer</span>
@@ -443,14 +449,15 @@
                             </v-dialog>
                         </v-card-text>
                     </v-card>
-                </v-flex>
-<v-flex xs12 md4 pa-2 d-flex>
+                </v-flex> -->
+
+<!-- <v-flex xs12 md4 pa-2 d-flex>
                     <v-card>
                         <v-toolbar dark color="primary">
                             <span class="font-weight-light">Forward to DDGIM</span>
                         </v-toolbar>
                         <v-card-text>
-                             <v-dialog
+                             <v-dialogF
                                 ref="dialogRef"
                                 persistent
                                 v-model="dialogValue"
@@ -518,9 +525,11 @@
                             </v-dialog>
                         </v-card-text>
                     </v-card>
-                </v-flex>
+                </v-flex> -->
+
+
                 <!-- Execution of REU -->
-                <v-flex xs12 md4 pa-2 d-flex>
+                <!-- <v-flex xs12 md4 pa-2 d-flex>
                     <v-card>
                         <v-toolbar dark color="primary">
                             <span class="font-weight-light">Execution of REU</span>
@@ -619,7 +628,7 @@
                             ></v-select>
                         </v-card-text>
                     </v-card>
-                </v-flex>
+                </v-flex> -->
             </v-layout>
         </v-card-text>
         <v-divider></v-divider>
@@ -641,7 +650,12 @@ export default {
         return {
             dialogValue:false,
             date:null,
-            dateValue:null
+            dateValue:null,
+            decking:{dateDecked: Date, ISevaluator:"", dateEvaluated: Date, dateFrwrdToSL: Date, actionTakenBySL: ""},
+            docket:{docketNumber: 0, dateDocketed: Date, dateIssued: Date, productsInvolve: "", lawsViolated:""},
+            lto:{lto: "",number: 0, validity: Date, centerInvolved: ""},
+            violation: {product: "", qualifiedPersonnel: "", others: ""}
+
         }
     }
 
