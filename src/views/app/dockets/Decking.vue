@@ -633,19 +633,15 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn outline color="secondary">Cancel</v-btn>
-            <v-btn color="primary">Next</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn outline color="secondary">Cancel</v-btn>
+          <v-btn color="primary">Next</v-btn>
         </v-card-actions>
-
-    </v-card>
+  </v-card>
 </template>
 
 <script>
-// import SiteMap from '@/components/SiteMap'
-// import Uploader from '@/components/Uploader'
 export default {
-    // components:{SiteMap, Uploader},
     data(){
         return {
             dialogValue:false,
@@ -663,5 +659,4 @@ export default {
 </script>
 
 <style>
-
 </style>
