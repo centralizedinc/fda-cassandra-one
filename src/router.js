@@ -76,6 +76,36 @@ export default new Router({
           component: ()=> import('@/views/app/case/CaseBoard.vue')
         },
         {
+          path: 'approval',
+          name: 'approval',
+          component: ()=> import('@/views/app/approval/approval.vue')
+        },
+        {
+          path: 'ViewApproval',
+          name: 'ViewApproval',
+          component: ()=> import('@/views/app/approval/ViewApproval.vue')
+        },
+        {
+          path: 'reviewer',
+          name: 'Reviewer',
+          component: ()=> import('@/views/app/reviewer/reviewer.vue')
+        },
+        {
+          path: 'ViewReviewer',
+          name: 'ViewReviewer',
+          component: ()=> import('@/views/app/reviewer/ViewReviewer.vue')
+        },
+        {
+          path: 'evaluator',
+          name: 'Evaluator',
+          component: ()=> import('@/views/app/evaluator/evaluator.vue')
+        },
+        {
+          path: 'ViewEvaluator',
+          name: 'ViewEvaluator',
+          component: ()=> import('@/views/app/evaluator/ViewEvaluator.vue')
+        },
+        {
           path: 'desicion',
           name: 'Desicion',
           component: ()=> import('@/views/app/desicion/desicion.vue')
