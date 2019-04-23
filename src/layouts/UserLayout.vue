@@ -173,7 +173,7 @@ export default {
         },
         isMiniView(){
             console.log("smAndDown: " + this.$vuetify.breakpoint.smAndDown)
-            this.showNav = false;
+            // this.showNav = false;
             return this.$vuetify.breakpoint.smAndDown
         }
     }
