@@ -102,7 +102,7 @@
                         <v-flex xs12>
                             <v-text-field outline
                                     name="inspector"
-                                    v-model="docket.product_involve"
+                                    v-model="docket.products_involved"
                                     label="Products Involve"
                                     id="inspector"
                                 ></v-text-field>
@@ -187,7 +187,7 @@
                         <v-flex xs12 md6 pa-1>
                             <v-text-field outline
                                 name="name"
-                                v-model="docket.establishment_pharmacist"
+                                v-model="docket.pharmacist_radiologist"
                                 label="Pharmacist/Radiologist"
                                 id="name"
                             ></v-text-field>
@@ -211,17 +211,17 @@
                         <v-flex xs12 md6 pa-1>
                             <v-select outline
                                 :items="items"
-                                v-model="docket.establishment_region"
+                                v-model="docket.establishment_address_region"
                                 label="Region"
                             ></v-select>
                             <v-select outline
                                 :items="items"
-                                v-model="docket.establishment_province"
+                                v-model="docket.establishment_address_province"
                                 label="Province"
                             ></v-select>
                             <v-select outline
                                 :items="items"
-                                v-model="docket.establishment_city"
+                                v-model="docket.establishment_address_city"
                                 label="City/Municipality"
                             ></v-select>
                             <v-textarea outline rows="2"

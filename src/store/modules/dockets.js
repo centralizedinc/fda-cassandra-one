@@ -33,11 +33,11 @@ const actions = {
                 api.getAllDockets()
                 .then(results=>{
                     if(results.data.success){
-                        context.commit(SET_DOCKET_LIST, result.data.model)
-                        resolve(result.data.model)
+                        context.commit('SET_DOCKET_LIST', results.data.model)
+                        resolve(results.data.model)
                     }else{
-                        context.commit(SET_DOCKET_LIST, context.state.list)
-                        reject(result.data.errors)   
+                        context.commit('SET_DOCKET_LIST', context.state.list)
+                        reject(results.data.errors)   
                     }                                                                   
                 })
                 .catch(error =>{

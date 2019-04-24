@@ -44,6 +44,11 @@ export default new Router({
           component: ()=> import('@/views/app/dockets/New.vue')
         },
         {
+          path: 'dockets/search',
+          name: 'View Dockets',
+          component: ()=> import('@/views/app/dockets/Search.vue')
+        },
+        {
           path: 'dockets/new/old',
           name: 'New Docket',
           component: ()=> import('@/views/app/dockets/NewDocket.vue')
@@ -76,9 +81,9 @@ export default new Router({
           component: ()=> import('@/views/app/case/ViewCase.vue')
         },
         {
-          path: 'cases/new',
-          name: 'New Case',
-          component: ()=> import('@/views/app/case/NewCase.vue')
+          path: 'cases/edit',
+          name: 'Edit Case',
+          component: ()=> import('@/views/app/case/EditCase.vue')
         },
         {
           path: 'cases/search',
