@@ -57,7 +57,7 @@
         </v-btn>
         </v-toolbar>
 
-        <v-navigation-drawer  dark app :mini-variant="mini" width="250" v-model="showNav">
+        <v-navigation-drawer  dark app :mini-variant="mini" width="300" v-model="showNav">
             <v-toolbar dark color="primary" v-if="!mini">
                 <span class="title font-weight-light">Cassandra One</span>
                 <v-spacer></v-spacer>
@@ -71,8 +71,8 @@
                 </v-btn>
             </v-toolbar>
 
-            <v-list >
-                <v-list-tile class="ma-2" @click="goTo('/app')" :style="activeRoute(['Dashboard'])">
+            <v-list >                
+                <v-list-tile  @click="goTo('/app')" :style="activeRoute(['Dashboard'])">
                     <v-list-tile-action>
                         <v-icon>dashboard</v-icon>
                     </v-list-tile-action>
@@ -80,24 +80,112 @@
                         <v-list-tile-title class="body-1 font-weight-light">Dashboard</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile class="ma-2" @click="goTo('/app/cases')" :style="activeRoute(['Cases', 'Case Details', 'New Case'])">
+                <!-- <v-list-tile class="ma-2" @click="goTo('/app/cases')" :style="activeRoute(['Cases', 'Case Details', 'New Case'])">
                     <v-list-tile-action>
                         <v-icon >gavel</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
                         <v-list-tile-title class="body-1 font-weight-light">Case Management</v-list-tile-title>
                     </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile class="ma-2" @click="goTo('/app/dockets')" :style="activeRoute(['Dockets', 'Docket Details', 'New Docket'])">
+                </v-list-tile> -->
+                <v-tooltip right>
+                    <v-list-group
+                        prepend-icon="inbox"
+                        slot="activator"
+                        append-icon="expand_more"
+                    >
+                        <v-list-tile slot="activator">
+                            <v-list-tile-title class="body-1 font-weight-light">Docket Management</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile class="ma-1" @click="goTo('/app/dockets/new')" :style="activeRoute(['New Docket'])">
+                            <v-list-tile-action>
+                                <v-icon class="pl-4" small>add</v-icon>
+                            </v-list-tile-action>
+                            <v-list-tile-content>
+                                <v-list-tile-title class="body-1 font-weight-light">Create New Docket</v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                        <v-list-tile  class="ma-1" @click="goTo('/app/dockets/evaluation')" :style="activeRoute(['Edit Case'])">
+                            <v-list-tile-action>
+                                <v-icon class="pl-4" small>edit</v-icon>
+                            </v-list-tile-action>
+                            <v-list-tile-content>
+                                <v-list-tile-title class="body-1 font-weight-light">Evaluate</v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                        <v-list-tile  @click="goTo('/app/cases/view')" class="ma-1" :style="activeRoute(['View Case'])">
+                            <v-list-tile-action>
+                                <v-icon class="pl-4" small>format_line_spacing</v-icon>
+                            </v-list-tile-action>
+                            <v-list-tile-content>
+                                <v-list-tile-title class="body-1 font-weight-light">Review</v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                         <v-list-tile @click="goTo('/app/cases/view')" class="ma-1" :style="activeRoute(['View Case'])">
+                            <v-list-tile-action>
+                                <v-icon class="pl-4" small>done</v-icon>
+                            </v-list-tile-action>
+                            <v-list-tile-content>
+                                <v-list-tile-title class="body-1 font-weight-light">Approve</v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                        <v-list-tile @click="goTo('/app/cases/view')" class="ma-1" :style="activeRoute(['View Case'])">
+                            <v-list-tile-action>
+                                <v-icon class="pl-4" small>search</v-icon>
+                            </v-list-tile-action>
+                            <v-list-tile-content>
+                                <v-list-tile-title class="body-1 font-weight-light">Search</v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                    </v-list-group>
+                    Docket Management
+                    </v-tooltip>
+                    <v-tooltip right>
+                    <v-list-group
+                        prepend-icon="gavel"
+                        slot="activator"
+                        append-icon="expand_more"
+                    >
+                        <v-list-tile slot="activator">
+                            <v-list-tile-title class="body-1 font-weight-light">Case Management</v-list-tile-title>
+                        </v-list-tile>                        
+                        <v-list-tile  class="ma-1" @click="goTo('/app/cases/new')" :style="activeRoute(['Edit Case'])">
+                            <v-list-tile-action>
+                                <v-icon class="pl-4" small>edit</v-icon>
+                            </v-list-tile-action>
+                            <v-list-tile-content>
+                                <v-list-tile-title class="body-1 font-weight-light">Edit Case</v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                        <v-list-tile  @click="goTo('/app/cases/view')" class="ma-1" :style="activeRoute(['View Case'])">
+                            <v-list-tile-action>
+                                <v-icon class="pl-4" small>view_column</v-icon>
+                            </v-list-tile-action>
+                            <v-list-tile-content>
+                                <v-list-tile-title class="body-1 font-weight-light">Case Board</v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                        <v-list-tile  @click="goTo('/app/cases/view')" class="ma-1" :style="activeRoute(['View Case'])">
+                            <v-list-tile-action>
+                                <v-icon class="pl-4" small>search</v-icon>
+                            </v-list-tile-action>
+                            <v-list-tile-content>
+                                <v-list-tile-title class="body-1 font-weight-light">Search Case</v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>                        
+                    </v-list-group>
+                    Case Management
+                    </v-tooltip>
+                <!-- <v-list-tile class="ma-2" @click="goTo('/app/dockets')" :style="activeRoute(['Dockets', 'Docket Details', 'New Docket'])">
                     <v-list-tile-action>
                         <v-icon>inbox</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
                         <v-list-tile-title class="body-1 font-weight-light">Docket Management</v-list-tile-title>
                     </v-list-tile-content>
-                </v-list-tile>
-                <v-divider class="mt-5"></v-divider>
-                <v-list-tile class="ma-2" @click="goTo('/app/profile')" :style="activeRoute(['My Profile'])">
+                </v-list-tile> -->
+                <!-- <v-divider class="mt-5"></v-divider> -->
+                <v-list-tile @click="goTo('/app/profile')" :style="activeRoute(['My Profile'])">
                     <v-list-tile-action>
                         <v-icon>account_circle</v-icon>
                     </v-list-tile-action>
@@ -105,7 +193,7 @@
                         <v-list-tile-title class="body-1 font-weight-light">My Profile</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile >
-                <v-list-tile class="ma-2" @click="goTo('/app/security')" :style="activeRoute(['Change Password'])">
+                <v-list-tile @click="goTo('/app/security')" :style="activeRoute(['Change Password'])">
                     <v-list-tile-action>
                         <v-icon>vpn_key</v-icon>
                     </v-list-tile-action>
@@ -113,7 +201,7 @@
                         <v-list-tile-title class="body-1 font-weight-light">Change Password</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile class="ma-2">
+                <v-list-tile>
                     <v-list-tile-action>
                         <v-icon>exit_to_app</v-icon>
                     </v-list-tile-action>

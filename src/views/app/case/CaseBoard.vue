@@ -10,7 +10,7 @@
                     </v-btn>
                 </v-toolbar>
                 <v-card-text>
-                    <draggable v-model="new_cases" :move="move" :options="{group:'cases'}">
+                    <draggable v-model="new_cases" :move="moveNew" :options="{group:'cases'}">
                         <transition-group>
                             <v-card v-for="element in new_cases" :key="element.name" class="ma-1">
                                 <v-card-title primary-title>
@@ -93,8 +93,14 @@ export default {
     methods:{
         move(evt, originalEvent){
             
-            // alert(JSON.stringify(evt));
-            // alert(JSON.stringify(originalEvent));
+            console.log(evt);
+            alert('move other...');
+            return true;
+        },
+        moveNew(evt, originalEvent){
+            
+            console.log(evt);
+            alert('move new...');
             return true;
         }
     }
