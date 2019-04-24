@@ -161,11 +161,14 @@
                             <v-list-tile-action>
                                 <v-icon class="pl-4" small>view_column</v-icon>
                             </v-list-tile-action>
+
+                            <!-- case board -->
                             <v-list-tile-content>
                                 <v-list-tile-title class="body-1 font-weight-light">Case Board</v-list-tile-title>
                             </v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile  @click="goTo('/app/cases/view')" class="ma-1" :style="activeRoute(['View Case'])">
+                        </v-list-tile>                                                    
+                        <!-- search case -->
+                        <v-list-tile  @click="goTo('/app/cases/search')" class="ma-1" :style="activeRoute(['Search Case'])">
                             <v-list-tile-action>
                                 <v-icon class="pl-4" small>search</v-icon>
                             </v-list-tile-action>
