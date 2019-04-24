@@ -1,9 +1,9 @@
 <template>
-  <v-container grid-list-xl fluid fill-height>
   <v-layout row wrap justify-center align-center>
+      <v-flex xs12 pa-5>
     <v-card>
-        <v-text-field class="elevation-5"
-        outline
+        <v-text-field class="pa-3 pb-2"
+        box
         append-icon="search"
         label="Search"
         single-line
@@ -41,8 +41,8 @@
             Case Details Overview
         </v-card>
     </v-dialog>
+      </v-flex>
   </v-layout>
-  </v-container>
 </template>
 
 <script>
