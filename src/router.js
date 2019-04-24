@@ -44,6 +44,11 @@ export default new Router({
           component: ()=> import('@/views/app/dockets/New.vue')
         },
         {
+          path: 'dockets/new/old',
+          name: 'New Docket',
+          component: ()=> import('@/views/app/dockets/NewDocket.vue')
+        },
+        {
           path: 'dockets/evaluation',
           name: 'Docket Evaluation',
           component: ()=> import('@/views/app/evaluator/evaluator.vue')
