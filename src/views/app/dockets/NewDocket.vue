@@ -10,23 +10,23 @@
                         <v-card-text>
                             <v-text-field
                                 name="DTN"
-                                v-model=" newDocket.dtn"
+                                v-model="docket.dtn"
                                 label="Docket Tracking Number"
                                 id="inspector"
                             ></v-text-field>
                             <v-select
                                 :items="items"
-                                v-model="newDocket.origin.cluster"
+                                v-model="docket.origin_cluster"
                                 label="Cluster"
                             ></v-select>
                             <v-select
                                 :items="items"
-                                v-model="newDocket.origin.region"
+                                v-model="docket.origin_region"
                                 label="Region"
                             ></v-select>
                             <v-select
                                 :items="items"
-                                v-model="newDocket.origin.area"
+                                v-model="docket.origin_area"
                                 label="Area"
                             ></v-select>
                         </v-card-text>
@@ -63,12 +63,12 @@
                             </v-dialog>
                             <v-text-field
                                 name="inspector"
-                                v-model="newDocket.inspectionDetails.inspector"
+                                v-model="docket.inspection_inspector"
                                 label="Name of Inspector"
                                 id="inspector"
                             ></v-text-field>
                             <v-textarea
-                                v-model="newDocket.inspectionDetails.purpose"
+                                v-model="docket.inspection_purpose"
                                 label="Purpose of Inspection"
                             ></v-textarea>
                         </v-card-text>
@@ -127,7 +127,7 @@
                             </v-dialog>
                             <v-select
                                 :items="items"
-                                v-model="newDocket.rov.centerInvolved"
+                                v-model="docket.rov_center_involved"
                                 label="Center Involved"
                             ></v-select>
                         </v-card-text>
@@ -142,36 +142,36 @@
                         <v-card-text>
                             <v-text-field
                                 name="name"
-                                v-model="newDocket.establishmentDetails.compliant"
+                                v-model="docket.establishment_compliant"
                                 label="Name of Compliant"
                                 id="name"
                             ></v-text-field>
                             <v-text-field
                                 name="name"
-                                v-model="newDocket.establishmentDetails.nameOfEstablishment"
+                                v-model="docket.establishment_name"
                                 label="Name of Establishment"
                                 id="name"
                             ></v-text-field>
                             <v-text-field
                                 name="owner"
-                                v-model="newDocket.establishmentDetails.owner"
+                                v-model="docket.establishment_owner"
                                 label="Owner of Establishment"
                                 id="owner"
                             ></v-text-field>
                             <v-select
                                 :items="items"
-                                v-model="newDocket.establishmentDetails.classificationOfStablishment"
+                                v-model="docket.establishment_classification"
                                 label="Classification of Establishment"
                             ></v-select>
                             <v-text-field
                                 name="pharma"
-                                v-model="newDocket.establishmentDetails.pharmacistRadiologist"
+                                v-model="docket.establishment_pharmacist_radiologist"
                                 label="Pharmacist/Radiologist"
                                 id="pharma"
                             ></v-text-field>
                             <v-select
                                 :items="items"
-                                v-model="newDocket.establishmentDetails.classificationOfProduct"
+                                v-model="docket.class_of_product"
                                 label="Classification of Products"
                             ></v-select>
                         </v-card-text>
@@ -186,20 +186,20 @@
                         <v-card-text>
                             <v-select
                                 :items="items"
-                                v-model="newDocket.establishmentAddress.region"
+                                v-model="docket.establishment_address_region"
                                 label="Region"
                             ></v-select>
                             <v-select
                                 :items="items"
-                                v-model="newDocket.establishmentAddress.province"
+                                v-model="docket.establishment_address_province"
                                 label="Province"
                             ></v-select>
                             <v-select
                                 :items="items"
-                                v-model="newDocket.establishmentAddress.cityMunicipality"
+                                v-model="docket.establishment_address_city"
                                 label="City/Municipality"
                             ></v-select>
-                            <v-textarea v-model="newDocket.establishmentAddress.address" label="Address"></v-textarea>
+                            <v-textarea v-model="docket.establishment_address" label="Address"></v-textarea>
                         </v-card-text>
                     </v-card>
                 </v-flex>
@@ -249,14 +249,28 @@ export default {
             dialogValue:false,
             date:null,
             dateValue:null,
-            newDocket:{
+            docket:{
                 dtn : 0,
-                origin: {cluster:"", region:"", area: ""},
-                inspectionDetails: {dateOfInspection: Date, inspector: "", purpose: ""},
-                rov:{dateOfRov: Date, rovDateReceived: Date, centerInvolved: ""},
-                establishmentDetails:{compliant:"", nameOfEstablishment:"", owner:"", classificationOfStablishment:"", pharmacistRadiologist:"", classificationOfProduct: ""},
-                establishmentAddress:{region:"",province:"",cityMunicipality:"",address:""},
-                documents:""
+                origin_cluster: "",
+                origin_region: "",
+                origin_area: "",
+                inspection_date: Date,
+                inspection_inspector: "",
+                inspection_purpose: "",
+                rov_date: Date,
+                rov_date_receive: Date,
+                rov_center_involved: "",
+                establishment_compliant: "",
+                establishment_name: "",
+                establishment_owner: "",
+                establishment_classification: "",
+                pharmacist_radiologist: "",
+                class_of_product: "",
+                establishment_address_region: "",
+                establishment_address_province: "",
+                establishment_address_city: "",
+                establishment_address: "",
+                documents: ""
             }
         }
     },
