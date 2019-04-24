@@ -10,7 +10,7 @@
                     <v-divider class="mb-3"></v-divider>
                     <!-- <v-text-field
                         name="DTN"
-                        v-model=" newDocket.dtn"
+                        v-model=" docket.dtn"
                         label="Docket Tracking Number"
                         id="inspector"
                     ></v-text-field> -->
@@ -18,7 +18,7 @@
                         <v-flex xs12 md4 pa-1>
                             <v-select outline
                                 :items="references.clusters"
-                                v-model="docket.cluster"
+                                v-model="docket.origin_cluster"
                                 label="Cluster"
                                 item-text="description"
                                 item-value="code"
@@ -27,7 +27,7 @@
                         <v-flex xs12 md4 pa-1>
                             <v-select outline
                                 :items="references.regions"
-                                v-model="docket.region"
+                                v-model="docket.origin_region"
                                 label="Region"
                                 item-text="description"
                                 item-value="code"
@@ -36,7 +36,7 @@
                         <v-flex xs12 md4 pa-1>
                             <v-select outline
                                 :items="references.areas"
-                                v-model="docket.area"
+                                v-model="docket.origin_area"
                                 label="Area"
                                 item-text="description"
                                 item-value="code"
@@ -73,7 +73,7 @@
                         <v-flex xs12 md6 pa-1>
                             <v-text-field outline
                                 name="inspector"
-                                v-model="docket.inspector"
+                                v-model="docket.inspection_inspector"
                                 label="Name of Inspector"
                                 id="inspector"
                             ></v-text-field>
@@ -93,7 +93,7 @@
                         <v-flex xs12>
                              <v-select outline
                                 :items="references.centers"
-                                v-model="docket.center_involved"
+                                v-model="docket.rov_center_involved"
                                 label="Center Involved"
                                 item-text="description"
                                 item-value="code"
@@ -143,7 +143,7 @@
                                  name="license_no"
                                  label="License Number"
                                  id="license_no"
-                                 v-model="docket.license_no"
+                                 v-model="docket.lto_no"
                              ></v-text-field>
                         </v-flex>
                         <v-flex xs12 md6 pa-1>
@@ -158,14 +158,14 @@
                                 min-width="290px">
                                 <template v-slot:activator="{ on }">
                                 <v-text-field outline
-                                    v-model="docket.license_validity"
+                                    v-model="docket.lto_validity"
                                     label="License Validity"
                                     append-icon="event"
                                     readonly
                                     v-on="on"
                                 ></v-text-field>
                                 </template>
-                                <v-date-picker v-model="docket.license_validity" @input="date_dialogs[1] = false"></v-date-picker>
+                                <v-date-picker v-model="docket.lto_validity" @input="date_dialogs[1] = false"></v-date-picker>
                             </v-menu>
                         </v-flex>
                         <v-flex xs12 pa-1>
