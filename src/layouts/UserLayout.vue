@@ -129,7 +129,7 @@
                                 <v-list-tile-title class="body-1 font-weight-light">Approve</v-list-tile-title>
                             </v-list-tile-content>
                         </v-list-tile>
-                        <v-list-tile @click="goTo('/app/cases/view')" class="ma-1" :style="activeRoute(['View Case'])">
+                        <v-list-tile @click="goTo('/app/dockets/search')" class="ma-1" :style="activeRoute(['View Dockets'])">
                             <v-list-tile-action>
                                 <v-icon class="pl-4" small>search</v-icon>
                             </v-list-tile-action>
