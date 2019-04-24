@@ -18,7 +18,7 @@
                         <v-flex xs12 md4 pa-1>
                             <v-select outline
                                 :items="references.clusters"
-                                v-model="docket.cluster"
+                                v-model="docket.origin_cluster"
                                 label="Cluster"
                                 item-text="description"
                                 item-value="code"
@@ -27,7 +27,7 @@
                         <v-flex xs12 md4 pa-1>
                             <v-select outline
                                 :items="references.regions"
-                                v-model="docket.region"
+                                v-model="docket.origin_region"
                                 label="Region"
                                 item-text="description"
                                 item-value="code"
@@ -36,7 +36,7 @@
                         <v-flex xs12 md4 pa-1>
                             <v-select outline
                                 :items="references.areas"
-                                v-model="docket.area"
+                                v-model="docket.origin_area"
                                 label="Area"
                                 item-text="description"
                                 item-value="code"
@@ -73,7 +73,7 @@
                         <v-flex xs12 md6 pa-1>
                             <v-text-field outline
                                 name="inspector"
-                                v-model="docket.inspector"
+                                v-model="docket.inspection_inspector"
                                 label="Name of Inspector"
                                 id="inspector"
                             ></v-text-field>
@@ -93,7 +93,7 @@
                         <v-flex xs12>
                              <v-select outline
                                 :items="references.centers"
-                                v-model="docket.center_involved"
+                                v-model="docket.rov_center_involved"
                                 label="Center Involved"
                                 item-text="description"
                                 item-value="code"
@@ -102,7 +102,7 @@
                         <v-flex xs12>
                             <v-text-field outline
                                     name="inspector"
-                                    v-model="docket.product_involve"
+                                    v-model="docket.products_involved"
                                     label="Products Involve"
                                     id="inspector"
                                 ></v-text-field>
@@ -187,7 +187,7 @@
                         <v-flex xs12 md6 pa-1>
                             <v-text-field outline
                                 name="name"
-                                v-model="docket.establishment_pharmacist"
+                                v-model="docket.pharmacist_radiologist"
                                 label="Pharmacist/Radiologist"
                                 id="name"
                             ></v-text-field>
@@ -211,17 +211,17 @@
                         <v-flex xs12 md6 pa-1>
                             <v-select outline
                                 :items="items"
-                                v-model="docket.establishment_region"
+                                v-model="docket.establishment_address_region"
                                 label="Region"
                             ></v-select>
                             <v-select outline
                                 :items="items"
-                                v-model="docket.establishment_province"
+                                v-model="docket.establishment_address_province"
                                 label="Province"
                             ></v-select>
                             <v-select outline
                                 :items="items"
-                                v-model="docket.establishment_city"
+                                v-model="docket.establishment_address_city"
                                 label="City/Municipality"
                             ></v-select>
                             <v-textarea outline rows="2"
