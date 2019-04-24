@@ -1,7 +1,7 @@
 <template>
     <v-layout row wrap>
         <v-flex xs12>
-             <GmapMap style="width: 100%; height: 300px;" :zoom="10" :center="center">
+             <GmapMap style="width: 100%; height: 350px;" :zoom="10" :center="center">
                  <GmapMarker
                     :draggable="edit"
                     :position="center"
