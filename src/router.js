@@ -81,6 +81,11 @@ export default new Router({
           component: ()=> import('@/views/app/case/NewCase.vue')
         },
         {
+          path: 'cases/search',
+          name: 'Search Case',
+          component: ()=> import('@/views/app/case/SearchCase.vue')
+        },
+        {
           path: 'cases/board',
           name: 'Case Board',
           component: ()=> import('@/views/app/case/CaseBoard.vue')
