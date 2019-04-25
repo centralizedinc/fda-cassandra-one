@@ -59,6 +59,11 @@ export default new Router({
           component: ()=> import('@/views/app/evaluator/evaluator.vue')
         },
         {
+          path: 'dockets/evaluationTable',
+          name: 'Docket Evaluation',
+          component: ()=> import('@/views/app/evaluator/EvaluatorTable.vue')
+        },
+        {
           path: 'dockets/decking',
           name: 'Decking',
           component: ()=> import('@/views/app/dockets/Decking.vue')
@@ -96,6 +101,11 @@ export default new Router({
           component: ()=> import('@/views/app/case/CaseBoard.vue')
         },
         {
+          path: 'approval/table',
+          name: 'approval',
+          component: ()=> import('@/views/app/approval/ApprovalTable.vue')
+        },
+        {
           path: 'approval',
           name: 'approval',
           component: ()=> import('@/views/app/approval/approval.vue')
@@ -106,6 +116,11 @@ export default new Router({
           component: ()=> import('@/views/app/approval/ViewApproval.vue')
         },
         {
+          path: 'reviewer/table',
+          name: 'Reviewer',
+          component: ()=> import('@/views/app/reviewer/ReviewerTable.vue')
+        },
+        {
           path: 'reviewer',
           name: 'Reviewer',
           component: ()=> import('@/views/app/reviewer/reviewer.vue')
@@ -114,6 +129,11 @@ export default new Router({
           path: 'ViewReviewer',
           name: 'ViewReviewer',
           component: ()=> import('@/views/app/reviewer/ViewReviewer.vue')
+        },
+        {
+          path: 'evaluatorTable',
+          name: 'EvaluatorTable',
+          component: ()=> import('@/views/app/evaluator/EvaluatorTable.vue')
         },
         {
           path: 'evaluator',
