@@ -82,7 +82,7 @@
             style=" height: 100px;"
           >
             <v-list-tile-avatar class="mt-4">
-              <v-btn fab icon slot="activator">
+              <v-btn fab icon slot="activator" @click="mini=false">
                 <v-avatar  size="50px" color="teal">
                   <span class="white--text title">AB</span>
                 </v-avatar>
@@ -92,8 +92,13 @@
             <v-list-tile-content class="mt-4">
               <v-list-tile-title class="body-2">Ariel Balita</v-list-tile-title>
               <v-list-tile-sub-title class="caption">Last Logged in:</v-list-tile-sub-title>
-              <v-list-tile-sub-title class="caption">{{new Date()}}</v-list-tile-sub-title>
+              <v-list-tile-sub-title class="caption">{{formatDate(new Date())}}</v-list-tile-sub-title>
             </v-list-tile-content>
+            <v-list-tile-action>
+                <v-btn v-if="!mini" flat icon @click="mini=true">
+                    <v-icon >chevron_left</v-icon>
+                </v-btn>
+            </v-list-tile-action>
           </v-list-tile>
         </v-list>
       </v-toolbar>

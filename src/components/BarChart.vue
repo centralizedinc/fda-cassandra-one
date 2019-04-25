@@ -5,7 +5,7 @@ export default {
   extends: Bar,
   props: ['chartdata', 'options'],
   mounted () {
-    this.renderChart(this.chartdata, this.options)
+    this.renderChart(this.chartdata, {aspectRatio:0.5, title:{display:false}})
   }
 }
 </script>

@@ -96,25 +96,85 @@
                         </v-card-actions>          
                     </v-card>            
                 </v-flex>
-                <v-flex xs12 md6 pa-2>
-                    <v-card style="background:linear-gradient(360deg, #297373 0%, #5FA391 100%); box-shadow: 0 6px 20px rgba(101, 198, 187, 1);">
+                
+                <v-flex xs12 pa-1 mt-5>
+                    <!-- <span class="title primary--text">Trends</span> -->
+                    <v-divider></v-divider>                    
+                </v-flex>
+                <v-flex xs12 md6 pa-1>
+                    <v-card style="background-color: #00a65a!important; box-shadow: 0 6px 20px rgba(101, 198, 187, 1);">
+                        <v-card-title primary-title>
+                            <span class="title font-weight-light white--text">New Cases</span>
+                            <v-spacer></v-spacer>
+                            <v-btn flat icon color="white">
+                                <v-icon>launch</v-icon>
+                            </v-btn>
+                        </v-card-title>
+                        <v-divider></v-divider>
                         <v-card-text>
-                            <bar-chart :chartdata="chartdata" ></bar-chart>
+                            <v-sparkline
+                                :value="trend_cases"
+                                :labels="['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']"
+                                color="white"
+                                line-width="2"
+                                padding="16"
+                                smooth="4"
+                            ></v-sparkline>
                         </v-card-text>
                     </v-card>
                 </v-flex>
-                <v-flex xs12 md6 pa-2>
-                    <v-card style="background:linear-gradient(360deg, #297373 0%, #5FA391 100%); box-shadow: 0 6px 20px rgba(101, 198, 187, 1);">
+
+                <v-flex xs12 md6 pa-1>
+                    <v-card style="background: linear-gradient(360deg, #F1961D 0%, #F58555  100%); box-shadow: 0 6px 20px 0 rgba(228, 120, 51, 1)">
+                        <v-card-title primary-title>
+                            <span class="title font-weight-light white--text">Closed Cases</span>
+                            <v-spacer></v-spacer>
+                            <v-btn flat icon color="white">
+                                <v-icon>launch</v-icon>
+                            </v-btn>
+                        </v-card-title>
+                        <v-divider></v-divider>
                         <v-card-text>
-                            <pie-chart :chartdata="chartdata" ></pie-chart>
+                            <v-sparkline
+                                :value="trend_cases"
+                                :labels="['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']"
+                                color="white"
+                                line-width="2"
+                                padding="16"
+                                smooth="4"
+                            ></v-sparkline>
                         </v-card-text>
                     </v-card>
                 </v-flex>
+                
+
+                <!-- <v-flex xs12 md6 pa-1>
+                    <v-card style="background:linear-gradient(360deg, #297373 0%, #5FA391 100%); box-shadow: 0 6px 20px rgba(101, 198, 187, 1);">
+                        <v-card-title primary-title>
+                            <span class="title font-weight-light white--text">Closed Cases</span>
+                            <v-spacer></v-spacer>
+                            <v-btn flat icon color="white">
+                                <v-icon>launch</v-icon>
+                            </v-btn>
+                        </v-card-title>
+                        <v-divider></v-divider>
+                        <v-card-text>
+                            <v-sparkline
+                                :value="trend_cases"
+                                :labels="['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']"
+                                color="white"
+                                line-width="2"
+                                padding="16"
+                                smooth="4"
+                            ></v-sparkline>
+                        </v-card-text>
+                    </v-card>
+                </v-flex> -->
             </v-layout>            
         </v-flex>
         
         <!-- recent activities card -->
-         <v-flex xs12 md4 pa-1  d-flex>
+         <v-flex xs12 md4 pt-2>
             <v-card style="background: linear-gradient(to right, #16222a, #3a6073);">
                 <v-card-title  primary-title>
                     <span class="title white--text">Recent Activities</span>
@@ -122,7 +182,7 @@
                 <v-divider></v-divider>
                 <v-card-text>
                     <v-timeline align-top dense>
-                        <v-timeline-item v-for="n in 5" :key="n"
+                        <v-timeline-item v-for="n in 4" :key="n"
                         color="success"
                             small
                             >
@@ -157,6 +217,9 @@
                 </v-card-actions>
             </v-card>           
             
+        </v-flex>
+        <v-flex xs12 pa-1>
+            <bar-chart :chartdata="chartdata" ></bar-chart>
         </v-flex>
         <!-- <v-flex xs3 pa-2>
             <v-card>
@@ -205,16 +268,6 @@ export default {
     components:{PieChart, BarChart, LineChart, DashboardCard},
     data(){
         return{
-            
-            chartdata:{
-                labels: ['Closed','Open','Evaluation','Review', 'Execution' ],
-                datasets: [
-                    {
-                    label: 'Case',
-                    data: [1, 5, 10, 20, 30]
-                    }
-                ]
-            }
         }
     },
     computed:{
@@ -230,7 +283,34 @@ export default {
                 Math.random() * (+30 - +0) + +0,
                 Math.random() * (+30 - +0) + +0,
                 Math.random() * (+30 - +0) + +0,
+                Math.random() * (+30 - +0) + +0,
+                Math.random() * (+30 - +0) + +0,
             ]
+        },
+        random(){
+            return Math.random() * (+30 - +0) + +0;
+        },
+        chartdata(){
+            return {
+                labels: ['Jan','Feb','Mar','Apr', 'May', 'Jun' , 'Jul' , 'Aug' , 'Sep' , 'Oct' , 'Nov' , 'Dec'  ],                
+                datasets: [
+                    {
+                    label: 'New Case',
+                    data: this.trend_cases,
+                    backgroundColor:'#297373'
+                    },
+                    {
+                    label: 'Inprogress',
+                    data: this.trend_cases,
+                    backgroundColor:'#F1961D'
+                    },
+                    {
+                    label: 'Closed Case',
+                    data:  this.trend_cases,
+                    backgroundColor:'#3a6073'
+                    }
+                ]
+            }
         }
     }
 }
