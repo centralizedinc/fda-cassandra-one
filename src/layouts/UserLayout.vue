@@ -58,18 +58,45 @@
         </v-toolbar>
 
         <v-navigation-drawer  dark app :mini-variant="mini" width="300" v-model="showNav">
-            <v-toolbar dark color="primary" v-if="!mini">
+            <!-- <v-toolbar dark color="primary" v-if="!mini">
                 <span class="title font-weight-light">Cassandra One</span>
                 <v-spacer></v-spacer>
                 <v-btn flat icon @click="mini=true">
                     <v-icon >chevron_left</v-icon>
                 </v-btn>
-            </v-toolbar>
-            <v-toolbar dark color="primary" v-else>
+            </v-toolbar> -->
+            <!-- <v-toolbar dark color="primary" v-else>
                 <v-btn flat icon @click="mini=false">
                     <v-icon >chevron_right</v-icon>
                 </v-btn>
-            </v-toolbar>
+            </v-toolbar> -->
+            <v-toolbar
+            dark
+            style="height: 100px; background: linear-gradient(45deg, #38c73c 0%, #b5c25a 100%)"
+        >
+        
+        <v-list class="pa-0">
+          <v-list-tile
+            class="pa-1 bg"
+            avatar
+            style=" height: 100px;"
+          >
+            <v-list-tile-avatar class="mt-4">
+              <v-btn fab icon slot="activator">
+                <v-avatar  size="50px" color="teal">
+                  <span class="white--text title">AB</span>
+                </v-avatar>
+              </v-btn>
+            </v-list-tile-avatar>
+            <v-spacer></v-spacer>
+            <v-list-tile-content class="mt-4">
+              <v-list-tile-title class="body-2">Ariel Balita</v-list-tile-title>
+              <v-list-tile-sub-title class="caption">Last Logged in:</v-list-tile-sub-title>
+              <v-list-tile-sub-title class="caption">{{new Date()}}</v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-toolbar>
 
             <v-list >                
                 <v-list-tile  @click="goTo('/app')" :style="activeRoute(['Dashboard'])">

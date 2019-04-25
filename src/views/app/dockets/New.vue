@@ -290,6 +290,7 @@ export default {
             this.$store.dispatch('NEW_DOCKET',this.docket)
             .then(results=>{                
                 console.log('RESULTS: ' +JSON.stringify(results))
+                this.$router.push('/app')
             })
             .catch(error=>{
                 console.error(error)
