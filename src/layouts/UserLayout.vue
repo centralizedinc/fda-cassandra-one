@@ -105,7 +105,7 @@
                                 <v-list-tile-title class="body-1 font-weight-light">Create New Docket</v-list-tile-title>
                             </v-list-tile-content>
                         </v-list-tile>
-                        <v-list-tile  class="ma-1" @click="goTo('/app/dockets/evaluation')" :style="activeRoute(['Edit Case'])">
+                        <v-list-tile  class="ma-1" @click="goTo('/app/dockets/evaluationTable')" :style="activeRoute(['Edit Case'])">
                             <v-list-tile-action>
                                 <v-icon class="pl-4" small>edit</v-icon>
                             </v-list-tile-action>
@@ -113,7 +113,7 @@
                                 <v-list-tile-title class="body-1 font-weight-light">Evaluate</v-list-tile-title>
                             </v-list-tile-content>
                         </v-list-tile>
-                        <v-list-tile  @click="goTo('/app/cases/view')" class="ma-1" :style="activeRoute(['View Case'])">
+                        <v-list-tile  @click="goTo('/app/reviewer/table')" class="ma-1" :style="activeRoute(['View Case'])">
                             <v-list-tile-action>
                                 <v-icon class="pl-4" small>format_line_spacing</v-icon>
                             </v-list-tile-action>
@@ -121,7 +121,7 @@
                                 <v-list-tile-title class="body-1 font-weight-light">Review</v-list-tile-title>
                             </v-list-tile-content>
                         </v-list-tile>
-                         <v-list-tile @click="goTo('/app/cases/view')" class="ma-1" :style="activeRoute(['View Case'])">
+                         <v-list-tile @click="goTo('/app/approval/table')" class="ma-1" :style="activeRoute(['View Case'])">
                             <v-list-tile-action>
                                 <v-icon class="pl-4" small>done</v-icon>
                             </v-list-tile-action>

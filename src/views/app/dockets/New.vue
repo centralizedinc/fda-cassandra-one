@@ -18,7 +18,7 @@
                         <v-flex xs12 md4 pa-1>
                             <v-select outline
                                 :items="references.clusters"
-                                v-model="docket.origin_cluster"
+                                v-model="docket.cluster"
                                 label="Cluster"
                                 item-text="description"
                                 item-value="code"
@@ -27,7 +27,7 @@
                         <v-flex xs12 md4 pa-1>
                             <v-select outline
                                 :items="references.regions"
-                                v-model="docket.origin_region"
+                                v-model="docket.region"
                                 label="Region"
                                 item-text="description"
                                 item-value="code"
@@ -36,7 +36,7 @@
                         <v-flex xs12 md4 pa-1>
                             <v-select outline
                                 :items="references.areas"
-                                v-model="docket.origin_area"
+                                v-model="docket.area"
                                 label="Area"
                                 item-text="description"
                                 item-value="code"
@@ -73,7 +73,7 @@
                         <v-flex xs12 md6 pa-1>
                             <v-text-field outline
                                 name="inspector"
-                                v-model="docket.inspection_inspector"
+                                v-model="docket.inspector"
                                 label="Name of Inspector"
                                 id="inspector"
                             ></v-text-field>
@@ -102,7 +102,7 @@
                         <v-flex xs12>
                             <v-text-field outline
                                     name="inspector"
-                                    v-model="docket.products_involved"
+                                    v-model="docket.product_involved"
                                     label="Products Involve"
                                     id="inspector"
                                 ></v-text-field>
@@ -143,7 +143,7 @@
                                  name="license_no"
                                  label="License Number"
                                  id="license_no"
-                                 v-model="docket.lto_no"
+                                 v-model="docket.license_no"
                              ></v-text-field>
                         </v-flex>
                         <v-flex xs12 md6 pa-1>
@@ -158,14 +158,14 @@
                                 min-width="290px">
                                 <template v-slot:activator="{ on }">
                                 <v-text-field outline
-                                    v-model="docket.lto_validity"
+                                    v-model="docket.license_validity"
                                     label="License Validity"
                                     append-icon="event"
                                     readonly
                                     v-on="on"
                                 ></v-text-field>
                                 </template>
-                                <v-date-picker v-model="docket.lto_validity" @input="date_dialogs[1] = false"></v-date-picker>
+                                <v-date-picker v-model="docket.license_validity" @input="date_dialogs[1] = false"></v-date-picker>
                             </v-menu>
                         </v-flex>
                         <v-flex xs12 pa-1>
@@ -187,7 +187,7 @@
                         <v-flex xs12 md6 pa-1>
                             <v-text-field outline
                                 name="name"
-                                v-model="docket.pharmacist_radiologist"
+                                v-model="docket.pharmacist"
                                 label="Pharmacist/Radiologist"
                                 id="name"
                             ></v-text-field>
@@ -211,17 +211,17 @@
                         <v-flex xs12 md6 pa-1>
                             <v-select outline
                                 :items="items"
-                                v-model="docket.establishment_address_region"
+                                v-model="docket.establishment_region"
                                 label="Region"
                             ></v-select>
                             <v-select outline
                                 :items="items"
-                                v-model="docket.establishment_address_province"
+                                v-model="docket.establishment_province"
                                 label="Province"
                             ></v-select>
                             <v-select outline
                                 :items="items"
-                                v-model="docket.establishment_address_city"
+                                v-model="docket.establishment_city"
                                 label="City/Municipality"
                             ></v-select>
                             <v-textarea outline rows="2"
