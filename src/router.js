@@ -135,6 +135,11 @@ export default new Router({
           component: ()=> import('@/views/app/evaluator/EvaluatorTable.vue')
         },
         {
+          path: 'evaluator/details',
+          name: 'EvaluatorTable',
+          component: ()=> import('@/views/app/evaluator/EvaluatorDetails.vue')
+        },
+        {
           path: 'evaluator',
           name: 'Evaluator',
           component: () => import('@/views/app/evaluator/evaluator.vue')

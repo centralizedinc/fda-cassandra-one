@@ -28,6 +28,7 @@ const actions = {
                 || context.state.regions.length === 0 
                 || context.state.areas.length === 0 
                 || context.state.est_class.length === 0 
+                || context.state.product_class.length === 0 
                 || refresh){
                     api.init()
                     .then(results=>{
