@@ -89,10 +89,10 @@ export default {
       return (age / 150) * 100;
     },
     view(docket) {
-      this.$router.push("/app/dockets/evaluation");
+      this.$router.push("/app/evaluator/details");
     },
     create() {
-      this.$router.push("/app/dockets/evaluation");
+      this.$router.push("/app/evaluator/details");
     }
   }
 };
