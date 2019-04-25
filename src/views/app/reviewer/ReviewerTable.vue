@@ -15,14 +15,15 @@
           Cases List
           <v-spacer></v-spacer>
         </v-card-title>
-        <v-data-table :headers="headers" :items="items" :search="search">
+        <v-data-table :headers="headers" :items="dockets" :search="search">
           <template v-slot:items="props">
             <tr @click="view(props.item)" style="cursor:pointer">
-              <td>{{ props.item.caseNo }}</td>
-              <td>{{ props.item.caseTitle }}</td>
-              <td>{{ props.item.dateDocketed }}</td>
-              <td>{{ props.item.product }}</td>
-              <td>{{ props.item.cause }}</td>
+              <td>{{ props.item.dtn }}</td>
+              <td>{{ props.item.cluster }}</td>
+              <td>{{ props.item.region }}</td>
+              <td>{{ props.item.area }}</td>
+              <td>{{ props.item.center }}</td>
+              <td>{{ props.item.establishment_name }}</td>
               <td>{{ props.item.status }}</td>
               <td>
                 <v-tooltip top>
@@ -36,12 +37,12 @@
               </td>
             </tr>
           </template>
-           <v-alert
-          slot="no-results"
-          :value="true"
-          color="error"
-          icon="warning"
-        >Your search for "{{ search }}" found no results.</v-alert>
+          <v-alert
+            slot="no-results"
+            :value="true"
+            color="error"
+            icon="warning"
+          >Your search for "{{ search }}" found no results.</v-alert>
         </v-data-table>
       </v-card>
     </v-flex>
@@ -53,54 +54,37 @@ export default {
   data() {
     return {
       search: "",
+      dockets: [],
       headers: [
-        { text: "Case Number", value: "caseNo" },
-        { text: "Case Title", value: "caseTitle" },
-        { text: "Date Docketed", value: "dateDocketed" },
-        { text: "Product Involved", value: "product" },
-        { text: "Cause of Complaint", value: "cause" },
-        { text: "Case Status", value: "status" }
-      ],
-      items: [
-        {
-          caseNo: "cmp-apm-2014-004",
-          caseTitle: "Colgate phils., inc. Petitioner v. Johnson & Johnson",
-          dateDocketed: "2018-07-12",
-          product: "Listerine",
-          cause: "adulterated; with petroleum based taste",
-          status: "referred ccrr for issuance of warning 2/13/14 (draft)"
-        },
-        {
-          caseNo: "cmp-apm-2013-130",
-          caseTitle:
-            "Ritemed phils., inc. Petitioner v. pascual consumer healthcare corp.",
-          dateDocketed: "2018-07-12",
-          product: "ascof lagundi ",
-          cause: 'misleading claim "tunaw ang plema',
-          status: "SUMMONS issued"
-        },
-        {
-          caseNo: "cmp-dr-2013-131",
-          caseTitle:
-            "international pharmaceuticals, inc. Petitioner v. greenstone pharmaceuticals, h.k.  ",
-          dateDocketed: "2018-07-12",
-          product: "katinko ointment",
-          cause: "non-compliance w/ generic labeling requirement",
-          status: "MEMO issued"
-        },
-        {
-          caseNo: "cmp-fd-13-117",
-          caseTitle:
-            "nestle philippines, inc. Petitioner v. tridharma marketing, inc.  ",
-          dateDocketed: "2018-07-12",
-          product: "kopiko l.a. coffee",
-          cause: "mislabeled",
-          status: "memo to cfrr for the recall"
-        }
+        { text: "Docket Number", value: "dtn" },
+        { text: "Cluster", value: "cluster" },
+        { text: "Region", value: "region" },
+        { text: "Area", value: "area" },
+        { text: "Center", value: "center" },
+        { text: "Establishment", value: "establishment" },
+        { text: "Status", value: "status" },
+        { text: "Age", value: "age" }
       ]
+      
     };
   },
+  created() {
+    this.init();
+  },
   methods: {
+    init() {
+      this.$store
+        .dispatch("GET_DOCKETS")
+        .then(results => {
+          this.dockets = results;
+          console.log(JSON.stringify(results));
+        })
+        .catch(error => {
+          // this.$notifyError(error)
+          console.error(error);
+        });
+    },
+
     compute_age(age) {
       return (age / 150) * 100;
     },
