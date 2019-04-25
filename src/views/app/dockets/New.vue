@@ -203,26 +203,34 @@
                         </v-flex>
                         <v-flex xs12 md6 pa-1>
                             <v-select outline
-                                :items="items"
+                                :items="references.product_class"
                                 v-model="docket.product_classification"
                                 label="Classification of Products"
+                                item-text="description"
+                                item-value="code"
                             ></v-select>
                         </v-flex>
                         <v-flex xs12 md6 pa-1>
                             <v-select outline
-                                :items="items"
+                                :items="references.regions"
                                 v-model="docket.establishment_region"
                                 label="Region"
+                                item-text="description"
+                                item-value="code"
                             ></v-select>
                             <v-select outline
-                                :items="items"
+                                :items="references.provinces"
                                 v-model="docket.establishment_province"
                                 label="Province"
+                                item-text="description"
+                                item-value="code"
                             ></v-select>
                             <v-select outline
-                                :items="items"
+                                :items="references.cities"
                                 v-model="docket.establishment_city"
                                 label="City/Municipality"
+                                item-text="description"
+                                item-value="code"
                             ></v-select>
                             <v-textarea outline rows="2"
                                 v-model="docket.establishment_address" 
