@@ -1,7 +1,10 @@
 <template>
   <v-layout row wrap justify-center align-center>
     <v-flex xs12 pa-2>
-      <v-card>
+      <v-card v-if="details">
+        <docket :docket_pick="docket_pick" ></docket>
+      </v-card>
+      <v-card v-if="!details">
         <v-text-field
           class="pa-3 pb-2"
           box
@@ -44,17 +47,24 @@
             icon="warning"
           >Your search for "{{ search }}" found no results.</v-alert>
         </v-data-table>
-      </v-card>
+      </v-card>      
     </v-flex>
   </v-layout>
 </template>
 
 <script>
+import Docket from "./EvaluatorDetails";
+
 export default {
+  components: {
+    Docket
+  },
   data() {
     return {
       search: "",
       dockets: [],
+      docket_pick: {}, 
+      details: false,
       headers: [
         { text: "Docket Number", value: "dtn" },
         { text: "Cluster", value: "cluster" },
@@ -89,11 +99,14 @@ export default {
       return (age / 150) * 100;
     },
     view(docket) {
-      this.$router.push("/app/evaluator/details");
+      console.log("view docket: " + JSON.stringify(docket))
+      this.docket_pick = docket
+      this.details = true
+      // this.$router.push("/app/evaluator/details");
     },
-    create() {
-      this.$router.push("/app/evaluator/details");
-    }
+    // create() {
+    //   this.$router.push("/app/evaluator/details");
+    // }
   }
 };
 </script>

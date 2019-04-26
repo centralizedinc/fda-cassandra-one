@@ -19,34 +19,36 @@
               <v-card flat>
                 <v-card-text>
                   <v-flex xs12 md6 class="font-weight-bold">Docket Number</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
+                  <v-flex xs12 md12>
+                    {{docket_pick.dtn}}
+                  </v-flex>
                   <br>
                   <v-flex xs12 md6 class="font-weight-bold">Ref/DTN #</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
+                  <v-flex xs12 md12>{{docket_pick.dtn}}</v-flex>
                   <br>
                   <v-flex xs12 md6 class="font-weight-bold">Date Received</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
+                  <v-flex xs12 md12>{{docket_pick.inspection_date}}</v-flex>
                   <br>
                   <v-flex xs12 md6 class="font-weight-bold">Date Docketed</v-flex>
                   <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
                   <br>
                   <v-flex xs12 md6 class="font-weight-bold">Complainant</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
+                  <v-flex xs12 md12>{{docket_pick.complainant_name}}</v-flex>
                   <br>
                   <v-flex xs12 md6 class="font-weight-bold">Complainant Address</v-flex>
                   <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
                   <br>
                   <v-flex xs12 md6 class="font-weight-bold">Respondent</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
+                  <v-flex xs12 md12>{{docket_pick.establishment_owner}}</v-flex>
                   <br>
                   <v-flex xs12 md6 class="font-weight-bold">Respondent Address</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
+                  <v-flex xs12 md12>{{docket_pick.establishment_addres}}</v-flex>
                   <br>
                   <v-flex xs12 md6 class="font-weight-bold">Cause of Complaint</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
+                  <v-flex xs12 md12>{{docket_pick.complaint_cause}}</v-flex>
                   <br>
                   <v-flex xs12 md6 class="font-weight-bold">Product/s Involved (if any)</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
+                  <v-flex xs12 md12>{{docket_pick.product_classification}}</v-flex>
                 </v-card-text>
               </v-card>
             </v-tab-item>
@@ -219,6 +221,11 @@
 import Uploader from "@/components/Uploader";
 import FabButtons from "@/components/FabButton";
 export default {
+  props:{
+    docket_pick:{
+      type: Object
+    }
+  },
   components: {
     Uploader,
     FabButtons
@@ -272,7 +279,27 @@ export default {
         }
       ]
     };
+  },
+created() {
+    this.init();
+  },
+  methods: {
+    // init() {
+    //   this.$store
+    //     .dispatch("GET_DOCKET_DETAILS")
+    //     .then(results => {
+    //       this.dockets = results;
+    //       console.log(JSON.stringify(results));
+    //     })
+    //     .catch(error => {
+    //       // this.$notifyError(error)
+    //       console.error(error);
+    //     });
+    // }
   }
+
+
+
 };
 </script>
 
