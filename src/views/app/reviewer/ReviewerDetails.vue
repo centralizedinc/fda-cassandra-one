@@ -2,8 +2,6 @@
   <v-card flat>
     <v-card-text>
       <span class="title">Sample Case Name</span>
-      <v-layout row wrap>
-        <v-flex xs12 md12>
           <v-tabs
             class="elevation-1 mt-2"
             v-model="tabs"
@@ -18,36 +16,65 @@
             <v-tab-item>
               <v-card flat>
                 <v-card-text>
-                  <v-flex xs12 md6 class="font-weight-bold">Case Number</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Ref/DTN #</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Date Received</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Date Docketed</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Complainant</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Complainant Address</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Respondent</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Respondent Address</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Cause of Complaint</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Product/s Involved (if any)</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
+                  <v-container grid-list-xl>
+                  <v-layout row wrap>
+                  <v-flex xs6>
+                  <span class="font-weight-bold">Case Number</span><br>
+                  <span>cmp-apm-2013-130</span>
+                </v-flex>
+                <br>
+                <v-flex xs6>
+                  <span class="font-weight-bold">Ref/DTN #</span><br>
+                  <span>cmp-apm-2013-130</span>
+                </v-flex>
+                <br>
+                <v-flex xs6>
+                  <span class="font-weight-bold">Date Received</span><br>
+                  <span>cmp-apm-2013-130</span>
+                </v-flex>
+                <br>
+                <v-flex xs6>
+                  <span class="font-weight-bold">Date Docketed</span><br>
+                  <span>cmp-apm-2013-130</span>
+                </v-flex>
+                <br>
+                <v-flex xs6>
+                  <span class="font-weight-bold">Complainant</span><br>
+                  <span>cmp-apm-2013-130</span>
+                </v-flex>
+                <br>
+                <v-flex xs6>
+                  <span class="font-weight-bold">Complainant Address</span><br>
+                  <span>cmp-apm-2013-130</span>
+                </v-flex>
+                <br>
+                <v-flex xs6>
+                  <span class="font-weight-bold">Respondent</span><br>
+                  <span>cmp-apm-2013-130</span>
+                </v-flex>
+                <br>
+                <v-flex xs6>
+                  <span class="font-weight-bold">Respondent</span><br>
+                  <span>cmp-apm-2013-130</span>
+                </v-flex>
+                <br>
+                <v-flex xs6>
+                  <span class="font-weight-bold">Cause of Complaint</span><br>
+                  <span>cmp-apm-2013-130</span>
+                </v-flex>
+                <br>
+                <v-flex xs6>
+                  <span class="font-weight-bold">Product/s Involved (if any)</span><br>
+                  <span>cmp-apm-2013-130</span>
+                </v-flex>
+                <br>
+                </v-layout>
+                  </v-container>
                 </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions>
+                  <v-btn  block  color="primary">Edit Case</v-btn>
+                </v-card-actions>
               </v-card>
             </v-tab-item>
             <!--documents  -->
@@ -80,51 +107,24 @@
                 </v-card-text>
               </v-card>
             </v-tab-item>
-          </v-tabs>
-        </v-flex>
+          </v-tabs>   
 
-        <!-- Nav to Evaluate -->
+        <!-- Nav to Review -->
         <v-navigation-drawer permanent right app width="300px" class="elevation-1">
           <v-toolbar flat>
-            <span class="title font-weight-light">Evaluate</span>
+            <span class="title font-weight-light primary--text" style="text-transform: uppercase">Review</span>
           </v-toolbar>
           <v-card flat>
-            <v-card-text>
+            <v-card-text>              
+               <v-select
+                label="1. Action Taken"
+                :items="actionTaken"
+                v-model="value"
+                autocomplete
+              ></v-select>
               <v-text-field
                 outline
-                label="1. Nature of Violation"
-                name="name"
-                textarea
-                multi-line
-                counter
-              ></v-text-field>
-              <v-text-field
-                outline
-                label="2. Action / Status"
-                name="name"
-                textarea
-                multi-line
-                counter
-              ></v-text-field>
-              <v-text-field
-                outline
-                label="3. Decision Category"
-                name="name"
-                textarea
-                multi-line
-                counter
-              ></v-text-field>
-              <v-text-field
-                outline
-                label="4. Penalty Impose"
-                name="name"
-                textarea
-                multi-line
-                counter
-              ></v-text-field>
-              <v-text-field
-                outline
-                label="5. Execution Details / Remarks"
+                label="Remarks"
                 name="name"
                 textarea
                 multi-line
@@ -133,18 +133,10 @@
               <span class="subheading font-weight-light primary--text">Add Supporting Documents</span>
               <v-divider class="mb-3"></v-divider>
               <uploader class="caption"></uploader>
-              <!-- <v-select
-                label="6. Directive to REU"
-                :items="itemsDirectives"
-                v-model="value"
-                autocomplete
-              ></v-select>-->
-
               <!-- fab button save -->
               <v-tooltip top>
                 <v-btn
                   class="elevation-10"
-                  style="background-image: linear-gradient(45deg, #0288d1, #26c6da)"
                   small
                   absolute
                   right
@@ -159,11 +151,10 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
-              <v-btn block color="primary">Submit for Review</v-btn>
+              <v-btn block color="primary">Submit for Approval</v-btn>
             </v-card-actions>
           </v-card>
         </v-navigation-drawer>
-      </v-layout>
     </v-card-text>
   </v-card>
 </template>
@@ -179,8 +170,11 @@ export default {
   data() {
     return {
       tabs: null,
-      itemsDirectives: ["Service Only", "Padlocking", "Seizure", "Sealing"],
-      items: [
+      natureViolation: ["Violative Products", "Qualified Personnel Requirement", "Others"],
+      violativeProds: ["Unregistered", "Adulterated", "Mislabeled", "Expired Product", "Counterfeit"],
+      actionTaken: ["Approved", "Major Revision", "Minor Revision"],
+      remanding: ["Incomplete Papers", "Lack of Product Verification Report"],
+     items: [
         {
           header: "Today"
         },

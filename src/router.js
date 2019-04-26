@@ -125,9 +125,9 @@ export default new Router({
           component: () => import('@/views/app/approval/ViewApproval.vue')
         },
         {
-          path: 'reviewer/table',
-          name: 'Reviewer',
-          component: ()=> import('@/views/app/reviewer/ReviewerTable.vue')
+          path: 'reviewer/details',
+          name: 'Review Case',
+          component: ()=> import('@/views/app/reviewer/ReviewerDetails.vue')
         },
         {
           path: 'reviewer',
