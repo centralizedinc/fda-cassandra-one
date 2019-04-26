@@ -57,7 +57,7 @@ export default new Router({
         {
           path: 'dockets/evaluationTable',
           name: 'Docket Evaluation',
-          component: ()=> import('@/views/app/evaluator/EvaluatorTable.vue')
+          component: () => import('@/views/app/evaluator/EvaluatorTable.vue')
         },
         {
           path: 'dockets/decking',
@@ -112,7 +112,7 @@ export default new Router({
         {
           path: 'approval/details',
           name: 'Approve Case',
-          component: ()=> import('@/views/app/approval/ApprovalDetails.vue')
+          component: () => import('@/views/app/approval/ApprovalDetails.vue')
         },
         {
           path: 'approval',
@@ -127,7 +127,7 @@ export default new Router({
         {
           path: 'reviewer/details',
           name: 'Review Case',
-          component: ()=> import('@/views/app/reviewer/ReviewerDetails.vue')
+          component: () => import('@/views/app/reviewer/ReviewerDetails.vue')
         },
         {
           path: 'reviewer',
@@ -142,12 +142,12 @@ export default new Router({
         {
           path: 'evaluatorTable',
           name: 'EvaluatorTable',
-          component: ()=> import('@/views/app/evaluator/EvaluatorTable.vue')
+          component: () => import('@/views/app/evaluator/EvaluatorTable.vue')
         },
         {
           path: 'evaluator/details',
           name: 'Evaluate Case',
-          component: ()=> import('@/views/app/evaluator/EvaluatorDetails.vue')
+          component: () => import('@/views/app/evaluator/EvaluatorDetails.vue')
         },
         {
           path: 'evaluator',
@@ -157,12 +157,12 @@ export default new Router({
         {
           path: 'finalize/details',
           name: 'Finalize Case',
-          component: ()=> import('@/views/app/finalize/FinalizeDetails.vue')
+          component: () => import('@/views/app/finalize/FinalizeDetails.vue')
         },
         {
           path: 'execute/details',
           name: 'Execute Case',
-          component: ()=> import('@/views/app/execute/ExecuteDetails.vue')
+          component: () => import('@/views/app/execute/ExecuteDetails.vue')
         },
         {
           path: 'ViewEvaluator',

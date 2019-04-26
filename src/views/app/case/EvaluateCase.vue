@@ -5,8 +5,8 @@
         <v-toolbar dark color="primary">
           <span class="headline font-weight-light">Cases List for Evaluation</span>
         </v-toolbar>
-          <v-card-title>
-            <v-spacer></v-spacer>
+        <v-card-title>
+          <v-spacer></v-spacer>
           <v-text-field
             outline
             append-icon="search"
@@ -15,9 +15,8 @@
             hide-details
             v-model="search"
           ></v-text-field>
-          </v-card-title>
+        </v-card-title>
         <v-data-table :headers="headers" :items="items" :search="search" class="pa-1">
-          
           <template v-slot:items="props">
             <tr @click="view(props.item)" style="cursor:pointer">
               <td>{{ props.item.docketNo }}</td>
@@ -37,7 +36,7 @@
           >Your search for "{{ search }}" found no results.</v-alert>
         </v-data-table>
       </v-card>
-    </v-flex>  
+    </v-flex>
   </v-layout>
 </template>
 
@@ -74,7 +73,6 @@ export default {
           cause: 'Misleading claim "tunaw ang plema',
           status: "Summons issued",
           type: "Case"
-
         },
         {
           docketNo: "2013-131",
@@ -85,7 +83,6 @@ export default {
           cause: "Non-compliance w/ Generic Labeling Requirement",
           status: "Memo issued",
           type: "MR"
-
         },
         {
           docketNo: "2013-117",
@@ -96,7 +93,6 @@ export default {
           cause: "Mislabeled",
           status: "Memo to CFRR for the recall",
           type: "MR"
-
         }
       ]
     };
