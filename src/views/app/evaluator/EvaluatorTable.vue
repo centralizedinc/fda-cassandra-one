@@ -63,7 +63,7 @@ export default {
         { text: "Center", value: "center" },
         { text: "Establishment", value: "establishment" },
         { text: "Status", value: "status" },
-        { text: "Age", value: "age" }
+        // { text: "Age", value: "age" }
       ]
       
     };
