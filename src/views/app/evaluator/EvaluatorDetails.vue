@@ -132,7 +132,7 @@
               ></v-text-field>
               <span class="subheading font-weight-light primary--text">Add Supporting Documents</span>
               <v-divider class="mb-3"></v-divider>
-              <uploader></uploader>
+              <uploader class="caption"></uploader>
               <!-- <v-select
                 label="6. Directive to REU"
                 :items="itemsDirectives"
