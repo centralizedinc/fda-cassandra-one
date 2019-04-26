@@ -16,39 +16,10 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <!-- <v-flex xs12 md6 class="font-weight-bold">Docket Number</v-flex>
-              <v-flex xs12 md12>{{docket_pick.dtn}}</v-flex>
-              <br>
-              <v-flex xs12 md6 class="font-weight-bold">Ref/DTN #</v-flex>
-              <v-flex xs12 md12>{{docket_pick.dtn}}</v-flex>
-              <br>
-              <v-flex xs12 md6 class="font-weight-bold">Date Received</v-flex>
-              <v-flex xs12 md12>{{docket_pick.inspection_date}}</v-flex>
-              <br>
-              <v-flex xs12 md6 class="font-weight-bold">Date Docketed</v-flex>
-              <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
-              <br>
-              <v-flex xs12 md6 class="font-weight-bold">Complainant</v-flex>
-              <v-flex xs12 md12>{{docket_pick.complainant_name}}</v-flex>
-              <br>
-              <v-flex xs12 md6 class="font-weight-bold">Complainant Address</v-flex>
-              <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
-              <br>
-              <v-flex xs12 md6 class="font-weight-bold">Respondent</v-flex>
-              <v-flex xs12 md12>{{docket_pick.establishment_owner}}</v-flex>
-              <br>
-              <v-flex xs12 md6 class="font-weight-bold">Respondent Address</v-flex>
-              <v-flex xs12 md12>{{docket_pick.establishment_addres}}</v-flex>
-              <br>
-              <v-flex xs12 md6 class="font-weight-bold">Cause of Complaint</v-flex>
-              <v-flex xs12 md12>{{docket_pick.complaint_cause}}</v-flex>
-              <br>
-              <v-flex xs12 md6 class="font-weight-bold">Product/s Involved (if any)</v-flex>
-              <v-flex xs12 md12>{{docket_pick.product_classification}}</v-flex>-->
               <v-container grid-list-xl>
                 <v-layout row wrap>
                   <v-flex xs6>
-                    <span class="font-weight-bold">Docket Number</span>
+                    <span class="font-weight-bold">Case Number</span>
                     <br>
                     <span>cmp-apm-2013-130</span>
                   </v-flex>
@@ -90,7 +61,7 @@
                   </v-flex>
                   <br>
                   <v-flex xs6>
-                    <span class="font-weight-bold">Respondent</span>
+                    <span class="font-weight-bold">Respondent Address</span>
                     <br>
                     <span>cmp-apm-2013-130</span>
                   </v-flex>
@@ -112,7 +83,7 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
-              <v-btn block color="primary">Edit Case</v-btn>
+              <v-btn block color="primary">Close Case</v-btn>
             </v-card-actions>
           </v-card>
         </v-tab-item>
@@ -148,42 +119,36 @@
         </v-tab-item>
       </v-tabs>
 
-      <!-- Nav to Evaluate -->
+      <!-- Nav PER -->
       <v-navigation-drawer permanent right app width="300px" class="elevation-1">
         <v-toolbar flat>
           <span
             class="title font-weight-light primary--text"
             style="text-transform: uppercase"
-          >Evaluate</span>
+          >Post Execution Report</span>
         </v-toolbar>
         <v-card flat>
           <v-card-text>
-            <v-text-field outline label="1. Laws Violated" name="name" textarea multi-line counter></v-text-field>
+            <v-select label="Status" :items="perStatus" v-model="selected_status" autocomplete></v-select>
             <v-select
-              label="2. Nature of Violation "
-              :items="natureViolation"
-              v-model="selected_item"
-              autocomplete
-            ></v-select>
-            <v-select
-              v-show="selected_item"
-              :label="`For ${selected_item}:`"
-              :items="violation_details"
+              v-show="selected_status"
+              :label="`If ${selected_status}:`"
+              :items="status_details"
               v-model="value"
               autocomplete
             ></v-select>
-            <v-text-field outline label="Remarks" name="name" textarea multi-line counter></v-text-field>
             <v-select
-              label="3. Action Taken"
-              :items="actionTaken"
-              v-model="selected_action"
+              v-show="selected_status"
+              :label="'Status'"
+              :items="status_details2"
+              v-model="value"
               autocomplete
             ></v-select>
             <v-select
-              v-show="selected_action"
-              :label="`For ${selected_action}:`"
-              :items="action_details"
-              v-model="value"
+              v-show="selected_status2"
+              :label="'Payment Status'"
+              :items="status_payment"
+              v-model="paymentStatus"
               autocomplete
             ></v-select>
             <v-text-field outline label="Remarks" name="name" textarea multi-line counter></v-text-field>
@@ -208,7 +173,7 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn block color="primary">Submit for Review</v-btn>
+            <v-btn block color="primary">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-navigation-drawer>
@@ -219,27 +184,18 @@
 <script>
 import Uploader from "@/components/Uploader";
 export default {
-  props: {
-    docket_pick: {
-      type: Object
-    }
-  },
   components: {
     Uploader
   },
   data() {
     return {
       tabs: null,
-      natureViolation: [
-        "Violative Products",
-        "Qualified Personnel Requirement",
-        "Others"
-      ],
-      violation_details: [],
-      selected_item: "",
-      actionTaken: ["Legal Order", "Remand"],
-      action_details: [],
-      selected_action: "",
+      perStatus: ["Served", "Unserved"],
+      selected_status: "",
+      selected_status2: "",
+      payment_status: [],
+      status_details: [],
+      status_details2: [],
       items: [
         {
           header: "Today"
@@ -283,53 +239,20 @@ export default {
       ]
     };
   },
-  created() {
-    this.init();
-  },
   watch: {
-    selected_item(val) {
-      if (val === "Violative Products") {
-        this.violation_details = [
-          "Unregistered",
-          "Adulterated",
-          "Mislabeled",
-          "Expired Product",
-          "Counterfeit"
-        ];
-      } else if (val === "Qualified Personnel Requirement") {
-        this.violation_details = ["APH", "NPH", "Unlicensed"];
+    selected_status(val) {
+      if (val === "Served") {
+        this.status_details = ["Payment"];
+        this.status_details2 = ["Paid", "Not Paid", "MR", "N/A"];
       } else {
-        this.violation_details = ["Remarks below"];
-      }
-    },
-    selected_action(val) {
-      if (val === "Legal Order") {
-        this.action_details = [
-          "Summons with Padlocking",
-          "Summons with seizure of Products",
-          "N/A"
+        this.status_details = [
+          "Moved out",
+          "Unknown Address",
+          "No longer existing"
         ];
-      } else {
-        this.action_details = [
-          "Incomplete Papers",
-          "Lack of Product Verification Report"
-        ];
+        this.status_details2 = ["With Feedback", "Without Feedback", "N/A"];
       }
     }
-  },
-  methods: {
-    // init() {
-    //   this.$store
-    //     .dispatch("GET_DOCKET_DETAILS")
-    //     .then(results => {
-    //       this.dockets = results;
-    //       console.log(JSON.stringify(results));
-    //     })
-    //     .catch(error => {
-    //       // this.$notifyError(error)
-    //       console.error(error);
-    //     });
-    // }
   }
 };
 </script>

@@ -2,6 +2,9 @@
   <v-layout row wrap justify-center align-center>
     <v-flex xs12 pa-2>
       <v-card class="elevation-2">
+        <v-toolbar dark color="primary">
+          <span class="headline font-weight-light">Cases List for Execution</span>
+        </v-toolbar>
         <v-card-title>
           <v-spacer></v-spacer>
           <v-text-field
@@ -93,6 +96,11 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    view(docket) {
+      this.$router.push("/app/per/details");
+    }
   }
 };
 </script>

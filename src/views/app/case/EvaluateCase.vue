@@ -2,6 +2,9 @@
   <v-layout row wrap justify-center align-center>
     <v-flex xs12 pa-2>
       <v-card class="elevation-2">
+        <v-toolbar dark color="primary">
+          <span class="headline font-weight-light">Cases List for Evaluation</span>
+        </v-toolbar>
         <v-card-title>
           <v-spacer></v-spacer>
           <v-text-field
@@ -16,7 +19,7 @@
         <v-data-table :headers="headers" :items="items" :search="search" class="pa-1">
           <template v-slot:items="props">
             <tr @click="view(props.item)" style="cursor:pointer">
-              <td>{{ props.item.caseNo }}</td>
+              <td>{{ props.item.docketNo }}</td>
               <td>{{ props.item.caseTitle }}</td>
               <td>{{ props.item.dateDocketed }}</td>
               <td>{{ props.item.product }}</td>
@@ -43,7 +46,7 @@ export default {
     return {
       search: "",
       headers: [
-        { text: "Case Number", value: "caseNo" },
+        { text: "Docket Number", value: "docketNo" },
         { text: "Case Title", value: "caseTitle" },
         { text: "Date Docketed", value: "dateDocketed" },
         { text: "Product Involved", value: "product" },
@@ -53,7 +56,7 @@ export default {
       ],
       items: [
         {
-          caseNo: "cmp-apm-2014-004",
+          docketNo: "2014-004",
           caseTitle: "Colgate phils., inc. Petitioner v. Johnson & Johnson",
           dateDocketed: "2018-07-12",
           product: "Listerine",
@@ -62,7 +65,7 @@ export default {
           type: "Docket"
         },
         {
-          caseNo: "cmp-apm-2013-130",
+          docketNo: "2013-130",
           caseTitle:
             "Ritemed Phils., Inc. Petitioner v. Pascual Consumer Healthcare Corp.",
           dateDocketed: "2018-07-12",
@@ -72,7 +75,7 @@ export default {
           type: "Case"
         },
         {
-          caseNo: "cmp-dr-2013-131",
+          docketNo: "2013-131",
           caseTitle:
             "International Pharmaceuticals, Inc. Petitioner v. Greenstone Pharmaceuticals, H.K.  ",
           dateDocketed: "2018-07-12",
@@ -82,7 +85,7 @@ export default {
           type: "MR"
         },
         {
-          caseNo: "cmp-fd-13-117",
+          docketNo: "2013-117",
           caseTitle:
             "Nestle Philippines, Inc. Petitioner v. Tridharma Marketing, Inc.  ",
           dateDocketed: "2018-07-12",
@@ -93,6 +96,11 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    view(docket) {
+      this.$router.push("/app/evaluator/details");
+    }
   }
 };
 </script>

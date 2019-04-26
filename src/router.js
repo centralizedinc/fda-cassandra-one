@@ -57,32 +57,47 @@ export default new Router({
         {
           path: 'dockets/evaluationTable',
           name: 'Docket Evaluation',
-          component: ()=> import('@/views/app/evaluator/EvaluatorTable.vue')
+          component: () => import('@/views/app/evaluator/EvaluatorTable.vue')
         },
         {
           path: 'dockets/decking',
           name: 'Decking',
           component: () => import('@/views/app/dockets/Decking.vue')
-        }, ,
-        {
-          path: 'motion',
-          name: 'Motion for Reconsideration',
-          component: () => import('@/views/app/motion/MotionForRecon.vue')
-        }, ,
+        },
         {
           path: 'cases',
           name: 'Cases',
           component: () => import('@/views/app/case/CaseList.vue')
         },
         {
-          path: 'cases/view',
-          name: 'Case Details',
-          component: () => import('@/views/app/case/ViewCase.vue')
+          path: 'cases/evaluate',
+          name: 'Evaluate Case',
+          component: () => import('@/views/app/case/EvaluateCase.vue')
         },
         {
-          path: 'cases/edit',
-          name: 'Edit Case',
-          component: () => import('@/views/app/case/EditCase.vue')
+          path: 'cases/review',
+          name: 'Review Case',
+          component: () => import('@/views/app/case/ReviewCase.vue')
+        },
+        {
+          path: 'cases/approve',
+          name: 'Approve Case',
+          component: () => import('@/views/app/case/ApproveCase.vue')
+        },
+        {
+          path: 'cases/finalize',
+          name: 'Finalize Case',
+          component: () => import('@/views/app/case/FinalizeCase.vue')
+        },
+        {
+          path: 'cases/execute',
+          name: 'Execute Case',
+          component: () => import('@/views/app/case/ExecuteCase.vue')
+        },
+        {
+          path: 'cases/appeal',
+          name: 'Cases on Appeal',
+          component: () => import('@/views/app/case/AppealCase.vue')
         },
         {
           path: 'cases/search',
@@ -90,19 +105,19 @@ export default new Router({
           component: () => import('@/views/app/case/SearchCase.vue')
         },
         {
-          path: 'cases/details',
-          name: 'Case Details',
-          component: () => import('@/views/app/case/CaseDetails.vue')
-        },
-        {
           path: 'cases/board',
           name: 'Case Board',
           component: () => import('@/views/app/case/CaseBoard.vue')
         },
         {
-          path: 'approval/table',
-          name: 'approval',
-          component: ()=> import('@/views/app/approval/ApprovalTable.vue')
+          path: 'cases/per',
+          name: 'Post Execution Report',
+          component: () => import('@/views/app/case/PerCase.vue')
+        },
+        {
+          path: 'approval/details',
+          name: 'Approve Case',
+          component: () => import('@/views/app/approval/ApprovalDetails.vue')
         },
         {
           path: 'approval',
@@ -115,9 +130,9 @@ export default new Router({
           component: () => import('@/views/app/approval/ViewApproval.vue')
         },
         {
-          path: 'reviewer/table',
-          name: 'Reviewer',
-          component: ()=> import('@/views/app/reviewer/ReviewerTable.vue')
+          path: 'reviewer/details',
+          name: 'Review Case',
+          component: () => import('@/views/app/reviewer/ReviewerDetails.vue')
         },
         {
           path: 'reviewer',
@@ -132,12 +147,12 @@ export default new Router({
         {
           path: 'evaluatorTable',
           name: 'EvaluatorTable',
-          component: ()=> import('@/views/app/evaluator/EvaluatorTable.vue')
+          component: () => import('@/views/app/evaluator/EvaluatorTable.vue')
         },
         {
           path: 'evaluator/details',
-          name: 'EvaluatorTable',
-          component: ()=> import('@/views/app/evaluator/EvaluatorDetails.vue')
+          name: 'Evaluate Case',
+          component: () => import('@/views/app/evaluator/EvaluatorDetails.vue')
         },
         {
           path: 'evaluator',
@@ -145,9 +160,29 @@ export default new Router({
           component: () => import('@/views/app/evaluator/evaluator.vue')
         },
         {
+          path: 'finalize/details',
+          name: 'Finalize Case',
+          component: () => import('@/views/app/finalize/FinalizeDetails.vue')
+        },
+        {
+          path: 'execute/details',
+          name: 'Execute Case',
+          component: () => import('@/views/app/execute/ExecuteDetails.vue')
+        },
+        {
           path: 'ViewEvaluator',
           name: 'ViewEvaluator',
           component: () => import('@/views/app/evaluator/ViewEvaluator.vue')
+        },
+        {
+          path: 'appeal/details',
+          name: 'Cases on Appeal',
+          component: () => import('@/views/app/appeal/MotionForRecon.vue')
+        },
+        {
+          path: 'per/details',
+          name: 'Post Execution Report',
+          component: () => import('@/views/app/appeal/PerDetails.vue')
         },
         {
           path: 'desicion',
