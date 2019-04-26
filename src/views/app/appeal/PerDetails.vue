@@ -83,7 +83,7 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
-              <v-btn block color="primary">Edit Case</v-btn>
+              <v-btn block color="primary">Close Case</v-btn>
             </v-card-actions>
           </v-card>
         </v-tab-item>
@@ -119,20 +119,36 @@
         </v-tab-item>
       </v-tabs>
 
-      <!-- Nav to Review -->
+      <!-- Nav PER -->
       <v-navigation-drawer permanent right app width="300px" class="elevation-1">
         <v-toolbar flat>
           <span
             class="title font-weight-light primary--text"
             style="text-transform: uppercase"
-          >Review</span>
+          >Post Execution Report</span>
         </v-toolbar>
         <v-card flat>
           <v-card-text>
+            <v-select label="Status" :items="perStatus" v-model="selected_status" autocomplete></v-select>
             <v-select
-              label="1. Action Taken"
-              :items="actionTaken"
-              v-model="selected_action"
+              v-show="selected_status"
+              :label="`If ${selected_status}:`"
+              :items="status_details"
+              v-model="value"
+              autocomplete
+            ></v-select>
+            <v-select
+              v-show="selected_status"
+              :label="'Status'"
+              :items="status_details2"
+              v-model="value"
+              autocomplete
+            ></v-select>
+            <v-select
+              v-show="selected_status2"
+              :label="'Payment Status'"
+              :items="status_payment"
+              v-model="paymentStatus"
               autocomplete
             ></v-select>
             <v-text-field outline label="Remarks" name="name" textarea multi-line counter></v-text-field>
@@ -157,11 +173,7 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn block color="primary">Submit for Approval</v-btn>
-            <!-- <v-btn
-              block
-              color="primary"
-            >Return to Evaluator</v-btn>-->
+            <v-btn block color="primary">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-navigation-drawer>
@@ -178,8 +190,12 @@ export default {
   data() {
     return {
       tabs: null,
-      actionTaken: ["Approved", "Major Revision", "Minor Revision"],
-      selected_action: "",
+      perStatus: ["Served", "Unserved"],
+      selected_status: "",
+      selected_status2: "",
+      payment_status: [],
+      status_details: [],
+      status_details2: [],
       items: [
         {
           header: "Today"
@@ -222,6 +238,21 @@ export default {
         }
       ]
     };
+  },
+  watch: {
+    selected_status(val) {
+      if (val === "Served") {
+        this.status_details = ["Payment"];
+        this.status_details2 = ["Paid", "Not Paid", "MR", "N/A"];
+      } else {
+        this.status_details = [
+          "Moved out",
+          "Unknown Address",
+          "No longer existing"
+        ];
+        this.status_details2 = ["With Feedback", "Without Feedback", "N/A"];
+      }
+    }
   }
 };
 </script>

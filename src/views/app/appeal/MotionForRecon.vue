@@ -83,7 +83,7 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
-              <v-btn block color="primary">Edit Case</v-btn>
+              <v-btn block color="primary">Close Case</v-btn>
             </v-card-actions>
           </v-card>
         </v-tab-item>
@@ -119,23 +119,38 @@
         </v-tab-item>
       </v-tabs>
 
-      <!-- Nav to Review -->
+      <!-- Nav MR -->
       <v-navigation-drawer permanent right app width="300px" class="elevation-1">
         <v-toolbar flat>
           <span
             class="title font-weight-light primary--text"
             style="text-transform: uppercase"
-          >Review</span>
+          >Motion for Reconsideration</span>
         </v-toolbar>
         <v-card flat>
           <v-card-text>
             <v-select
-              label="1. Action Taken"
-              :items="actionTaken"
-              v-model="selected_action"
+              label="Action Taken Reviewer"
+              :items="actionReviewer"
+              v-model="selected_action_reviewer"
               autocomplete
             ></v-select>
             <v-text-field outline label="Remarks" name="name" textarea multi-line counter></v-text-field>
+            <v-select
+              label="Action Taken OIC"
+              :items="actionOic"
+              v-model="selected_action_oic"
+              autocomplete
+            ></v-select>
+            <v-text-field outline label="Remarks" name="name" textarea multi-line counter></v-text-field>
+            <v-select
+              label="Action Taken ODG"
+              :items="actionOdg"
+              v-model="selected_action_odg"
+              autocomplete
+            ></v-select>
+            <v-text-field outline label="Remarks" name="name" textarea multi-line counter></v-text-field>
+
             <span class="subheading font-weight-light primary--text">Add Supporting Documents</span>
             <v-divider class="mb-3"></v-divider>
             <uploader class="caption"></uploader>
@@ -157,11 +172,7 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn block color="primary">Submit for Approval</v-btn>
-            <!-- <v-btn
-              block
-              color="primary"
-            >Return to Evaluator</v-btn>-->
+            <v-btn block color="primary">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-navigation-drawer>
@@ -178,8 +189,11 @@ export default {
   data() {
     return {
       tabs: null,
-      actionTaken: ["Approved", "Major Revision", "Minor Revision"],
-      selected_action: "",
+      actionReviewer: ["Approved", "Major Revision"],
+      actionOic: ["Granted", " Not Granted", "N/A"],
+      actionOdg: ["Approved", " Denied", "N/A"],
+      execute_details: [],
+      selected_execute: "",
       items: [
         {
           header: "Today"
@@ -222,6 +236,24 @@ export default {
         }
       ]
     };
+  },
+  watch: {
+    selected_execute(val) {
+      if (val === "Served") {
+        this.execute_details = [
+          "Service only",
+          "Padlocking",
+          "Seizure",
+          "Sealing"
+        ];
+      } else {
+        this.execute_details = [
+          "Moved out",
+          "Unknown Address",
+          "No longer existing"
+        ];
+      }
+    }
   }
 };
 </script>

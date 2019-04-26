@@ -218,7 +218,6 @@
 
 <script>
 import Uploader from "@/components/Uploader";
-import FabButtons from "@/components/FabButton";
 export default {
   props: {
     docket_pick: {
@@ -226,8 +225,7 @@ export default {
     }
   },
   components: {
-    Uploader,
-    FabButtons
+    Uploader
   },
   data() {
     return {

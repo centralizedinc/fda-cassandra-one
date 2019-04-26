@@ -63,12 +63,7 @@ export default new Router({
           path: 'dockets/decking',
           name: 'Decking',
           component: () => import('@/views/app/dockets/Decking.vue')
-        }, ,
-        {
-          path: 'motion',
-          name: 'Motion for Reconsideration',
-          component: () => import('@/views/app/motion/MotionForRecon.vue')
-        }, ,
+        },
         {
           path: 'cases',
           name: 'Cases',
@@ -100,6 +95,11 @@ export default new Router({
           component: () => import('@/views/app/case/ExecuteCase.vue')
         },
         {
+          path: 'cases/appeal',
+          name: 'Cases on Appeal',
+          component: () => import('@/views/app/case/AppealCase.vue')
+        },
+        {
           path: 'cases/search',
           name: 'Search Case',
           component: () => import('@/views/app/case/SearchCase.vue')
@@ -108,6 +108,11 @@ export default new Router({
           path: 'cases/board',
           name: 'Case Board',
           component: () => import('@/views/app/case/CaseBoard.vue')
+        },
+        {
+          path: 'cases/per',
+          name: 'Post Execution Report',
+          component: () => import('@/views/app/case/PerCase.vue')
         },
         {
           path: 'approval/details',
@@ -168,6 +173,16 @@ export default new Router({
           path: 'ViewEvaluator',
           name: 'ViewEvaluator',
           component: () => import('@/views/app/evaluator/ViewEvaluator.vue')
+        },
+        {
+          path: 'appeal/details',
+          name: 'Cases on Appeal',
+          component: () => import('@/views/app/appeal/MotionForRecon.vue')
+        },
+        {
+          path: 'per/details',
+          name: 'Post Execution Report',
+          component: () => import('@/views/app/appeal/PerDetails.vue')
         },
         {
           path: 'desicion',
