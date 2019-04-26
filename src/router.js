@@ -110,9 +110,9 @@ export default new Router({
           component: () => import('@/views/app/case/CaseBoard.vue')
         },
         {
-          path: 'approval/table',
-          name: 'approval',
-          component: ()=> import('@/views/app/approval/ApprovalTable.vue')
+          path: 'approval/details',
+          name: 'Approve Case',
+          component: ()=> import('@/views/app/approval/ApprovalDetails.vue')
         },
         {
           path: 'approval',
@@ -153,6 +153,16 @@ export default new Router({
           path: 'evaluator',
           name: 'Evaluator',
           component: () => import('@/views/app/evaluator/evaluator.vue')
+        },
+        {
+          path: 'finalize/details',
+          name: 'Finalize Case',
+          component: ()=> import('@/views/app/finalize/FinalizeDetails.vue')
+        },
+        {
+          path: 'execute/details',
+          name: 'Execute Case',
+          component: ()=> import('@/views/app/execute/ExecuteDetails.vue')
         },
         {
           path: 'ViewEvaluator',

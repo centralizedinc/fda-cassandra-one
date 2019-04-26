@@ -73,7 +73,7 @@
                 </v-card-text>
                 <v-divider></v-divider>
                 <v-card-actions>
-                  <v-btn  block  color="primary">Edit Case</v-btn>
+                  <v-btn  block  color="primary">Close Case</v-btn>
                 </v-card-actions>
               </v-card>
             </v-tab-item>
@@ -109,22 +109,16 @@
             </v-tab-item>
           </v-tabs>   
 
-        <!-- Nav to Review -->
+        <!-- Nav to finalize -->
         <v-navigation-drawer permanent right app width="300px" class="elevation-1">
           <v-toolbar flat>
-            <span class="title font-weight-light primary--text" style="text-transform: uppercase">Review</span>
+            <span class="title font-weight-light primary--text" style="text-transform: uppercase">Finalization</span>
           </v-toolbar>
           <v-card flat>
             <v-card-text>              
-               <v-select
-                label="1. Action Taken"
-                :items="actionTaken"
-                v-model="value"
-                autocomplete
-              ></v-select>
               <v-text-field
                 outline
-                label="Remarks"
+                label="Notes"
                 name="name"
                 textarea
                 multi-line
@@ -151,7 +145,7 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
-              <v-btn block color="primary">Submit for Approval</v-btn>
+              <v-btn block color="primary">Print</v-btn>
             </v-card-actions>
           </v-card>
         </v-navigation-drawer>
@@ -170,10 +164,7 @@ export default {
   data() {
     return {
       tabs: null,
-      natureViolation: ["Violative Products", "Qualified Personnel Requirement", "Others"],
-      violativeProds: ["Unregistered", "Adulterated", "Mislabeled", "Expired Product", "Counterfeit"],
-      actionTaken: ["Approved", "Major Revision", "Minor Revision"],
-      remanding: ["Incomplete Papers", "Lack of Product Verification Report"],
+      finalAction: ["Legal Order", "Remand"],
      items: [
         {
           header: "Today"

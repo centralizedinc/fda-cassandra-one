@@ -103,7 +103,7 @@ export default {
   },
   methods: {
     view(docket) {
-      this.$router.push("/app/cases/details");
+      this.$router.push("/app/finalize/details");
     },
     create() {
       this.$router.push("/app/dockets/new");

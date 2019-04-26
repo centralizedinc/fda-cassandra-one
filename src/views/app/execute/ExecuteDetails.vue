@@ -73,7 +73,7 @@
                 </v-card-text>
                 <v-divider></v-divider>
                 <v-card-actions>
-                  <v-btn  block  color="primary">Edit Case</v-btn>
+                  <v-btn  block  color="primary">Close Case</v-btn>
                 </v-card-actions>
               </v-card>
             </v-tab-item>
@@ -109,22 +109,28 @@
             </v-tab-item>
           </v-tabs>   
 
-        <!-- Nav to Review -->
+        <!-- Nav to execute -->
         <v-navigation-drawer permanent right app width="300px" class="elevation-1">
           <v-toolbar flat>
-            <span class="title font-weight-light primary--text" style="text-transform: uppercase">Review</span>
+            <span class="title font-weight-light primary--text" style="text-transform: uppercase">Execution</span>
           </v-toolbar>
           <v-card flat>
-            <v-card-text>              
-               <v-select
-                label="1. Action Taken"
-                :items="actionTaken"
+            <v-card-text>  
+              <v-select
+                label="1. Execution Details"
+                :items="execute"
+                v-model="selected_execute"
+                autocomplete
+              ></v-select> 
+              <v-select v-show="selected_execute"
+                :label="`2. If ${selected_execute},`"
+                :items="execute_details"
                 v-model="value"
                 autocomplete
-              ></v-select>
+              ></v-select>            
               <v-text-field
                 outline
-                label="Remarks"
+                label="Notes"
                 name="name"
                 textarea
                 multi-line
@@ -151,7 +157,7 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
-              <v-btn block color="primary">Submit for Approval</v-btn>
+              <v-btn block color="primary">Save</v-btn>
             </v-card-actions>
           </v-card>
         </v-navigation-drawer>
@@ -170,10 +176,9 @@ export default {
   data() {
     return {
       tabs: null,
-      natureViolation: ["Violative Products", "Qualified Personnel Requirement", "Others"],
-      violativeProds: ["Unregistered", "Adulterated", "Mislabeled", "Expired Product", "Counterfeit"],
-      actionTaken: ["Approved", "Major Revision", "Minor Revision"],
-      remanding: ["Incomplete Papers", "Lack of Product Verification Report"],
+      execute: ["Served", "Not Served"],
+      execute_details: [],
+      selected_execute: "",
      items: [
         {
           header: "Today"
@@ -216,6 +221,16 @@ export default {
         }
       ]
     };
+  },
+  watch: {
+    selected_execute(val){
+      if(val === "Served") {
+        this.execute_details = ["Service only", "Padlocking", "Seizure", "Sealing"]
+      } else {
+        this.execute_details = ["Moved out", "Unknown Address", "No longer existing"]
+
+      }
+    }
   }
 };
 </script>
