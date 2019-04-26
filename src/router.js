@@ -75,14 +75,29 @@ export default new Router({
           component: () => import('@/views/app/case/CaseList.vue')
         },
         {
-          path: 'cases/view',
-          name: 'Case Details',
-          component: () => import('@/views/app/case/ViewCase.vue')
+          path: 'cases/evaluate',
+          name: 'Evaluate Case',
+          component: () => import('@/views/app/case/EvaluateCase.vue')
         },
         {
-          path: 'cases/edit',
-          name: 'Edit Case',
-          component: () => import('@/views/app/case/EditCase.vue')
+          path: 'cases/review',
+          name: 'Review Case',
+          component: () => import('@/views/app/case/ReviewCase.vue')
+        },
+        {
+          path: 'cases/approve',
+          name: 'Approve Case',
+          component: () => import('@/views/app/case/ApproveCase.vue')
+        },
+        {
+          path: 'cases/finalize',
+          name: 'Finalize Case',
+          component: () => import('@/views/app/case/FinalizeCase.vue')
+        },
+        {
+          path: 'cases/execute',
+          name: 'Execute Case',
+          component: () => import('@/views/app/case/ExecuteCase.vue')
         },
         {
           path: 'cases/search',
