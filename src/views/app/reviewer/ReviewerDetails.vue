@@ -1,6 +1,6 @@
 <template>
   <v-card flat>
-     <v-card-text>
+    <v-card-text>
       <span class="title">Sample Case Name</span>
           <v-tabs
             class="elevation-1 mt-2"
@@ -16,44 +16,13 @@
             <v-tab-item>
               <v-card flat>
                 <v-card-text>
-                  <v-flex xs12 md6 class="font-weight-bold">Docket Number</v-flex>
-                  <v-flex xs12 md12>
-                    {{docket_pick.dtn}}
-                  </v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Ref/DTN #</v-flex>
-                  <v-flex xs12 md12>{{docket_pick.dtn}}</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Date Received</v-flex>
-                  <v-flex xs12 md12>{{docket_pick.inspection_date}}</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Date Docketed</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Complainant</v-flex>
-                  <v-flex xs12 md12>{{docket_pick.complainant_name}}</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Complainant Address</v-flex>
-                  <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Respondent</v-flex>
-                  <v-flex xs12 md12>{{docket_pick.establishment_owner}}</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Respondent Address</v-flex>
-                  <v-flex xs12 md12>{{docket_pick.establishment_addres}}</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Cause of Complaint</v-flex>
-                  <v-flex xs12 md12>{{docket_pick.complaint_cause}}</v-flex>
-                  <br>
-                  <v-flex xs12 md6 class="font-weight-bold">Product/s Involved (if any)</v-flex>
-                  <v-flex xs12 md12>{{docket_pick.product_classification}}</v-flex>
                   <v-container grid-list-xl>
                   <v-layout row wrap>
-                  <!-- <v-flex xs6>
-                  <span class="font-weight-bold">Docket Number</span><br>
+                  <v-flex xs6>
+                  <span class="font-weight-bold">Case Number</span><br>
                   <span>cmp-apm-2013-130</span>
-                </v-flex> -->
-                <!-- <br>
+                </v-flex>
+                <br>
                 <v-flex xs6>
                   <span class="font-weight-bold">Ref/DTN #</span><br>
                   <span>cmp-apm-2013-130</span>
@@ -98,7 +67,7 @@
                   <span class="font-weight-bold">Product/s Involved (if any)</span><br>
                   <span>cmp-apm-2013-130</span>
                 </v-flex>
-                <br> -->
+                <br>
                 </v-layout>
                   </v-container>
                 </v-card-text>
@@ -194,11 +163,6 @@
 import Uploader from "@/components/Uploader";
 import FabButtons from "@/components/FabButton";
 export default {
-  props:{
-    docket_pick:{
-      type: Object
-    }
-  },
   components: {
     Uploader,
     FabButtons
@@ -208,7 +172,7 @@ export default {
       tabs: null,
       natureViolation: ["Violative Products", "Qualified Personnel Requirement", "Others"],
       violativeProds: ["Unregistered", "Adulterated", "Mislabeled", "Expired Product", "Counterfeit"],
-      actionTaken: ["Legal Order", "Remand"],
+      actionTaken: ["Approved", "Major Revision", "Minor Revision"],
       remanding: ["Incomplete Papers", "Lack of Product Verification Report"],
      items: [
         {
@@ -252,27 +216,7 @@ export default {
         }
       ]
     };
-  },
-created() {
-    this.init();
-  },
-  methods: {
-    // init() {
-    //   this.$store
-    //     .dispatch("GET_DOCKET_DETAILS")
-    //     .then(results => {
-    //       this.dockets = results;
-    //       console.log(JSON.stringify(results));
-    //     })
-    //     .catch(error => {
-    //       // this.$notifyError(error)
-    //       console.error(error);
-    //     });
-    // }
   }
-
-
-
 };
 </script>
 
