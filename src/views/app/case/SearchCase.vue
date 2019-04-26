@@ -1,47 +1,39 @@
 <template>
   <v-layout row wrap justify-center align-center>
-      <v-flex xs12 pa-5>
-    <v-card>
-        <v-text-field class="pa-3 pb-2"
-        box
-        append-icon="search"
-        label="Search"
-        single-line
-        hide-details
-        v-model="search"
-      ></v-text-field>
-      <v-card-title class="mt-3 title font-weight-light">
-        Cases List
-        <v-spacer></v-spacer>
-      </v-card-title>
-      <v-data-table :headers="headers" :items="items" :search="search">
-        <template slot="items" slot-scope="props">
-        <tr @click="preview(props.item)" style="cursor:pointer"> 
-          <td>{{ props.item.caseNo }}</td>
-          <td>{{ props.item.caseTitle }}</td>
-          <td>{{ props.item.dateDocketed }}</td>
-          <td>{{ props.item.caseStatus }}</td>
-        </tr>
-        </template>
-        <v-alert
-          slot="no-results"
-          :value="true"
-          color="error"
-          icon="warning"
-        >Your search for "{{ search }}" found no results.</v-alert>
-      </v-data-table>
-    </v-card>
-    <v-dialog
-        v-model="caseDialog"
-        :overlay="false"
-        max-width="500px"
-        transition="dialog-transition"
-    >
-        <v-card>
-            Case Details Overview
-        </v-card>
-    </v-dialog>
-      </v-flex>
+    <v-flex xs12 pa-2>
+      <v-card class="elevation-2">
+        <v-card-title>
+          <v-spacer></v-spacer>
+          <v-text-field
+            outline
+            append-icon="search"
+            label="Search"
+            single-line
+            hide-details
+            v-model="search"
+          ></v-text-field>
+        </v-card-title>
+        <v-data-table :headers="headers" :items="items" :search="search" class="pa-1">
+          <template v-slot:items="props">
+            <tr @click="view(props.item)" style="cursor:pointer">
+              <td>{{ props.item.caseNo }}</td>
+              <td>{{ props.item.caseTitle }}</td>
+              <td>{{ props.item.dateDocketed }}</td>
+              <td>{{ props.item.product }}</td>
+              <td>{{ props.item.cause }}</td>
+              <td>{{ props.item.status }}</td>
+              <td>{{props.item.type}}</td>
+            </tr>
+          </template>
+          <v-alert
+            slot="no-results"
+            :value="true"
+            color="error"
+            icon="warning"
+          >Your search for "{{ search }}" found no results.</v-alert>
+        </v-data-table>
+      </v-card>
+    </v-flex>
   </v-layout>
 </template>
 
@@ -49,49 +41,61 @@
 export default {
   data() {
     return {
-      caseDialog: false,
       search: "",
       headers: [
-         { text: "Case Number", align: "left", sortable: true, value: "caseNo"},
-         { text: "Case Title", align: "left", value: "caseTitle" },
-         { text: "Date Docketed", align: "left", value: "dateDocketed" },
-         { text: "Case Status", align: "left", value: "caseStatus" }
-
+        { text: "Case Number", value: "caseNo" },
+        { text: "Case Title", value: "caseTitle" },
+        { text: "Date Docketed", value: "dateDocketed" },
+        { text: "Product Involved", value: "product" },
+        { text: "Cause of Complaint", value: "cause" },
+        { text: "Status", value: "status" },
+        { text: "Type", value: "type" }
       ],
       items: [
-          {
-              caseNo: 'cmp-2018-0003',
-              caseTitle: 'DMI MEDICAL SUPPLY CO., INC, Petitioner v. Shoppee',
-              dateDocketed: '2018-12-07',
-              caseStatus: 'For signature'
-          },
-          {
-              caseNo: 'cmp-2018-0004',
-              caseTitle: 'TAYLOR LOUISE LEZADA, Petitioner v. Belo Medical Clinic',
-              dateDocketed: '2018-11-19',
-              caseStatus: 'Dismissed'
-
-          },
-          {
-              caseNo: 'cmp-2018-0005',
-              caseTitle: 'RONALDO PENA, Petitioner v. Robert Todd ',
-              dateDocketed: '2018-1-19',
-              caseStatus: 'Dismissed'
-          },
-
+        {
+          caseNo: "cmp-apm-2014-004",
+          caseTitle: "Colgate phils., inc. Petitioner v. Johnson & Johnson",
+          dateDocketed: "2018-07-12",
+          product: "Listerine",
+          cause: "Adulterated; with petroleum based taste",
+          status: "Referred CCRR for issuance of warning 2/13/14 (draft)",
+          type: "Docket"
+        },
+        {
+          caseNo: "cmp-apm-2013-130",
+          caseTitle:
+            "Ritemed Phils., Inc. Petitioner v. Pascual Consumer Healthcare Corp.",
+          dateDocketed: "2018-07-12",
+          product: "Ascof Lagundi ",
+          cause: 'Misleading claim "tunaw ang plema',
+          status: "Summons issued",
+          type: "Case"
+        },
+        {
+          caseNo: "cmp-dr-2013-131",
+          caseTitle:
+            "International Pharmaceuticals, Inc. Petitioner v. Greenstone Pharmaceuticals, H.K.  ",
+          dateDocketed: "2018-07-12",
+          product: "Katinko Ointment",
+          cause: "Non-compliance w/ Generic Labeling Requirement",
+          status: "Memo issued",
+          type: "MR"
+        },
+        {
+          caseNo: "cmp-fd-13-117",
+          caseTitle:
+            "Nestle Philippines, Inc. Petitioner v. Tridharma Marketing, Inc.  ",
+          dateDocketed: "2018-07-12",
+          product: "Kopiko L.A. Coffee",
+          cause: "Mislabeled",
+          status: "Memo to CFRR for the recall",
+          type: "MR"
+        }
       ]
     };
-  },
-  methods: {
-      preview() {
-          this.caseDialog = true
-      }
   }
 };
 </script>
 
 <style>
-.data-row:hover {
-  cursor: pointer;
-}
 </style>

@@ -288,7 +288,7 @@
         </v-dialog>
 
         <!-- Case Board -->
-        <v-list-tile @click="goTo('/app/profile')" :style="activeRoute(['Case Board'])">
+        <v-list-tile @click="goTo('/app')" :style="activeRoute(['Case Board'])">
           <v-list-tile-action>
             <v-icon>view_column</v-icon>
           </v-list-tile-action>
@@ -371,6 +371,8 @@ export default {
     },
     search() {
       this.isLoading = true;
+      this.$router.push("/app/cases/search");
+      this.isLoading = false;
       this.searchDialog = false;
     }
   },
