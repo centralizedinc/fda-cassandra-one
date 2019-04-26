@@ -258,7 +258,7 @@
         <v-divider></v-divider>
 
         <!-- Search case -->
-        <v-list-tile @click="goTo('/app/cases/search')" :style="activeRoute(['Search Case'])">
+        <v-list-tile @click="searchDialog = true" :style="activeRoute(['Search Case'])">
           <v-list-tile-action>
             <v-icon>search</v-icon>
           </v-list-tile-action>
@@ -266,6 +266,27 @@
             <v-list-tile-title class="body-1 font-weight-light">Search Case</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-dialog
+          v-model="searchDialog"
+          :overlay="false"
+          max-width="500px"
+          transition="dialog-transition"
+        >
+          <v-card flat>
+            <v-card-title primary-title></v-card-title>
+            <v-card-text>
+              <span
+                class="body-2 font-weight-light"
+              >Search for a particular case using the Case Number, Case Name or DTN (Docket Transaction Number)</span>
+              <v-text-field class="mt-4" outline append-icon="search" label="Search" single-line></v-text-field>
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-btn :loading="isLoading" block flat color="primary" @click="search">Search</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
         <!-- Case Board -->
         <v-list-tile @click="goTo('/app/profile')" :style="activeRoute(['Case Board'])">
           <v-list-tile-action>
@@ -325,6 +346,8 @@
 export default {
   data() {
     return {
+      isLoading: false,
+      searchDialog: false,
       miniNav: false,
       showNav: true,
       mini: false,
@@ -345,6 +368,10 @@ export default {
     },
     goTo(path) {
       this.$router.push(path);
+    },
+    search() {
+      this.isLoading = true;
+      this.searchDialog = false;
     }
   },
   computed: {

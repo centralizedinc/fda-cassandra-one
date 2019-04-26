@@ -172,9 +172,9 @@
               v-model="value"
               autocomplete
             ></v-select>
-            <v-text-field outline label="3. Remarks" name="name" textarea multi-line counter></v-text-field>
+            <v-text-field outline label="Remarks" name="name" textarea multi-line counter></v-text-field>
             <v-select
-              label="4. Action Taken"
+              label="3. Action Taken"
               :items="actionTaken"
               v-model="selected_action"
               autocomplete
