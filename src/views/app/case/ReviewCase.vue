@@ -103,11 +103,8 @@ export default {
   },
   methods: {
     view(docket) {
-      this.$router.push("/app/cases/details");
-    },
-    create() {
-      this.$router.push("/app/dockets/new");
-    }
+      this.$router.push("/app/reviewer/details");
+  }
   }
 };
 </script>

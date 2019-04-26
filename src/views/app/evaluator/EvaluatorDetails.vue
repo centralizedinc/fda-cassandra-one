@@ -3,7 +3,7 @@
     <v-card-text>
       <span class="title">Sample Case Name</span>
       <v-layout row wrap>
-        <v-flex xs12 md12>
+        <v-flex xs12 md12 d-flex>
           <v-tabs
             class="elevation-1 mt-2"
             v-model="tabs"
@@ -17,7 +17,9 @@
             <v-tab ripple>Case Information</v-tab>
             <v-tab-item>
               <v-card flat>
-                <v-card-text>
+                <v-card-text class="ml-3 mt-3">
+                  <!-- <v-btn class="mr-3" absolute right dark outline color="primary"> Edit -->
+                <!-- </v-btn> -->
                   <v-flex xs12 md6 class="font-weight-bold">Docket Number</v-flex>
                   <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
                   <br>
@@ -48,6 +50,10 @@
                   <v-flex xs12 md6 class="font-weight-bold">Product/s Involved (if any)</v-flex>
                   <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
                 </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions>
+                  <v-btn  block  color="primary">Edit Case</v-btn>
+                </v-card-actions>
               </v-card>
             </v-tab-item>
             <!--documents  -->
@@ -81,7 +87,7 @@
               </v-card>
             </v-tab-item>
           </v-tabs>
-        </v-flex>
+        </v-flex>   
 
         <!-- Nav to Evaluate -->
         <v-navigation-drawer permanent right app width="300px" class="elevation-1">
