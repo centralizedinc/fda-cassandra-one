@@ -18,7 +18,7 @@
             <v-tab-item>
               <v-card flat>
                 <v-card-text>
-                  <v-flex xs12 md6 class="font-weight-bold">Docket Number</v-flex>
+                  <v-flex xs12 md6 class="font-weight-bold">Case Number</v-flex>
                   <v-flex xs12 md12>cmp-apm-2013-130</v-flex>
                   <br>
                   <v-flex xs12 md6 class="font-weight-bold">Ref/DTN #</v-flex>
@@ -86,75 +86,27 @@
         <!-- Nav to Evaluate -->
         <v-navigation-drawer permanent right app width="300px" class="elevation-1">
           <v-toolbar flat>
-            <span class="title font-weight-light primary--text" style="text-transform: uppercase">Evaluate</span>
+            <span class="title font-weight-light">Evaluate</span>
           </v-toolbar>
           <v-card flat>
             <v-card-text>
               <v-text-field
                 outline
-                label="1. Laws Violated"
+                label="1. Nature of Violation"
                 name="name"
                 textarea
                 multi-line
                 counter
               ></v-text-field>
-              <!-- <span class="subheading font-weight-light primary--text">Nature of Violation</span>
-              <v-divider class="mb-3"></v-divider> -->
-               <v-select
-                label="2. Nature of Violation"
-                :items="natureViolation"
-                v-model="value"
-                autocomplete
-              ></v-select>
-              <!-- <v-select
-                label="Violative Products"
-                :items="violativeProds"
-                v-model="value"
-                autocomplete
-              ></v-select> -->
               <v-text-field
                 outline
-                label="Remarks"
+                label="2. Action / Status"
                 name="name"
                 textarea
                 multi-line
                 counter
               ></v-text-field>
-               <v-select
-                label="3. Action Taken"
-                :items="actionTaken"
-                v-model="value"
-                autocomplete
-              ></v-select>
-               <!-- <v-select
-                label="If Legal Order"
-                :items="legalOrder"
-                v-model="value"
-                autocomplete
-              ></v-select> -->
-               <v-text-field
-                outline
-                label="Remarks"
-                name="name"
-                textarea
-                multi-line
-                counter
-              ></v-text-field>
-              <v-select
-                label="4. Reason for Remanding"
-                :items="remanding"
-                v-model="value"
-                autocomplete
-              ></v-select>
-               <v-text-field
-                outline
-                label="Remarks"
-                name="name"
-                textarea
-                multi-line
-                counter
-              ></v-text-field>
-              <!-- <v-text-field
+              <v-text-field
                 outline
                 label="3. Decision Category"
                 name="name"
@@ -177,7 +129,7 @@
                 textarea
                 multi-line
                 counter
-              ></v-text-field> -->
+              ></v-text-field>
               <span class="subheading font-weight-light primary--text">Add Supporting Documents</span>
               <v-divider class="mb-3"></v-divider>
               <uploader class="caption"></uploader>
@@ -192,6 +144,7 @@
               <v-tooltip top>
                 <v-btn
                   class="elevation-10"
+                  style="background-image: linear-gradient(45deg, #0288d1, #26c6da)"
                   small
                   absolute
                   right
@@ -226,11 +179,8 @@ export default {
   data() {
     return {
       tabs: null,
-      natureViolation: ["Violative Products", "Qualified Personnel Requirement", "Others"],
-      violativeProds: ["Unregistered", "Adulterated", "Mislabeled", "Expired Product", "Counterfeit"],
-      actionTaken: ["Legal Order", "Remand"],
-      remanding: ["Incomplete Papers", "Lack of Product Verification Report"],
-     items: [
+      itemsDirectives: ["Service Only", "Padlocking", "Seizure", "Sealing"],
+      items: [
         {
           header: "Today"
         },

@@ -146,7 +146,7 @@ export default new Router({
         },
         {
           path: 'evaluator/details',
-          name: 'EvaluatorTable',
+          name: 'Evaluate Case',
           component: ()=> import('@/views/app/evaluator/EvaluatorDetails.vue')
         },
         {
