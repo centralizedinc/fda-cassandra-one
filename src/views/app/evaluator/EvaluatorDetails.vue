@@ -8,7 +8,7 @@
         color="primary"
         dark
         height="60px"
-        slider-color="info"
+        slider-color="yellow"
         fixed-tabs
       >
         <!-- case information -->
@@ -149,7 +149,7 @@
       </v-tabs>
 
       <!-- Nav to Evaluate -->
-      <v-navigation-drawer permanent right app width="300px" class="elevation-1">
+      <v-navigation-drawer permanent right app width="400" class="elevation-1">
         <v-toolbar flat>
           <span
             class="title font-weight-light primary--text"
@@ -320,7 +320,7 @@ export default {
   methods: {
     init(){
       this.$miniNavbar();
-      this.$notify({message:'Evaluating Case No: ', color:'success'})
+      // this.$notify({message:'Evaluating Case No: ', color:'success'})
     }
     // init() {
     //   this.$store

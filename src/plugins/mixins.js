@@ -5,17 +5,37 @@ export default {
     install(Vue) {
       Vue.mixin({
         methods: {
-            formatDate: (date, type) => {
-                if (!date) {
+            getCaseStatus(status){
+              var arr=[
+                'For Evaluation',
+                'For Review',
+                'For Approval',
+                'For Finalization',
+                'For Execution'
+              ]
+              return arr[status]
+            },
+            getCaseType(status){
+              var arr=[
+                'Docket',
+                'Case',
+                'Appeal'
+              ]
+              return arr[status]
+            },
+            formatDate: (date_str, type) => {
+                if (!date_str) {
                   return "";
                 }
-                var dt = new Date(date).toLocaleString("en-US", type ? type : {
-                  hour12: true,
-                  year: "numeric",
-                  month: "long",
-                  day: "2-digit"
-                });
-                return dt;
+                var date = new Date(date_str)
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                var ampm = hours >= 12 ? 'pm' : 'am';
+                hours = hours % 12;
+                hours = hours ? hours : 12; // the hour '0' should be '12'
+                minutes = minutes < 10 ? '0'+minutes : minutes;
+                var strTime = hours + ':' + minutes + ' ' + ampm;
+                return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
               },
         }
       })
