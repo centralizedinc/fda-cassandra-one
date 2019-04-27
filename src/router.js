@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Base from '@/layouts/BaseLayout'
 import Login from '@/views/Login'
+import store from '@/store'
 
 Vue.use(Router)
 

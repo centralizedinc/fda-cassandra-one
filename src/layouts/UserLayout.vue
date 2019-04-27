@@ -1,5 +1,6 @@
 <template>
   <v-layout row wrap>
+    <notification></notification>
     <v-toolbar
       height="80"
       dark
@@ -59,7 +60,7 @@
         <v-icon>menu</v-icon>
       </v-btn>
     </v-toolbar>
-    <v-navigation-drawer dark app :mini-variant="mini" width="300" v-model="showNav">
+    <v-navigation-drawer dark app :mini-variant="$store.state.navbar.mini" width="300" v-model="showNav">
       <!-- <v-toolbar dark color="primary" v-if="!mini">
                     <span class="title font-weight-light">Cassandra One</span>
                     <v-spacer></v-spacer>
@@ -79,7 +80,7 @@
         <v-list class="pa-0">
           <v-list-tile class="pa-1 bg" avatar style=" height: 100px;">
             <v-list-tile-avatar class="mt-4">
-              <v-btn fab icon slot="activator" @click="mini=false">
+              <v-btn fab icon slot="activator" @click="$defaultNavbar()">
                 <v-avatar size="50px" color="teal">
                   <span class="white--text title">AB</span>
                 </v-avatar>
@@ -92,7 +93,7 @@
               <v-list-tile-sub-title class="caption">{{formatDate(new Date())}}</v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-action>
-              <v-btn v-if="!mini" flat icon @click="mini=true">
+              <v-btn v-if="!$store.state.navbar.mini" flat icon @click="$miniNavbar()">
                 <v-icon>chevron_left</v-icon>
               </v-btn>
             </v-list-tile-action>
@@ -343,7 +344,9 @@
 </template>
 
 <script>
+import notification from "@/components/Notification";
 export default {
+components:{notification},
   data() {
     return {
       isLoading: false,

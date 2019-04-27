@@ -318,6 +318,10 @@ export default {
     }
   },
   methods: {
+    init(){
+      this.$miniNavbar();
+      this.$notify({message:'Evaluating Case No: ', color:'success'})
+    }
     // init() {
     //   this.$store
     //     .dispatch("GET_DOCKET_DETAILS")

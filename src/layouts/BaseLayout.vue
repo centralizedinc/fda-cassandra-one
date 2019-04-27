@@ -1,5 +1,6 @@
 <template>
     <v-layout row wrap>
+        <notification></notification>
         <v-toolbar dark app color="primary">
             <span class="headline font-weight-light">Cassandra One</span>
             <v-spacer></v-spacer>
@@ -20,7 +21,9 @@
 </template>
 
 <script>
+import notification from "@/components/Notification";
 export default {
+    components: { notification },
 
 }
 </script>
