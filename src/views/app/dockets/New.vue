@@ -244,7 +244,7 @@
 
                     <span class="title font-weight-light primary--text">Supporting Documents</span>
                     <v-divider class="mb-3"></v-divider>
-                    <uploader></uploader>
+                    <uploader @upload="uploadFile"></uploader>
                     
                 </v-card-text>
                 <v-divider class="mb-3"></v-divider>
@@ -276,8 +276,9 @@ export default {
         return {
             date_dialogs:[],
             docket:{},
-            references:{}
-            
+            references:{},
+            formData:{},
+            uploadedFiles:[]            
         }
     },
     created(){
@@ -294,14 +295,22 @@ export default {
                 console.error(error)
             })
         },
+        uploadFile(data) {
+            this.formData = data.formData;
+            this.uploadedFiles = data.uploadedFiles;
+        },
         submit(){
-            this.$store.dispatch('NEW_DOCKET',this.docket)
+            //set initial activity
+            this.docket.activities = [{stage:0,status:5}]
+            this.$store.dispatch('NEW_DOCKET',{docket: this.docket, documents:this.formData})
             .then(results=>{                
                 console.log('RESULTS: ' +JSON.stringify(results))
-                this.$router.push('/app')
+                this.$notify({message:'New Case Created! \n Docket Number: ' + results.dtn})
+                // this.$router.push('/app')
             })
             .catch(error=>{
                 console.error(error)
+                this.$notifyError(error)
             })
         }
     }

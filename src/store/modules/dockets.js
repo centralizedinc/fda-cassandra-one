@@ -50,6 +50,90 @@ const actions = {
     },
 
     /**
+     * @description finds all dockets in the DB if there are no values found in the current session
+     * @param {*} context 
+     * @param {Boolean} refresh 
+     * @returns {Promise}
+     */
+    GET_DOCKETS_EVALUATION(context, refresh){
+        return new Promise((resolve, reject)=>{
+            if(context.state.list.length ===0 || refresh){
+                api.getDocketsByStatus(0)
+                .then(results=>{
+                    if(results.data.success){
+                        context.commit('SET_DOCKET_LIST', results.data.model)
+                        resolve(results.data.model)
+                    }else{
+                        context.commit('SET_DOCKET_LIST', context.state.list)
+                        reject(results.data.errors)   
+                    }                                                                   
+                })
+                .catch(error =>{
+                    reject(error)
+                })
+            }else{
+                resolve(context.state.list)
+            }
+        })        
+    },
+
+    /**
+     * @description finds all dockets in the DB if there are no values found in the current session
+     * @param {*} context 
+     * @param {Boolean} refresh 
+     * @returns {Promise}
+     */
+    GET_DOCKETS_REVIEW(context, refresh){
+        return new Promise((resolve, reject)=>{
+            if(context.state.list.length ===0 || refresh){
+                api.getDocketsByStatus(1)
+                .then(results=>{
+                    if(results.data.success){
+                        context.commit('SET_DOCKET_LIST', results.data.model)
+                        resolve(results.data.model)
+                    }else{
+                        context.commit('SET_DOCKET_LIST', context.state.list)
+                        reject(results.data.errors)   
+                    }                                                                   
+                })
+                .catch(error =>{
+                    reject(error)
+                })
+            }else{
+                resolve(context.state.list)
+            }
+        })        
+    },
+
+    /**
+     * @description finds all dockets in the DB if there are no values found in the current session
+     * @param {*} context 
+     * @param {Boolean} refresh 
+     * @returns {Promise}
+     */
+    GET_DOCKETS_APPROVAL(context, refresh){
+        return new Promise((resolve, reject)=>{
+            if(context.state.list.length ===0 || refresh){
+                api.getDocketsByStatus(2)
+                .then(results=>{
+                    if(results.data.success){
+                        context.commit('SET_DOCKET_LIST', results.data.model)
+                        resolve(results.data.model)
+                    }else{
+                        context.commit('SET_DOCKET_LIST', context.state.list)
+                        reject(results.data.errors)   
+                    }                                                                   
+                })
+                .catch(error =>{
+                    reject(error)
+                })
+            }else{
+                resolve(context.state.list)
+            }
+        })        
+    },
+
+    /**
      * @description find docket by id
      * @param {*} context 
      * @param {String} id 

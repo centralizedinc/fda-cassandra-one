@@ -82,7 +82,7 @@ const actions = {
         return api.createCase(details)
     },
 
-    UPDATE_DOCKET(context, details){
+    UPDATE_CASE(context, details){
         return api.updateCase(details)
     }
 };

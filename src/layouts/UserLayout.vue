@@ -110,6 +110,16 @@
             <v-list-tile-title class="body-1 font-weight-light">Dashboard</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+
+        <v-list-tile @click="goTo('/app')" :style="activeRoute(['Inbox'])">
+          <v-list-tile-action>
+            <v-icon>inbox</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title class="body-1 font-weight-light">Inbox</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        
         <!-- Docket Management -->
         <v-tooltip right>
           <v-list-group prepend-icon="inbox" slot="activator" append-icon="expand_more">

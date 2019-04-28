@@ -120,7 +120,39 @@
         <v-tab ripple>Case Documents Uploaded</v-tab>
         <v-tab-item>
           <v-card flat>
-            <v-card-text>oioioioioio</v-card-text>
+            <v-card-text>
+              <v-layout row wrap>
+                <v-flex v-for="item in docket.documents" :key="item.originalname" xs12 md4 pa-2 d-flex>
+                    <v-card  @click="viewFile(item.location)" style="cursor:zoom-in">
+                    <v-toolbar
+                        dark
+                    >
+                        {{prettify(item.originalname)}}
+                    </v-toolbar>
+                    <v-card-text>
+                        <v-layout row wrap align-center justify-center ma-0>
+                            <v-img
+                            v-if="item.mimetype != 'application/pdf'"
+                            :src="item.location"
+                            class="grey lighten-2"
+                            max-height="200"
+                            max-width="100"
+                            contain
+                            >
+                                <v-layout slot="placeholder" fill-height align-center justify-center ma-0>
+                                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                                </v-layout>
+                            </v-img>
+                            <div v-else>
+                                <pdf :src="'https://cors-anywhere.herokuapp.com/'+item.location"></pdf>
+                                <!-- <v-progress-circular  v-show="!loaded" indeterminate color="primary"></v-progress-circular> -->
+                            </div>
+                        </v-layout>
+                      </v-card-text>
+                    </v-card>
+                </v-flex>
+              </v-layout>
+            </v-card-text>
           </v-card>
         </v-tab-item>
         <!--recent activity  -->
@@ -129,18 +161,18 @@
           <v-card flat>
             <v-card-text>
               <v-list three-line>
-                <template v-for="(item, index) in items.slice(0, 8)">
-                  <v-subheader v-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
-                  <v-divider v-else-if="item.divider" :key="index" :inset="item.inset"></v-divider>
-                  <v-list-tile v-else :key="item.title" avatar>
+                <template v-for="(item, index) in docket.activities">
+                  
+                  <v-list-tile :key="index" avatar>
                     <v-list-tile-avatar>
-                      <img :src="item.avatar">
+                      <v-img src="http://i.pravatar.cc/61"></v-img>
                     </v-list-tile-avatar>
                     <v-list-tile-content>
-                      <v-list-tile-title v-html="item.title"></v-list-tile-title>
-                      <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
+                      <v-list-tile-title v-html="item.user"></v-list-tile-title>
+                      <v-list-tile-sub-title v-html="createActivityDesc(item)"></v-list-tile-sub-title>
                     </v-list-tile-content>
                   </v-list-tile>
+                  <v-divider inset :key="index"></v-divider>
                 </template>
               </v-list>
             </v-card-text>
@@ -158,7 +190,7 @@
         </v-toolbar>
         <v-card flat>
           <v-card-text>
-            <v-text-field outline label="1. Laws Violated" name="name" textarea multi-line counter></v-text-field>
+            <!-- <v-text-field outline label="1. Laws Violated" name="name" textarea multi-line counter></v-text-field>
             <v-select
               label="2. Nature of Violation "
               :items="natureViolation"
@@ -171,10 +203,10 @@
               :items="violation_details"
               v-model="value"
               autocomplete
-            ></v-select>
-            <v-text-field outline label="Remarks" name="name" textarea multi-line counter></v-text-field>
+            ></v-select> -->
+            <!-- <v-text-field outline label="Remarks" name="name" textarea multi-line counter></v-text-field> -->
             <v-select
-              label="3. Action Taken"
+              label="Action Taken"
               :items="actionTaken"
               v-model="selected_action"
               autocomplete
@@ -186,12 +218,12 @@
               v-model="value"
               autocomplete
             ></v-select>
-            <v-text-field outline label="Remarks" name="name" textarea multi-line counter></v-text-field>
+            <v-textarea outline label="Remarks" name="name" v-model="remarks"></v-textarea>
             <span class="subheading font-weight-light primary--text">Add Supporting Documents</span>
             <v-divider class="mb-3"></v-divider>
             <uploader class="caption"></uploader>
             <!-- fab button save -->
-            <v-tooltip top>
+            <!-- <v-tooltip top>
               <v-btn
                 class="elevation-10"
                 small
@@ -204,11 +236,11 @@
               >
                 <v-icon>save</v-icon>
               </v-btn>save
-            </v-tooltip>
+            </v-tooltip> -->
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn block color="primary">Submit for Review</v-btn>
+            <v-btn block color="primary" @click="evaluate()">Submit for Review</v-btn>
           </v-card-actions>
         </v-card>
       </v-navigation-drawer>
@@ -218,6 +250,7 @@
 
 <script>
 import Uploader from "@/components/Uploader";
+import pdf from 'vue-pdf'
 export default {
   props: {
     docket_pick: {
@@ -225,10 +258,12 @@ export default {
     }
   },
   components: {
-    Uploader
+    Uploader,
+    pdf
   },
   data() {
     return {
+      docket:{},
       tabs: null,
       natureViolation: [
         "Violative Products",
@@ -240,47 +275,9 @@ export default {
       actionTaken: ["Legal Order", "Remand"],
       action_details: [],
       selected_action: "",
-      items: [
-        {
-          header: "Today"
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "Joel C. Ubalde, Special Investigator IV",
-          subtitle:
-            "<span class='text--primary'>about 21 hours ago</span> &mdash; Evaluated this case and Submit for Review"
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-          title: "Friane Gaitan, Special Investigator II",
-          subtitle:
-            "<span class='text--primary'>about 18 hours ago</span> &mdash; Updated this case and Evaluate Action/Status "
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-          title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
-          subtitle:
-            "<span class='text--primary'>about 15 hours ago</span> &mdash;  Uploaded a new case document "
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
-          subtitle:
-            "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
-        }
-      ]
+      value:"",
+      items: [],
+      remarks:""
     };
   },
   created() {
@@ -320,20 +317,40 @@ export default {
   methods: {
     init(){
       this.$miniNavbar();
+      this.docket = this.$store.state.dockets.active
       // this.$notify({message:'Evaluating Case No: ', color:'success'})
+    },
+    prettify(name) {
+        if (name.length > 15) {
+            return name.substring(0, 15) + " ..." + name.substring(name.length -3, name.length);
+        } else {
+            return name;
+        }
+    },
+    createActivityDesc(item){
+      return "<span class='primary--text'>"+this.formatDate(item.date_created)+"</span> &mdash;  Created Case Docket (Docket Number: "+this.docket.dtn+")"
+    },
+    viewFile(url){
+        window.open(url, '_blank')
+    },
+    evaluate(){
+      console.info(JSON.stringify(this.docket))
+      this.docket.activities.push({
+        action_taken:this.selected_action,
+        if_legal_order:this.value,
+        comment:this.remarks
+      })
+      this.docket.current_status=1;
+      this.$store.dispatch('UPDATE_DOCKET', this.docket)
+      .then(result=>{
+        console.log(JSON.stringify(result))
+      })
+      .catch(error=>{
+        console.error(error)
+        this.$notifyError(error)
+      })
     }
-    // init() {
-    //   this.$store
-    //     .dispatch("GET_DOCKET_DETAILS")
-    //     .then(results => {
-    //       this.dockets = results;
-    //       console.log(JSON.stringify(results));
-    //     })
-    //     .catch(error => {
-    //       // this.$notifyError(error)
-    //       console.error(error);
-    //     });
-    // }
+   
   }
 };
 </script>

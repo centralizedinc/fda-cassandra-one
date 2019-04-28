@@ -12,13 +12,13 @@ export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   // plugins: [createPersistedState()]
   plugins: [
-    // createPersistedState({
-    //   key:'fda-encoder-reference',
-    //   paths:['address','breadcrumbs','cases', 'licenses', 'notifications', 'payments', 'products', 'reference', 'tasks']
-    // }),
+    createPersistedState({
+      key:'fda-cms',
+      paths:['cases','dockets','navbar', 'notifications', 'references']
+    }),
   //store user session in cookies
   createPersistedState({
-    key:'fda-encoder-session',
+    key:'fda-cms',
     paths:['user_session'],
     storage: {
       getItem: key =>  Cookies.get(key),

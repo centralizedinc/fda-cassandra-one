@@ -120,7 +120,7 @@
       </v-tabs>
 
       <!-- Nav to Review -->
-      <v-navigation-drawer permanent right app width="300px" class="elevation-1">
+      <v-navigation-drawer permanent right app width="400" class="elevation-1">
         <v-toolbar flat>
           <span
             class="title font-weight-light primary--text"
@@ -140,7 +140,7 @@
             <v-divider class="mb-3"></v-divider>
             <uploader class="caption"></uploader>
             <!-- fab button save -->
-            <v-tooltip top>
+            <!-- <v-tooltip top>
               <v-btn
                 class="elevation-10"
                 small
@@ -153,7 +153,7 @@
               >
                 <v-icon>save</v-icon>
               </v-btn>save
-            </v-tooltip>
+            </v-tooltip> -->
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>

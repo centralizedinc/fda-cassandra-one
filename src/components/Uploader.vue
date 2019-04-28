@@ -1,10 +1,9 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12 v-show="!isSuccess && !isFailed">
-      <v-card>
+    <v-flex xs12 >
+      <v-card >
         <!-- <v-card-title primary-title class="headline">Upload files</v-card-title> -->
-
-        <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
+        <form enctype="multipart/form-data" novalidate>
           <!-- <h1>Upload images</h1> -->
           <div class="dropbox">
             <input
@@ -17,36 +16,56 @@
               accept="image/*, application/pdf"
               class="input-file"
             >
-            <p v-if="isInitial">Drag your file(s) here to begin
+            <p v-if="uploadedFiles.length === 0">Drag your file(s) here to begin
               <br>or click to browse
             </p>
-            <p v-if="isSaving">Uploading {{ fileCount }} files...</p>
+            <p v-else>Uploaded {{ uploadedFiles.length }} files. Drag files here to upload more.</p>
           </div>
         </form>
       </v-card>
     </v-flex>
     <v-flex v-show="isSuccess" xs12>
-      <!--SUCCESS-->
-      <v-card>
-        <v-toolbar>Preview
-          <v-spacer></v-spacer>
-          <v-btn color="success" @click="reset">RESET</v-btn>
+      <!--SUCCESS-->    
+        <v-toolbar dark flat color="primary" class="elevation-5">
+            <span class="title font-weight-light">Preview</span>
+            <v-spacer></v-spacer>
+           <v-tooltip top>
+            <v-btn slot="activator"  outline small icon  @click="$refs.image.click()">
+              <v-icon>fas fa-plus</v-icon>
+            </v-btn>Upload More Files
+           </v-tooltip>
+          <v-tooltip top>
+            <v-btn
+              class="elevation-2"
+              slot="activator"
+              small
+              outline
+              icon
+              
+              @click="reset"
+            >
+              <v-icon>fas fa-redo-alt</v-icon>
+            </v-btn>Reset
+          </v-tooltip>
         </v-toolbar>
+        <v-card>
         <v-container grid-list-sm fluid>
           <v-layout row wrap>
             <v-flex v-for="item in uploadedFiles" :key="item.name" xs3 d-flex>
-              <v-card>
-                <v-toolbar
+              <v-card class="elevation-5" >
+                <v-card-title primary-title>
+                   {{prettify(item.name)}}
+                </v-card-title>
+                <!-- <v-toolbar height="40px"
                   dark
-                  color="fdaGreen"
-                  style="background: linear-gradient(45deg, #104B2A 0%, #b5c25a 100%)"
+                  flat
                 >
-                  {{prettify(item.name)}}
+                  {{prettify(item.name)}} -->
                   <!-- <v-spacer></v-spacer>
                     <v-btn dark flat icon>
                         <v-icon>close</v-icon>
                   </v-btn>-->
-                </v-toolbar>
+                <!-- </v-toolbar> -->
                 <v-card-text>
                   <v-img
                     v-if="item.type !== 'application/pdf'"
@@ -60,10 +79,10 @@
                       <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                     </v-layout>
                   </v-img>
-                  <v-img
-                    v-else
-                    src="https://www.acts.co.za/shop/wp-content/uploads/2017/11/filetype_pdf-278.png"
-                  ></v-img>
+                  <div v-else>
+                  <pdf  v-show="loaded" @loaded="loaded=true" :src="item.url"></pdf>
+                  <v-progress-circular  v-show="!loaded" indeterminate color="primary"></v-progress-circular>
+                  </div>
                 </v-card-text>
               </v-card>
             </v-flex>
@@ -75,18 +94,22 @@
 </template>
 
 <script>
+import pdf from 'vue-pdf'
 const STATUS_INITIAL = 0,
   STATUS_SAVING = 1,
   STATUS_SUCCESS = 2,
   STATUS_FAILED = 3;
 
 export default {
+  components:{pdf},
   data() {
     return {
+      loaded:false,
       uploadedFiles: [],
       uploadError: null,
       currentStatus: null,
-      uploadFieldName: "file"
+      uploadFieldName: "file",
+      formData:new FormData()
     };
   },
   computed: {
@@ -109,10 +132,11 @@ export default {
       this.currentStatus = STATUS_INITIAL;
       this.uploadedFiles = [];
       this.uploadError = null;
+      this.formData = new FormData();
     },
     onFileChange(fieldName, fileList) {
       // handle file changes
-      const formData = new FormData();
+      
 
       if (!fileList.length) return;
 
@@ -123,7 +147,7 @@ export default {
           fileList[x].type === "image/jpeg" ||
           fileList[x].type === "image/png"
         ) {
-          formData.append(fieldName, fileList[x], fileList[x].name);
+          this.formData.append(fieldName, fileList[x], fileList[x].name);
           console.log("fileList[x]: " + fileList[x].type);
           const file = fileList[x];
           this.uploadedFiles.push({
@@ -140,8 +164,7 @@ export default {
       });
 
       this.currentStatus = STATUS_SUCCESS;
-      console.log('formData :', formData);
-      this.$emit("upload", formData);
+      this.$emit("upload", {formData:this.formData, uploadedFiles:this.uploadedFiles});
     },
     prettify(name) {
       if (name.length > 15) {
@@ -159,10 +182,10 @@ export default {
 
 <style lang="scss">
 .dropbox {
-  outline: 2px dashed grey; /* the dash box */
-  outline-offset: -10px;
-  background: lightcyan;
-  color: dimgray;
+  outline: 1px dashed grey; /* the dash box */
+  outline-offset: -5px;
+  background: #e6e6e6;
+  color: black;
   padding: 10px 10px;
   min-height: 200px; /* minimum height */
   position: relative;
@@ -178,7 +201,7 @@ export default {
 }
 
 .dropbox:hover {
-  background: lightblue; /* when mouse over to the drop zone, change color */
+  background: #cad0a0; /* when mouse over to the drop zone, change color */
 }
 
 .dropbox p {

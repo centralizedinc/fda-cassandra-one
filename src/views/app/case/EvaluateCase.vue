@@ -41,7 +41,7 @@
     <v-navigation-drawer right app temporary v-model="previewNav">
       <v-card>
         <v-toolbar dark color="primary">
-          preview
+          <span class="title font-weight-light">Case Preview</span>
           <v-spacer></v-spacer>
           <v-btn flat icon @click="view">
             <v-icon>launch</v-icon>
@@ -87,8 +87,8 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" @click="view">Evaluate</v-btn>
+          <!-- <v-spacer></v-spacer> -->
+          <v-btn color="primary" block @click="view">Evaluate</v-btn>
         </v-card-actions>
       </v-card>
     </v-navigation-drawer>
@@ -160,7 +160,7 @@ export default {
   },
   methods: {
     init(){
-      this.$store.dispatch('GET_DOCKETS', true)
+      this.$store.dispatch('GET_DOCKETS_EVALUATION', true)
       .then(results =>{
         this.items = results;
       })
