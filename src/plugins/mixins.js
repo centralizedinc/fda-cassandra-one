@@ -37,6 +37,14 @@ export default {
                 var strTime = hours + ':' + minutes + ' ' + ampm;
                 return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
             },
+            allowed_access(module_access){
+              console.log("MODULE_ACCESS: "+ this.$store.state.user_session.permissions.find(o => o.value === module_access))
+              if(this.$store.state.user_session.permissions.find(o => o.value === module_access)){
+                return true
+              }else{
+                return false
+              }              
+            },
             logout() {
             this.$store.dispatch("LOGOUT");
             this.$router.push("/login");

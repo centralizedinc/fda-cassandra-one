@@ -81,6 +81,8 @@
                                 :items="roles"
                                 label="Role"
                                 v-model="account.role"
+                                item-text="name"
+                                item-value="code"
                             ></v-select>
                          </v-form>
                     </v-card-text>
@@ -129,6 +131,10 @@ export default {
             .then(results=>{
                 console.log('FETCH_ACCOUNTS:' + JSON.stringify(results.data))
                 this.items = results.data.model
+                return this.$store.dispatch('GET_ROLES')
+            })
+            .then(roles=>{
+                this.roles = roles.data.model
             })
         },
         view(item){

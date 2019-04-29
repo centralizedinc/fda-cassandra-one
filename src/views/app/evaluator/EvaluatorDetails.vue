@@ -62,13 +62,13 @@
                   <v-flex xs6>
                     <span class="font-weight-bold">Date Received</span>
                     <br>
-                    <span>{{docket.inspection_date}}</span>
+                    <span>{{ formatDate(docket.inspection_date) }}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
                     <span class="font-weight-bold">Date Docketed</span>
                     <br>
-                    <span>{{docket.date_docketed}}</span>
+                    <span>{{  formatDate(docket.date_docketed) }}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
