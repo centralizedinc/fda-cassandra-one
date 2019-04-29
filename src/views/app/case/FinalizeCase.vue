@@ -20,13 +20,21 @@
           
           <template v-slot:items="props">
             <tr @click="view(props.item)" style="cursor:pointer">
-              <td>{{ props.item.caseNo }}</td>
+              <td>{{ props.item.dtn }}</td>
+              <td>{{ formatDate(props.item.date_docketed) }}</td>
+              <td>{{ props.item.establishment_name }}</td>              
+              <td>{{ props.item.violation_product }}</td>
+              <td>{{ props.item.complainant_name }}</td>
+              <td>{{ props.item.complaint_cause }}</td>
+              <td>{{ getCaseStatus(props.item.current_status) }}</td>
+              <td>{{ getCaseType(props.item.stage)}}</td>
+              <!-- <td>{{ props.item.caseNo }}</td>
               <td>{{ props.item.caseTitle }}</td>
               <td>{{ props.item.dateDocketed }}</td>
               <td>{{ props.item.product }}</td>
               <td>{{ props.item.cause }}</td>
               <td>{{ props.item.status }}</td>
-              <td>{{props.item.type}}</td>
+              <td>{{props.item.type}}</td> -->
             </tr>
           </template>
           <v-alert
@@ -56,52 +64,65 @@ export default {
         { text: "Type", value: "type" }
       ],
       items: [
-        {
-          caseNo: "cmp-apm-2014-004",
-          caseTitle: "Colgate phils., inc. Petitioner v. Johnson & Johnson",
-          dateDocketed: "2018-07-12",
-          product: "Listerine",
-          cause: "Adulterated; with petroleum based taste",
-          status: "Referred CCRR for issuance of warning 2/13/14 (draft)",
-          type: "Docket"
-        },
-        {
-          caseNo: "cmp-apm-2013-130",
-          caseTitle:
-            "Ritemed Phils., Inc. Petitioner v. Pascual Consumer Healthcare Corp.",
-          dateDocketed: "2018-07-12",
-          product: "Ascof Lagundi ",
-          cause: 'Misleading claim "tunaw ang plema',
-          status: "Summons issued",
-          type: "Case"
+        // {
+        //   caseNo: "cmp-apm-2014-004",
+        //   caseTitle: "Colgate phils., inc. Petitioner v. Johnson & Johnson",
+        //   dateDocketed: "2018-07-12",
+        //   product: "Listerine",
+        //   cause: "Adulterated; with petroleum based taste",
+        //   status: "Referred CCRR for issuance of warning 2/13/14 (draft)",
+        //   type: "Docket"
+        // },
+        // {
+        //   caseNo: "cmp-apm-2013-130",
+        //   caseTitle:
+        //     "Ritemed Phils., Inc. Petitioner v. Pascual Consumer Healthcare Corp.",
+        //   dateDocketed: "2018-07-12",
+        //   product: "Ascof Lagundi ",
+        //   cause: 'Misleading claim "tunaw ang plema',
+        //   status: "Summons issued",
+        //   type: "Case"
 
-        },
-        {
-          caseNo: "cmp-dr-2013-131",
-          caseTitle:
-            "International Pharmaceuticals, Inc. Petitioner v. Greenstone Pharmaceuticals, H.K.  ",
-          dateDocketed: "2018-07-12",
-          product: "Katinko Ointment",
-          cause: "Non-compliance w/ Generic Labeling Requirement",
-          status: "Memo issued",
-          type: "MR"
+        // },
+        // {
+        //   caseNo: "cmp-dr-2013-131",
+        //   caseTitle:
+        //     "International Pharmaceuticals, Inc. Petitioner v. Greenstone Pharmaceuticals, H.K.  ",
+        //   dateDocketed: "2018-07-12",
+        //   product: "Katinko Ointment",
+        //   cause: "Non-compliance w/ Generic Labeling Requirement",
+        //   status: "Memo issued",
+        //   type: "MR"
 
-        },
-        {
-          caseNo: "cmp-fd-13-117",
-          caseTitle:
-            "Nestle Philippines, Inc. Petitioner v. Tridharma Marketing, Inc.  ",
-          dateDocketed: "2018-07-12",
-          product: "Kopiko L.A. Coffee",
-          cause: "Mislabeled",
-          status: "Memo to CFRR for the recall",
-          type: "MR"
+        // },
+        // {
+        //   caseNo: "cmp-fd-13-117",
+        //   caseTitle:
+        //     "Nestle Philippines, Inc. Petitioner v. Tridharma Marketing, Inc.  ",
+        //   dateDocketed: "2018-07-12",
+        //   product: "Kopiko L.A. Coffee",
+        //   cause: "Mislabeled",
+        //   status: "Memo to CFRR for the recall",
+        //   type: "MR"
 
-        }
+        // }
       ]
     };
   },
+  created(){
+    this.init()
+  },
   methods: {
+    init(){
+      this.$store.dispatch('GET_DOCKETS_FINALIZE', true)
+      .then(results =>{
+        this.items = results;
+        console.log("GET_DOCKETS_FINALIZE: " + JSON.stringify(this.items))
+      })
+      .catch(error=>{
+
+      })
+    },
     view(docket) {
       this.$router.push("/app/finalize/details");
     },

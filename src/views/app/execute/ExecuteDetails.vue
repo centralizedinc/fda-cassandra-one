@@ -164,7 +164,7 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn block color="primary">Save</v-btn>
+            <v-btn block color="primary" @click="save()">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-navigation-drawer>
@@ -226,7 +226,8 @@ export default {
           subtitle:
             "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
         }
-      ]
+      ],
+      docket: {}
     };
   },
   watch: {
@@ -245,6 +246,28 @@ export default {
           "No longer existing"
         ];
       }
+    }
+  },
+  created() {
+    this.init();
+  },
+  methods: {
+    init(){
+      this.$miniNavbar();
+      this.docket = this.$store.state.dockets.active
+      console.log("this is docket of execute: " + JSON.stringify(this.docket))
+      // this.$notify({message:'Evaluating Case No: ', color:'success'})
+    },
+    execute(){
+      this.docket.current_status=4;
+      this.$store.dispatch('UPDATE_DOCKET', this.docket)
+      .then(result=>{
+        console.log("review update docket result: " + JSON.stringify(result))
+      })
+      .catch(error=>{
+        console.error(error)
+        this.$notifyError(error)
+      })
     }
   }
 };

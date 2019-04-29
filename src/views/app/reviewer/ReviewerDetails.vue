@@ -157,7 +157,7 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn block color="primary">Submit for Approval</v-btn>
+            <v-btn block color="primary" @click="approver()">Submit for Approval</v-btn>
             <!-- <v-btn
               block
               color="primary"
@@ -177,6 +177,7 @@ export default {
   },
   data() {
     return {
+      docket:{},
       tabs: null,
       actionTaken: ["Approved", "Major Revision", "Minor Revision"],
       selected_action: "",
@@ -222,6 +223,38 @@ export default {
         }
       ]
     };
+  },
+  created() {
+    this.init();
+  },
+  methods: {
+    init(){
+      this.$miniNavbar();
+      this.docket = this.$store.state.dockets.active
+      console.log("this is docket of reviewer: " + JSON.stringify(this.docket))
+      // this.$notify({message:'Evaluating Case No: ', color:'success'})
+    },
+    approver(){
+      this.docket.activities.push({
+        stage: 0,
+        status: 1,
+        // out data on ff. var
+        // action_taken_by_SL: ,
+        // comment: ,
+        // action_taken_OIC_LSSC: ,
+        // final_action: ,
+        // reason_for_remanding: 
+      })
+      this.docket.current_status=2;
+      this.$store.dispatch('UPDATE_DOCKET', this.docket)
+      .then(result=>{
+        console.log("review update docket result: " + JSON.stringify(result))
+      })
+      .catch(error=>{
+        console.error(error)
+        this.$notifyError(error)
+      })
+    }
   }
 };
 </script>

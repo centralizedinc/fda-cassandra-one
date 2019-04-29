@@ -145,7 +145,7 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
-              <v-btn block color="primary">Print</v-btn>
+              <v-btn block color="primary" @click="execute()">Print</v-btn>
             </v-card-actions>
           </v-card>
         </v-navigation-drawer>
@@ -165,48 +165,75 @@ export default {
     return {
       tabs: null,
       finalAction: ["Legal Order", "Remand"],
+      docket: {},
      items: [
-        {
-          header: "Today"
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "Joel C. Ubalde, Special Investigator IV",
-          subtitle:
-            "<span class='text--primary'>about 21 hours ago</span> &mdash; Evaluated this case and Submit for Review"
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-          title: "Friane Gaitan, Special Investigator II",
-          subtitle:
-            "<span class='text--primary'>about 18 hours ago</span> &mdash; Updated this case and Evaluate Action/Status "
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-          title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
-          subtitle:
-            "<span class='text--primary'>about 15 hours ago</span> &mdash;  Uploaded a new case document "
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
-          subtitle:
-            "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
-        }
+        // {
+        //   header: "Today"
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+        //   title: "Joel C. Ubalde, Special Investigator IV",
+        //   subtitle:
+        //     "<span class='text--primary'>about 21 hours ago</span> &mdash; Evaluated this case and Submit for Review"
+        // },
+        // {
+        //   divider: true,
+        //   inset: true
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
+        //   title: "Friane Gaitan, Special Investigator II",
+        //   subtitle:
+        //     "<span class='text--primary'>about 18 hours ago</span> &mdash; Updated this case and Evaluate Action/Status "
+        // },
+        // {
+        //   divider: true,
+        //   inset: true
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
+        //   title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
+        //   subtitle:
+        //     "<span class='text--primary'>about 15 hours ago</span> &mdash;  Uploaded a new case document "
+        // },
+        // {
+        //   divider: true,
+        //   inset: true
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+        //   title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
+        //   subtitle:
+        //     "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
+        // }
       ]
     };
+  },
+  created() {
+    this.init();
+  },
+  methods: {
+    init(){
+      this.$miniNavbar();
+      this.docket = this.$store.state.dockets.active
+      console.log("this is docket of finalize: " + JSON.stringify(this.docket))
+      // this.$notify({message:'Evaluating Case No: ', color:'success'})
+    },
+    execute(){
+      this.docket.activities.push({
+        stage: 0,
+        status: 4,
+      })
+      this.docket.current_status=4;
+      this.$store.dispatch('UPDATE_DOCKET', this.docket)
+      .then(result=>{
+        console.log("review update docket result: " + JSON.stringify(result))
+      })
+      .catch(error=>{
+        console.error(error)
+        this.$notifyError(error)
+      })
+    }
   }
 };
 </script>
