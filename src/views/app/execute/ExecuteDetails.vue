@@ -258,11 +258,16 @@ export default {
       console.log("this is docket of execute: " + JSON.stringify(this.docket))
       // this.$notify({message:'Evaluating Case No: ', color:'success'})
     },
-    execute(){
-      this.docket.current_status=4;
+    save(){
+      this.docket.activities.push({
+        stage: 0,
+        status: 4,
+      })
+      this.docket.current_status=0;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
         console.log("review update docket result: " + JSON.stringify(result))
+
       })
       .catch(error=>{
         console.error(error)
