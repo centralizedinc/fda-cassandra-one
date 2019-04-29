@@ -55,6 +55,9 @@ const actions = {
                 }
         })
     },
+    GET_REFERENCE_TABLE(context){
+        return api.findAll()
+    },
     GET_CLUSTERS(context, refresh){
         return new Promise((resolve, reject)=>{
             if(context.state.clusters.length ===0 || refresh){
@@ -76,6 +79,10 @@ const actions = {
                 resolve(context.state.clusters)
             }
         })
+    },
+
+    ADD_REFERENCE_ITEM(context, item){
+        return api.add(item)
     }
 }
 

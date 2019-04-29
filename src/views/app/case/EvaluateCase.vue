@@ -169,6 +169,7 @@ export default {
       })
     },
     view() {
+      console.log("evaluator case: " + JSON.stringify(this.selected_item))
       this.$store.commit('SET_ACTIVE_DOCKET', this.selected_item)
       this.$router.push("/app/evaluator/details");
     },

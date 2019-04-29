@@ -6,7 +6,7 @@
           </v-btn>Home
         </v-tooltip>
         <v-tooltip top v-for="button in buttons" :key="button.label">
-          <v-btn slot="activator" fab color="primary" @click="submit(button.action)" style="background-image: linear-gradient(45deg, #0288d1, #26c6da)">
+          <v-btn :loading="button.loading" slot="activator" fab color="primary" @click="submit(button.action)" style="background-image: linear-gradient(45deg, #0288d1, #26c6da)">
             <v-icon>{{button.icon}}</v-icon>
           </v-btn>{{button.label}}
         </v-tooltip>
