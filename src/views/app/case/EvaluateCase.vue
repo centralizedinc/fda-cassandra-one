@@ -21,8 +21,8 @@
             <tr @click="preview(props.item)" style="cursor:pointer">
               <td>{{ props.item.dtn }}</td>
               <td>{{ formatDate(props.item.date_docketed) }}</td>
-              <td>{{ props.item.establishment_name }}</td>              
-              <td>{{ props.item.violation_product }}</td>
+              <td>{{ props.item.establishment_name }}</td>
+              <td>{{ props.item.product_involved }}</td>
               <td>{{ props.item.complainant_name }}</td>
               <td>{{ props.item.complaint_cause }}</td>
               <td>{{ getCaseStatus(props.item.current_status) }}</td>
@@ -78,12 +78,12 @@
             readonly
             :value="selected_item.complainant_name"
           ></v-text-field>
-          <v-textarea rows="2"
+          <v-textarea
+            rows="2"
             label="Cause of Complaint"
             readonly
             :value="selected_item.complaint_cause"
           ></v-textarea>
-
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
@@ -99,18 +99,66 @@
 export default {
   data() {
     return {
-      previewNav:false,
-      selected_item:{},
+      previewNav: false,
+      selected_item: {},
       search: "",
+      // headers: [
+      //   { text: "Docket Number", value: "docketNo" },
+      //   { text: "Esablishment", value: "caseTitle" },
+      //   { text: "Date Docketed", value: "dateDocketed" },
+      //   { text: "Product Involved", value: "product" },
+      //   { text: "Complainant", value: "complainant" },
+      //   { text: "Cause of Complaint", value: "cause" },
+      //   { text: "Status", value: "status" },
+      //   { text: "Type", value: "type" }
+      // ],
       headers: [
-        { text: "Docket Number", value: "docketNo" },
-        { text: "Esablishment", value: "caseTitle" },
-        { text: "Date Docketed", value: "dateDocketed" },
-        { text: "Product Involved", value: "product" },
-        { text: "Complainant", value: "complainant" },
-        { text: "Cause of Complaint", value: "cause" },
-        { text: "Status", value: "status" },
-        { text: "Type", value: "type" }
+        {
+          text: "Docket Number",
+          align: "left",
+          sortable: "true",
+          value: "dtn"
+        },
+        {
+          text: "Date Docketed",
+          align: "left",
+          sortable: "true",
+          value: "date_docketed"
+        },
+        {
+          text: "Esablishment",
+          align: "left",
+          sortable: "true",
+          value: "establishment_name"
+        },
+        {
+          text: "Product Involved",
+          align: "left",
+          sortable: "true",
+          value: "product_involved"
+        },
+        {
+          text: "Complainant",
+          align: "left",
+          sortable: "true",
+          value: "complainant_name"
+        },
+        {
+          text: "Cause of Complaint",
+          align: "left",
+          sortable: "true",
+          value: "complaint_cause"
+        },
+        {
+          text: "Status",
+          align: "left",
+          value: "current_status"
+        },
+        {
+          text: "Type",
+          align: "left",
+          value: "stage"
+        }
       ],
       items: [
         // {
@@ -155,24 +203,24 @@ export default {
       ]
     };
   },
-  created(){
+  created() {
     this.init();
   },
   methods: {
-    init(){
-      this.$store.dispatch('GET_DOCKETS_EVALUATION', true)
-      .then(results =>{
-        this.items = results;
-      })
-      .catch(error=>{
-
-      })
+    init() {
+      this.$store
+        .dispatch("GET_DOCKETS_EVALUATION", true)
+        .then(results => {
+          this.items = results;
+        })
+        .catch(error => {});
     },
     view() {
-      this.$store.commit('SET_ACTIVE_DOCKET', this.selected_item)
+      console.log("evaluator case: " + JSON.stringify(this.selected_item));
+      this.$store.commit("SET_ACTIVE_DOCKET", this.selected_item);
       this.$router.push("/app/evaluator/details");
     },
-    preview(docket){
+    preview(docket) {
       this.selected_item = docket;
       this.previewNav = true;
     }
@@ -182,6 +230,6 @@ export default {
 
 <style>
 .right-input input {
-  text-align: right
+  text-align: right;
 }
 </style>
