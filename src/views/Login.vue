@@ -1,7 +1,17 @@
 <template>
+<div>
+  <v-container grid-list-md text-xs-left>
   <v-layout align-center justify-center>
-    <v-flex xs4 pa-2 mt-4>
-      <v-card pa-5>
+     <v-flex xs12 md6 mr-5 pa-1>
+        <v-card class="tCard elevation-10">
+          <v-img :src="require('@/assets/logo.png')" aspect-ratio="2.75"></v-img>
+          <v-card-text
+            class="subheading black--text"
+          >Cassandra 1.0 is a centralized Docket Management System and serves as the official repository for the administrative proceedings for the Food and Drug Administration (FDA) Philippines. The system allows the Legal Services Support Team to access FDA's administrative proceedings and rule-making documents more readily, including Federal Registers, Petitions, supporting documents and comments.</v-card-text>
+        </v-card>
+      </v-flex>
+    <v-flex xs12 md6 ml-5 mr-5 pa-2>
+      <v-card>
         <v-toolbar dark color="primary">
           <span class="font-weight-light title">Login</span>
           <v-spacer></v-spacer>
@@ -91,6 +101,8 @@
       </v-card>
     </v-dialog>
   </v-layout>
+  </v-container>
+</div>
 </template>
 
 <script>
@@ -168,4 +180,22 @@ export default {
 </script>
 
 <style>
+.tCard {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.cardButton {
+  -webkit-box-reflect: below 6px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(10%, transparent), to(rgba(250, 250, 250, 0.1))) !important;
+  border-radius: 8px !important;
+  height: calc(100% - 30px) !important;
+  border: none;
+  position: relative;
+  margin: 10px 1px;
+  line-height: 1.42857;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  will-change: box-shadow, transform;
+}
 </style>
+

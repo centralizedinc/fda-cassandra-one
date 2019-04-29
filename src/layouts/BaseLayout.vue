@@ -7,7 +7,7 @@
             <v-btn flat>ABOUT</v-btn>
             <v-btn outline>help</v-btn>
         </v-toolbar>
-        <v-container>
+        <v-container fluid class="bg">
             <router-view></router-view>
         </v-container>
         <v-footer app dark color="primary" class="pa-1">
@@ -31,7 +31,7 @@ export default {
 <style>
 .bg {
   /* The image used */
-  /* background-image: url("https://i.pinimg.com/originals/01/67/e9/0167e9df8103435b37b166aea72d57b3.jpg"); */
+  background-image: url("https://i.postimg.cc/c4L0Zg5x/bg.png");
 
   /* Full height */
   height: 100%;

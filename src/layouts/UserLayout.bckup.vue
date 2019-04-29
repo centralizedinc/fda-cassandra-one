@@ -307,7 +307,7 @@ export default {
 <style>
 .bg {
   /* The image used */
-  background-image: url("https://pixinvent.com/materialize-material-design-admin-template/app-assets/images/gallery/breadcrumb-bg.jpg");
+  background-image: url("https://i.postimg.cc/j5T1ZyYz/bg.png");
 
   /* Full height */
   height: 100%;
