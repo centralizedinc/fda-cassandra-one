@@ -250,7 +250,7 @@
                 <v-divider class="mb-3"></v-divider>
                 <v-card-actions>
                     <!-- <v-spacer></v-spacer> -->
-                    <v-btn :disabled="isLoading" color="secondary">Cancel</v-btn>
+                    <v-btn :disabled="isLoading" outline color="secondary">Cancel</v-btn>
                     <v-btn :loading="isLoading" color="primary" @click="submit()">Submit</v-btn>
                 </v-card-actions>
             </v-card>

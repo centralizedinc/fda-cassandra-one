@@ -50,61 +50,61 @@
                   <v-flex xs6>
                     <span class="font-weight-bold">Docket Number</span>
                     <br>
-                    <span>cmp-apm-2013-130</span>
+                    <span>{{docket.dtn}}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
                     <span class="font-weight-bold">Ref/DTN #</span>
                     <br>
-                    <span>cmp-apm-2013-130</span>
+                    <span>{{docket.dtn}} </span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
                     <span class="font-weight-bold">Date Received</span>
                     <br>
-                    <span>cmp-apm-2013-130</span>
+                    <span>{{ formatDate(docket.inspection_date) }}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
                     <span class="font-weight-bold">Date Docketed</span>
                     <br>
-                    <span>cmp-apm-2013-130</span>
+                    <span>{{  formatDate(docket.date_docketed) }}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
                     <span class="font-weight-bold">Complainant</span>
                     <br>
-                    <span>cmp-apm-2013-130</span>
-                  </v-flex>
-                  <br>
-                  <v-flex xs6>
-                    <span class="font-weight-bold">Complainant Address</span>
-                    <br>
-                    <span>cmp-apm-2013-130</span>
-                  </v-flex>
-                  <br>
-                  <v-flex xs6>
-                    <span class="font-weight-bold">Respondent</span>
-                    <br>
-                    <span>cmp-apm-2013-130</span>
-                  </v-flex>
-                  <br>
-                  <v-flex xs6>
-                    <span class="font-weight-bold">Respondent</span>
-                    <br>
-                    <span>cmp-apm-2013-130</span>
+                    <span>{{docket.complainant_name}}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
                     <span class="font-weight-bold">Cause of Complaint</span>
                     <br>
-                    <span>cmp-apm-2013-130</span>
+                    <span>{{docket.complaint_cause}}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Respondent</span>
+                    <br>
+                    <span>{{docket.establishment_owner}}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Respondent Address</span>
+                    <br>
+                    <span>{{docket.establishment_address}}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Laws Violated</span>
+                    <br>
+                    <span>{{docket.laws_violated}}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
                     <span class="font-weight-bold">Product/s Involved (if any)</span>
                     <br>
-                    <span>cmp-apm-2013-130</span>
+                    <span>{{docket_product_involved}}</span>
                   </v-flex>
                   <br>
                 </v-layout>
@@ -318,6 +318,7 @@ export default {
     init(){
       this.$miniNavbar();
       this.docket = this.$store.state.dockets.active
+      console.log("this is docket of evaluator: " + JSON.stringify(this.docket))
       // this.$notify({message:'Evaluating Case No: ', color:'success'})
     },
     prettify(name) {
@@ -334,16 +335,18 @@ export default {
         window.open(url, '_blank')
     },
     evaluate(){
-      console.info(JSON.stringify(this.docket))
+      console.info("evaluate data: " + JSON.stringify(this.docket))
       this.docket.activities.push({
+        stage: 0,
+        status: 0,
         action_taken:this.selected_action,
         if_legal_order:this.value,
-        comment:this.remarks
+        comment:this.remarks,        
       })
-      this.docket.current_status=1;
+      this.docket.current_status=2;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
-        console.log(JSON.stringify(result))
+        console.log("evaluate update docket result: " + JSON.stringify(result))
       })
       .catch(error=>{
         console.error(error)

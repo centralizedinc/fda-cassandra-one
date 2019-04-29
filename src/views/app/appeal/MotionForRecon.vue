@@ -172,7 +172,7 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn block color="primary">Save</v-btn>
+            <v-btn block color="primary">Submit & Execute</v-btn>
           </v-card-actions>
         </v-card>
       </v-navigation-drawer>

@@ -20,13 +20,21 @@
           
           <template v-slot:items="props">
             <tr @click="view(props.item)" style="cursor:pointer">
-              <td>{{ props.item.caseNo }}</td>
+              <td>{{ props.item.dtn }}</td>
+              <td>{{ formatDate(props.item.date_docketed) }}</td>
+              <td>{{ props.item.establishment_name }}</td>              
+              <td>{{ props.item.violation_product }}</td>
+              <td>{{ props.item.complainant_name }}</td>
+              <td>{{ props.item.complaint_cause }}</td>
+              <td>{{ getCaseStatus(props.item.current_status) }}</td>
+              <td>{{ getCaseType(props.item.stage)}}</td>
+              <!-- <td>{{ props.item.caseNo }}</td>
               <td>{{ props.item.caseTitle }}</td>
               <td>{{ props.item.dateDocketed }}</td>
               <td>{{ props.item.product }}</td>
               <td>{{ props.item.cause }}</td>
               <td>{{ props.item.status }}</td>
-              <td>{{props.item.type}}</td>
+              <td>{{props.item.type}}</td> -->
             </tr>
           </template>
           <v-alert
@@ -98,10 +106,23 @@ export default {
           type: "MR"
 
         }
-      ]
+      ],
+      items: []
     };
   },
+  created(){
+    this.init()
+  },
   methods: {
+    init(){
+      this.$store.dispatch('GET_DOCKETS_EXECUTE', true)
+      .then(results =>{
+        this.items = results;
+      })
+      .catch(error=>{
+
+      })
+    },
     view(docket) {
       this.$router.push("/app/execute/details");
     }

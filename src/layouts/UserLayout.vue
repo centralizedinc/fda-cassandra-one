@@ -90,7 +90,11 @@
       <v-list>
         <v-list-tile @click="goTo('/app')" :style="activeRoute(['Dashboard'])">
           <v-list-tile-action>
+            <v-tooltip right>
+              <v-btn slot="activator" icon>
             <v-icon>dashboard</v-icon>
+              </v-btn> Dashboard
+            </v-tooltip>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title class="body-1 font-weight-light">Dashboard</v-list-tile-title>
@@ -98,7 +102,9 @@
         </v-list-tile>
         <v-list-tile @click="goTo('/app')" :style="activeRoute(['Inbox'])">
           <v-list-tile-action>
-            <v-icon>archive</v-icon>
+            <v-tooltip right>
+              <v-btn slot="activator" icon>
+            <v-icon>archive</v-icon> </v-btn> Inbox </v-tooltip>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title class="body-1 font-weight-light">Inbox</v-list-tile-title>
@@ -112,7 +118,9 @@
             </v-list-tile>
             <v-list-tile v-if="allowed_access('DOCKET_CREATE')" class="ma-1" @click="goTo('/app/dockets/new')" :style="activeRoute(['New Docket'])">
               <v-list-tile-action>
-                <v-icon class="pl-4" small>add</v-icon>
+                <v-tooltip right>
+              <v-btn slot="activator" icon>
+                <v-icon class="pl-4" small>add</v-icon></v-btn> New Docket </v-tooltip>
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-title class="body-1 font-weight-light">New Docket</v-list-tile-title>
@@ -121,7 +129,9 @@
             <!-- Evaluate  -->
             <v-list-tile v-if="allowed_access('DOCKET_EVAL')" class="ma-1" @click="goTo('/app/cases/evaluate')" :style="activeRoute(['Evaluate Case'])">
               <v-list-tile-action>
-                <v-icon class="pl-4" small>description</v-icon>
+                <v-tooltip right>
+              <v-btn slot="activator" icon>
+                <v-icon class="pl-4" small>description</v-icon> </v-btn> Evaluate Case </v-tooltip>
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-title class="body-1 font-weight-light">Evaluation</v-list-tile-title>
@@ -130,7 +140,9 @@
             <!-- Review  -->
             <v-list-tile v-if="allowed_access('DOCKET_REVIEW')" class="ma-1" @click="goTo('/app/cases/review')" :style="activeRoute(['Review Case'])">
               <v-list-tile-action>
-                <v-icon class="pl-4" small>rate_review</v-icon>
+                <v-tooltip right>
+              <v-btn slot="activator" icon>
+                <v-icon class="pl-4" small>rate_review</v-icon> </v-btn> Review Case </v-tooltip>
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-title class="body-1 font-weight-light">Review</v-list-tile-title>
@@ -139,7 +151,9 @@
             <!-- Approve  -->
             <v-list-tile v-if="allowed_access('DOCKET_APPROVAL')" class="ma-1" @click="goTo('/app/cases/approve')" :style="activeRoute(['Approve Case'])">
               <v-list-tile-action>
-                <v-icon class="pl-4" small>thumb_up</v-icon>
+                <v-tooltip right>
+              <v-btn slot="activator" icon>
+                <v-icon class="pl-4" small>thumb_up</v-icon> </v-btn> Approve Case </v-tooltip>
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-title class="body-1 font-weight-light">Approval</v-list-tile-title>
@@ -148,7 +162,9 @@
             <!-- Finalize  -->
             <v-list-tile v-if="allowed_access('DOCKET_FINALIZATION')" class="ma-1" @click="goTo('/app/cases/finalize')" :style="activeRoute(['Finalize Case'])">
               <v-list-tile-action>
-                <v-icon class="pl-4" small>check_circle</v-icon>
+                <v-tooltip right>
+              <v-btn slot="activator" icon>
+                <v-icon class="pl-4" small>check_circle</v-icon> </v-btn> Finalize Case </v-tooltip>
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-title class="body-1 font-weight-light">Finalization</v-list-tile-title>
@@ -157,7 +173,9 @@
             <!-- Execute  -->
             <v-list-tile v-if="allowed_access('DOCKET_EXECUTION')" class="ma-1" @click="goTo('/app/cases/execute')" :style="activeRoute(['Execute Case'])">
               <v-list-tile-action>
-                <v-icon class="pl-4" small>playlist_add_check</v-icon>
+                <v-tooltip right>
+              <v-btn slot="activator" icon>
+                <v-icon class="pl-4" small>playlist_add_check</v-icon> </v-btn> Execute Case </v-tooltip>
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-title class="body-1 font-weight-light">Execution</v-list-tile-title>
@@ -208,15 +226,19 @@
             </v-list-tile>
             <v-list-tile @click="goTo('/app/cases/appeal')" class="ma-1" :style="activeRoute(['Cases on Appeal'])">
               <v-list-tile-action>
-                <v-icon class="pl-4" small>gavel</v-icon>
+                <v-tooltip right>
+              <v-btn slot="activator" icon>
+                <v-icon class="pl-4" small>gavel</v-icon> </v-btn> Appeal </v-tooltip>
               </v-list-tile-action>
               <v-list-tile-content>
-                <v-list-tile-title class="body-1 font-weight-light">Motion for Reconsideration</v-list-tile-title>
+                <v-list-tile-title class="body-1 font-weight-light">Appeal</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
             <v-list-tile @click="goTo('/app/cases/per')" class="ma-1" :style="activeRoute(['Post Execution Report'])">
               <v-list-tile-action>
-                <v-icon class="pl-4" small>playlist_add_check</v-icon>
+                <v-tooltip right>
+              <v-btn slot="activator" icon>
+                <v-icon class="pl-4" small>playlist_add_check</v-icon> </v-btn> Post Execution Report </v-tooltip>
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-title class="body-1 font-weight-light">Post Execution Report</v-list-tile-title>
@@ -228,7 +250,9 @@
         <!-- Search case -->
         <v-list-tile v-if="allowed_access('CASE_SEARCH')" @click="searchDialog = true" :style="activeRoute(['Search Case'])">
           <v-list-tile-action>
-            <v-icon>search</v-icon>
+            <v-tooltip right>
+              <v-btn slot="activator" icon>
+            <v-icon>search</v-icon> </v-btn> Search Case </v-tooltip>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title class="body-1 font-weight-light">Search Case</v-list-tile-title>
@@ -250,7 +274,9 @@
         <!-- Case Board -->
         <v-list-tile v-if="allowed_access('CASE_BOARD')" @click="goTo('/app/cases/board')" :style="activeRoute(['Case Board'])">
           <v-list-tile-action>
-            <v-icon>view_column</v-icon>
+            <v-tooltip right>
+              <v-btn slot="activator" icon>
+            <v-icon>view_column</v-icon> </v-btn> Case Board </v-tooltip>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title class="body-1 font-weight-light">Case Board</v-list-tile-title>
@@ -309,7 +335,9 @@
         <!-- My Profile -->
         <v-list-tile @click="goTo('/app/profile')" :style="activeRoute(['My Profile'])">
           <v-list-tile-action>
-            <v-icon>account_circle</v-icon>
+            <v-tooltip right>
+              <v-btn slot="activator" icon>
+            <v-icon>account_circle</v-icon> </v-btn>My Profile </v-tooltip>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title class="body-1 font-weight-light">My Profile</v-list-tile-title>
@@ -318,7 +346,9 @@
         <!-- Change Password -->
         <v-list-tile @click="goTo('/app/security')" :style="activeRoute(['Change Password'])">
           <v-list-tile-action>
-            <v-icon>vpn_key</v-icon>
+            <v-tooltip right>
+              <v-btn slot="activator" icon>
+            <v-icon>vpn_key</v-icon> </v-btn> Change Password </v-tooltip>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title class="body-1 font-weight-light">Change Password</v-list-tile-title>
@@ -327,7 +357,9 @@
         <!-- Logout SideNav -->
         <v-list-tile @click="showLogout()" class="ma-1" :style="activeRoute('Logout')">
           <v-list-tile-action>
-            <v-icon>exit_to_app</v-icon>
+            <v-tooltip right>
+              <v-btn slot="activator" icon>
+            <v-icon>exit_to_app</v-icon></v-btn> Logout </v-tooltip>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title class="body-1 font-weight-light">Logout </v-list-tile-title>
@@ -337,6 +369,7 @@
     <v-dialog v-model="show_logout" persistent max-width="300" transition="dialog-transition">
       <v-card>
       <v-card-title>
+        <span class="title font-weight-light"></span>
         </v-card-title>
         <v-card-text>
           <span class="font-weight-light">Are you sure you want to logout?</span>
