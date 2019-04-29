@@ -79,6 +79,10 @@ const actions = {
                 resolve(context.state.clusters)
             }
         })
+    },
+
+    ADD_REFERENCE_ITEM(context, item){
+        return api.add(item)
     }
 }
 
