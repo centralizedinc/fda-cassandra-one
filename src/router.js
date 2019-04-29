@@ -208,7 +208,7 @@ export default new Router({
         {
           path: 'logout',
           name: 'Logout',
-          component: () => import('@/layouts/UserLayout.vue')
+          // component: () => import('@/layouts/UserLayout.vue')
         },
       ]
     },
