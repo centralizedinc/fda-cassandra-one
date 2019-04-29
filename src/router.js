@@ -204,7 +204,12 @@ export default new Router({
           path: 'security',
           name: 'Change Password',
           component: () => import('@/views/app/profile/Password.vue')
-        }
+        },
+        {
+          path: 'logout',
+          name: 'Logout',
+          component: () => import('@/layouts/UserLayout.vue')
+        },
       ]
     },
     {
