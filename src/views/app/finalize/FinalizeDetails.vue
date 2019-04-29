@@ -145,7 +145,7 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
-              <v-btn block color="primary">Print</v-btn>
+              <v-btn block color="primary" @click="printSummon">Print</v-btn>
             </v-card-actions>
           </v-card>
         </v-navigation-drawer>
@@ -207,6 +207,12 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    printSummon() {
+      var details ="";
+      this.$download(details, "SUMMON", "summon.pdf");
+    }
   }
 };
 </script>
