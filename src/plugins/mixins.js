@@ -36,7 +36,11 @@ export default {
                 minutes = minutes < 10 ? '0'+minutes : minutes;
                 var strTime = hours + ':' + minutes + ' ' + ampm;
                 return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
-              },
+            },
+            logout() {
+            this.$store.dispatch("LOGOUT");
+            this.$router.push("/login");
+          }
         }
       })
     }

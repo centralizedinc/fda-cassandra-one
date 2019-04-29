@@ -115,23 +115,33 @@ export default class UserAPI {
   static updateAccount(profile) {
 
     return new Promise((resolve, reject)=>{
-      axios.post('documents/avatars?account_id=' + profile.account._id, profile.avatar)
-      .then(result1=>{
-        if(result1.data.success){
-          profile.account.avatar = result1.data.model
-          return axios.post('secured/accounts/admin/' + profile.account._id, profile.account)
-        }else{
-          resolve(result1.data)
-        }
+      axios.post('/accounts/'+profile._id, profile)
+      .then(result=>{
+        resolve(result)
       })
-      .then(result2=>{
-        resolve(result2.data)
+      .catch(error=>{
+        reject(error)
       })
-      .catch(err=>{        
-        reject(err)
-      })
+    })
+
+    // return new Promise((resolve, reject)=>{
+    //   axios.post('documents/avatars?account_id=' + profile.account._id, profile.avatar)
+    //   .then(result1=>{
+    //     if(result1.data.success){
+    //       profile.account.avatar = result1.data.model
+    //       return axios.post('secured/accounts/admin/' + profile.account._id, profile.account)
+    //     }else{
+    //       resolve(result1.data)
+    //     }
+    //   })
+    //   .then(result2=>{
+    //     resolve(result2.data)
+    //   })
+    //   .catch(err=>{        
+    //     reject(err)
+    //   })
       
-    })    
+    // })    
   }
 
   static findAccount(id){

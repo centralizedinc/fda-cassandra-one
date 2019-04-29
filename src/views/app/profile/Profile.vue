@@ -8,8 +8,7 @@
             style="display: none"
             ref="image"
             @change="onFilePicked"
-            accept="image/*"
-        >
+            accept="image/*">
         <a @click="$refs.image.click()">
             <v-avatar size="150" style="left:40%; z-index:1">
                 <img src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/images/user/12.jpg" alt="alt">
@@ -22,25 +21,29 @@
                     name="last_name"
                     label="Last Name"
                     id="last_name"
+                    v-model="user.name.last"
                 ></v-text-field>
                 <v-text-field
                     name="first_name"
                     label="First Name"
                     id="first_name"
+                    v-model="user.name.first"
                 ></v-text-field>
                 <v-text-field
                     name="middle_name"
                     label="Middle Name"
                     id="middle_name"
+                    v-model="user.name.middle"
                 ></v-text-field>
                 <v-text-field
                     name="email"
                     label="Email"
                     id="email"
+                    v-model="user.email"
                 ></v-text-field>
                 <v-text-field
                     name="contact_no"
-                    label="Contact Number"
+                    label="Role"
                     id="contact_no"
                 ></v-text-field>
             </v-form>
@@ -48,7 +51,7 @@
         <v-divider></v-divider>
         <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn outline >Save</v-btn>
+            <v-btn outline @click="save">Save</v-btn>
         </v-card-actions>
     </v-card>
     </v-flex>
@@ -64,7 +67,36 @@
 import FabButtons from '@/components/FabButton'
 
 export default {
-    components:{FabButtons}
+    components:{FabButtons},
+    data(){
+        return{
+            user:null,
+            isLoading:false
+        }
+    },
+    created(){
+        this.init()
+    },
+    methods:{
+        init(){
+            this.user = JSON.parse(JSON.stringify(this.$store.state.user_session.user))
+        },
+        save(){
+            this.isLoading = true
+            this.$store.dispatch('UPDATE_ACCOUNT', this.user)
+            .then(result=>{
+                console.log(JSON.stringify(result))
+                this.isLoading = false
+                this.$notify({message:'Updated Profile!', color:'success'})
+            })
+            .catch(error=>{
+                console.error(error)
+                this.isLoading = false
+                this.$notifyError(error)
+            })
+        }
+    }
+    
 }
 </script>
 
