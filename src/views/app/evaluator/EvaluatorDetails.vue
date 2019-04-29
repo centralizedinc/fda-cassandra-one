@@ -62,13 +62,13 @@
                   <v-flex xs6>
                     <span class="font-weight-bold">Date Received</span>
                     <br>
-                    <span>{{docket.inspection_date}}</span>
+                    <span>{{ formatDate(docket.inspection_date) }}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
                     <span class="font-weight-bold">Date Docketed</span>
                     <br>
-                    <span>{{docket.date_docketed}}</span>
+                    <span>{{  formatDate(docket.date_docketed) }}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
@@ -340,7 +340,7 @@ export default {
         if_legal_order:this.value,
         comment:this.remarks
       })
-      this.docket.current_status=1;
+      this.docket.current_status=2;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
         console.log(JSON.stringify(result))
