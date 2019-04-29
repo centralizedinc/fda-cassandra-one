@@ -19,55 +19,83 @@
                   <v-container grid-list-xl>
                   <v-layout row wrap>
                   <v-flex xs6>
-                  <span class="font-weight-bold">Case Number</span><br>
-                  <span>cmp-apm-2013-130</span>
-                </v-flex>
-                <br>
-                <v-flex xs6>
-                  <span class="font-weight-bold">Ref/DTN #</span><br>
-                  <span>cmp-apm-2013-130</span>
-                </v-flex>
-                <br>
-                <v-flex xs6>
-                  <span class="font-weight-bold">Date Received</span><br>
-                  <span>cmp-apm-2013-130</span>
-                </v-flex>
-                <br>
-                <v-flex xs6>
-                  <span class="font-weight-bold">Date Docketed</span><br>
-                  <span>cmp-apm-2013-130</span>
-                </v-flex>
-                <br>
-                <v-flex xs6>
-                  <span class="font-weight-bold">Complainant</span><br>
-                  <span>cmp-apm-2013-130</span>
-                </v-flex>
-                <br>
-                <v-flex xs6>
-                  <span class="font-weight-bold">Complainant Address</span><br>
-                  <span>cmp-apm-2013-130</span>
-                </v-flex>
-                <br>
-                <v-flex xs6>
-                  <span class="font-weight-bold">Respondent</span><br>
-                  <span>cmp-apm-2013-130</span>
-                </v-flex>
-                <br>
-                <v-flex xs6>
-                  <span class="font-weight-bold">Respondent Address</span><br>
-                  <span>cmp-apm-2013-130</span>
-                </v-flex>
-                <br>
-                <v-flex xs6>
-                  <span class="font-weight-bold">Cause of Complaint</span><br>
-                  <span>cmp-apm-2013-130</span>
-                </v-flex>
-                <br>
-                <v-flex xs6>
-                  <span class="font-weight-bold">Product/s Involved (if any)</span><br>
-                  <span>cmp-apm-2013-130</span>
-                </v-flex>
-                <br>
+                    <span class="font-weight-bold">Case Number</span>
+                    <br>
+                    <span>{{docket.case_number}}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Ref/DTN #</span>
+                    <br>
+                    <span>{{docket.dtn}} </span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Date Received</span>
+                    <br>
+                    <span>{{ formatDate(docket.inspection_date) }}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Date Docketed</span>
+                    <br>
+                    <span>{{  formatDate(docket.date_docketed) }}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Complainant</span>
+                    <br>
+                    <span>{{docket.complainant_name}}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Cause of Complaint</span>
+                    <br>
+                    <span>{{docket.complaint_cause}}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Respondent</span>
+                    <br>
+                    <span>{{docket.establishment_owner}}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Respondent Address</span>
+                    <br>
+                    <span>{{docket.establishment_address}}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Laws Violated</span>
+                    <br>
+                    <span>{{docket.laws_violated}}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Product/s Involved (if any)</span>
+                    <br>
+                    <span>{{docket.product_involved}}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Action Taken</span>
+                    <br>
+                    <span>{{docket.action_taken}}</span>
+                  </v-flex>
+                  <br>
+                   <v-flex xs6>
+                    <span class="font-weight-bold">Legal Order</span>
+                    <br>
+                    <span>{{docket.if_legal_order}}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Comment</span>
+                    <br>
+                    <span>{{docket.comment}}</span>
+                  </v-flex>
+                  <br>
                 </v-layout>
                   </v-container>
                 </v-card-text>
@@ -151,7 +179,7 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
-              <v-btn block color="primary">Submit for Finalization</v-btn>
+              <v-btn block color="primary" @click="final()">Submit for Finalization</v-btn>
             </v-card-actions>
           </v-card>
         </v-navigation-drawer>
@@ -171,48 +199,78 @@ export default {
     return {
       tabs: null,
       finalAction: ["Legal Order", "Remand"],
+      docket: {},
      items: [
-        {
-          header: "Today"
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "Joel C. Ubalde, Special Investigator IV",
-          subtitle:
-            "<span class='text--primary'>about 21 hours ago</span> &mdash; Evaluated this case and Submit for Review"
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-          title: "Friane Gaitan, Special Investigator II",
-          subtitle:
-            "<span class='text--primary'>about 18 hours ago</span> &mdash; Updated this case and Evaluate Action/Status "
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-          title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
-          subtitle:
-            "<span class='text--primary'>about 15 hours ago</span> &mdash;  Uploaded a new case document "
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
-          subtitle:
-            "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
-        }
+        // {
+        //   header: "Today"
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+        //   title: "Joel C. Ubalde, Special Investigator IV",
+        //   subtitle:
+        //     "<span class='text--primary'>about 21 hours ago</span> &mdash; Evaluated this case and Submit for Review"
+        // },
+        // {
+        //   divider: true,
+        //   inset: true
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
+        //   title: "Friane Gaitan, Special Investigator II",
+        //   subtitle:
+        //     "<span class='text--primary'>about 18 hours ago</span> &mdash; Updated this case and Evaluate Action/Status "
+        // },
+        // {
+        //   divider: true,
+        //   inset: true
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
+        //   title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
+        //   subtitle:
+        //     "<span class='text--primary'>about 15 hours ago</span> &mdash;  Uploaded a new case document "
+        // },
+        // {
+        //   divider: true,
+        //   inset: true
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+        //   title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
+        //   subtitle:
+        //     "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
+        // }
       ]
     };
+  },
+  created() {
+    this.init();
+  },
+  methods: {
+    init(){
+      this.$miniNavbar();
+      this.docket = this.$store.state.dockets.active
+      console.log("this is docket of approver: " + JSON.stringify(this.docket))
+      // this.$notify({message:'Evaluating Case No: ', color:'success'})
+    },
+    final(){
+      this.docket.activities.push({
+        stage: 0,
+        status: 3,
+        // decision: 
+      })
+       this.docket.current_status=3;
+      this.$store.dispatch('UPDATE_DOCKET', this.docket)
+      .then(result=>{
+        console.log("review update docket result: " + JSON.stringify(result))
+        
+      })
+      .catch(error=>{
+        console.error(error)
+        this.$notifyError(error)
+      })
+      this.$router.push("/app/approval/details");
+    }
   }
 };
 </script>

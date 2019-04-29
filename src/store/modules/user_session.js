@@ -6,7 +6,8 @@ const initialState = {
   token: null,
   user: {},
   task: {},
-  registration_details: {}
+  registration_details: {},
+  permissions:[]
 };
 
 const state = initialState;
@@ -20,6 +21,10 @@ const mutations = {
     state.token = payload.token;
     state.isAuthenticated = payload.isMatch;
     console.log('LOGIN STATE: ' + JSON.stringify(state))
+  },
+  SET_USER_PERMISSIONS(state, payload){
+    console.log('SETTING PERMISSIONS: ' + JSON.stringify(payload))
+    state.permissions = payload
   },
   LOGOUT: function(state) {
     state.user = {};
