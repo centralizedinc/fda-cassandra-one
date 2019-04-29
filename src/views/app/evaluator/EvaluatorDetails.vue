@@ -318,6 +318,7 @@ export default {
     init(){
       this.$miniNavbar();
       this.docket = this.$store.state.dockets.active
+      console.log("this is docket of evaluator: " + JSON.stringify(this.docket))
       // this.$notify({message:'Evaluating Case No: ', color:'success'})
     },
     prettify(name) {
@@ -334,16 +335,18 @@ export default {
         window.open(url, '_blank')
     },
     evaluate(){
-      console.info(JSON.stringify(this.docket))
+      console.info("evaluate data: " + JSON.stringify(this.docket))
       this.docket.activities.push({
+        stage: 0,
+        status: 0,
         action_taken:this.selected_action,
         if_legal_order:this.value,
-        comment:this.remarks
+        comment:this.remarks,        
       })
       this.docket.current_status=2;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
-        console.log(JSON.stringify(result))
+        console.log("evaluate update docket result: " + JSON.stringify(result))
       })
       .catch(error=>{
         console.error(error)
