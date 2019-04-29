@@ -291,6 +291,13 @@ export default {
             .then(result =>{
                 console.log(JSON.stringify(result))
                 this.references = result
+                console.log("this is edit data: " + JSON.stringify(this.$store.state.dockets.active))
+            if(this.$store.state.dockets.active.edit){
+                this.$store.state.dockets.active.edit = false;
+                this.docket = this.$store.state.dockets.active
+                this.docket.license_validity = formatDate(this.docket.license_validity)
+                this.docket.inspection_date = formatDate(this.docket.inspection_date)
+            }
             })  
             .catch(error=>{
                 console.error(error)

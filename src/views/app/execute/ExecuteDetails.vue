@@ -321,11 +321,16 @@ export default {
     viewFile(url){
         window.open(url, '_blank')
     },
-    execute(){
-      this.docket.current_status=4;
+    save(){
+      this.docket.activities.push({
+        stage: 0,
+        status: 4,
+      })
+      this.docket.current_status=0;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
         console.log("review update docket result: " + JSON.stringify(result))
+
       })
       .catch(error=>{
         console.error(error)

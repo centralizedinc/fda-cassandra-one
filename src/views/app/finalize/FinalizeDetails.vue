@@ -295,7 +295,7 @@ export default {
     printSummon(){
       this.docket.activities.push({
         stage: 0,
-        status: 4,
+        status: 3,
       })
       this.docket.current_status=4;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)

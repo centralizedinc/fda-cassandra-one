@@ -112,7 +112,7 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
-              <v-btn block color="primary">Edit Case</v-btn>
+              <v-btn block color="primary" @click="edit()">Edit Case</v-btn>
             </v-card-actions>
           </v-card>
         </v-tab-item>
@@ -241,6 +241,7 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-btn block color="primary" @click="evaluate()">Submit for Review</v-btn>
+            <v-btn block color="primary" @click="decline()">Decline</v-btn>
           </v-card-actions>
         </v-card>
       </v-navigation-drawer>
@@ -335,14 +336,30 @@ export default {
         window.open(url, '_blank')
     },
     evaluate(){
-      console.info("evaluate data: " + JSON.stringify(this.docket))
-      this.docket.activities.push({
+      console.info("evaluate data: " + JSON.stringify(this.docket.activities))
+      var stage_case = false
+      this.docket.activities.forEach(element => {
+        if(element.status === 4)
+          stage_case = true
+      });
+      if(stage_case){
+        this.docket.activities.push({
+        stage: 1,
+        status: 0,
+        action_taken:this.selected_action,
+        if_legal_order:this.value,
+        comment:this.remarks,        
+        })
+      }else{
+        this.docket.activities.push({
         stage: 0,
         status: 0,
         action_taken:this.selected_action,
         if_legal_order:this.value,
         comment:this.remarks,        
       })
+      }
+      
       this.docket.current_status=1;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
@@ -352,6 +369,38 @@ export default {
         console.error(error)
         this.$notifyError(error)
       })
+    },
+    decline(){
+      console.info("evaluate data: " + JSON.stringify(this.docket))
+      this.docket.activities.push({
+        stage: 0,
+        status: 0,
+        action_taken:this.selected_action,
+        if_legal_order:this.value,
+        comment:this.remarks,        
+      })
+      this.docket.current_status=0;
+      this.$store.dispatch('UPDATE_DOCKET', this.docket)
+      .then(result=>{
+        console.log("evaluate update docket result: " + JSON.stringify(result))
+      })
+      .catch(error=>{
+        console.error(error)
+        this.$notifyError(error)
+      })
+    },
+    edit(){
+      this.docket.edit = true;
+      this.$store.dispatch('UPDATE_DOCKET', this.docket)
+      .then(result=>{
+        console.log("evaluate update docket result: " + JSON.stringify(result))
+        this.$router.push('/app/dockets/new') 
+      })
+      .catch(error=>{
+        console.error(error)
+        this.$notifyError(error)
+      })
+      
     }
    
   }
