@@ -21,61 +21,79 @@
                   <v-flex xs6>
                     <span class="font-weight-bold">Case Number</span>
                     <br>
-                    <span>cmp-apm-2013-130</span>
+                    <span>{{docket.case_number}}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
                     <span class="font-weight-bold">Ref/DTN #</span>
                     <br>
-                    <span>cmp-apm-2013-130</span>
+                    <span>{{docket.dtn}} </span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
                     <span class="font-weight-bold">Date Received</span>
                     <br>
-                    <span>cmp-apm-2013-130</span>
+                    <span>{{ formatDate(docket.inspection_date) }}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
                     <span class="font-weight-bold">Date Docketed</span>
                     <br>
-                    <span>cmp-apm-2013-130</span>
+                    <span>{{  formatDate(docket.date_docketed) }}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
                     <span class="font-weight-bold">Complainant</span>
                     <br>
-                    <span>cmp-apm-2013-130</span>
-                  </v-flex>
-                  <br>
-                  <v-flex xs6>
-                    <span class="font-weight-bold">Complainant Address</span>
-                    <br>
-                    <span>cmp-apm-2013-130</span>
-                  </v-flex>
-                  <br>
-                  <v-flex xs6>
-                    <span class="font-weight-bold">Respondent</span>
-                    <br>
-                    <span>cmp-apm-2013-130</span>
-                  </v-flex>
-                  <br>
-                  <v-flex xs6>
-                    <span class="font-weight-bold">Respondent Address</span>
-                    <br>
-                    <span>cmp-apm-2013-130</span>
+                    <span>{{docket.complainant_name}}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
                     <span class="font-weight-bold">Cause of Complaint</span>
                     <br>
-                    <span>cmp-apm-2013-130</span>
+                    <span>{{docket.complaint_cause}}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Respondent</span>
+                    <br>
+                    <span>{{docket.establishment_owner}}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Respondent Address</span>
+                    <br>
+                    <span>{{docket.establishment_address}}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Laws Violated</span>
+                    <br>
+                    <span>{{docket.laws_violated}}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
                     <span class="font-weight-bold">Product/s Involved (if any)</span>
                     <br>
-                    <span>cmp-apm-2013-130</span>
+                    <span>{{docket_product_involved}}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Action Taken</span>
+                    <br>
+                    <span>{{docket.action_taken}}</span>
+                  </v-flex>
+                  <br>
+                   <v-flex xs6>
+                    <span class="font-weight-bold">Legal Order</span>
+                    <br>
+                    <span>{{docket.if_legal_order}}</span>
+                  </v-flex>
+                  <br>
+                  <v-flex xs6>
+                    <span class="font-weight-bold">Comment</span>
+                    <br>
+                    <span>{{docket.comment}}</span>
                   </v-flex>
                   <br>
                 </v-layout>
