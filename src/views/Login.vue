@@ -5,38 +5,35 @@
         <v-toolbar dark color="primary">
           <span class="font-weight-light title">Login</span>
           <v-spacer></v-spacer>
-          <!-- <v-btn flat color="white">REGISTER</v-btn> -->
         </v-toolbar>
         <v-divider></v-divider>
         <v-form class="mt-4 login" @submit.prevent="login">  
-        <v-card-text>
-          
-                                
-          <v-text-field 
-          outline
-            name="name" 
-            label="Username" 
-            @keypress.enter="login" 
-            id="username"
-            autocomplete="username"
-            v-model="credentials.username"
-            color="primary"></v-text-field>
-          <v-text-field
-          outline
-            name="name"
-            label="Enter your password"
-            min="8"
-            autocomplete="current-password"
-            @keypress.enter="login"
-            :append-icon="value ? 'visibility' : 'visibility_off'"
-            @click:append="() => (value = !value)"
-            :type="value ? 'password' : 'text'"
-            v-model="credentials.password"
-            color="primary"
-          ></v-text-field>
-          
-          <!-- <v-divider></v-divider> -->
-        </v-card-text>
+          <v-card-text>
+            
+                                  
+            <v-text-field 
+            outline
+              name="name" 
+              label="Username" 
+              @keypress.enter="login" 
+              id="username"
+              autocomplete="username"
+              v-model="credentials.username"
+              color="primary"></v-text-field>
+            <v-text-field
+            outline
+              name="name"
+              label="Enter your password"
+              min="8"
+              autocomplete="current-password"
+              @keypress.enter="login"
+              :append-icon="value ? 'visibility' : 'visibility_off'"
+              @click:append="() => (value = !value)"
+              :type="value ? 'password' : 'text'"
+              v-model="credentials.password"
+              color="primary"
+            ></v-text-field>
+          </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn 
@@ -101,53 +98,70 @@ export default {
   data() {
     return {
       value: true,
-      credentials:{},
-      loading:false,
-      loading2:false,
-      dialog:false,
-      email:""
+      credentials: {},
+      loading: false,
+      loading2: false,
+      dialog: false,
+      email: ""
     };
   },
   methods: {
     login() {
       this.loading = true;
-      // this.$router.push("/app");  
-    //   this.$store.dispatch('LOGIN', this.credentials)
-    //     .then((res)=>{          
-    //       this.loading = false;
-    //       if(res.isMatch){
-    //         this.$router.push("/app");                        
-    //       }else{
-    //         this.credentials.password = "";
-    //         this.$notify({message:'Invalid User Credentials', color:'warning', icon:'error_outline'})
-    //       }
-          
-    //     })
-    //     .catch((err)=>{
-    //       this.loading = false;
-    //       this.$notify({message:'Oops! Something went wrong. Please try again.', color:'error', icon:'error_outline'})
-    //     })
+      // this.$router.push("/app");
+      this.$store
+        .dispatch("LOGIN", this.credentials)
+        .then(res => {
+          this.loading = false;
+          if (res.isMatch) {
+            this.$router.push("/app");
+          } else {
+            this.credentials.password = "";
+            this.$notify({
+              message: "Invalid User Credentials",
+              color: "warning",
+              icon: "error_outline"
+            });
+          }
+        })
+        .catch(err => {
+          this.loading = false;
+          this.$notify({
+            message: "Oops! Something went wrong. Please try again.",
+            color: "error",
+            icon: "error_outline"
+          });
+        });
     },
-    signup(){
-      this.$router.push("/signup")
+    signup() {
+      this.$router.push("/signup");
     },
-    forgot_password(){
+    forgot_password() {
       this.loading2 = true;
-      this.$store.dispatch('FORGOT_PASSWORD', this.email)
-      .then(res=>{
-        this.loading2 = false;
-        this.dialog = false
-        this.$notify({
-        message:"We have received your request for account recovery. Please check your email ("+this.email+") in order to proceed.", color:"success"})
-      })
-      .catch(err=>{
-        this.loading2 = false;
-        this.dialog = false
-        this.$notify({
-        message:"Could not associate your email ("+this.email+ ") to any user account.", color:"error"})
-      })
-      
-      
+      this.$store
+        .dispatch("FORGOT_PASSWORD", this.email)
+        .then(res => {
+          this.loading2 = false;
+          this.dialog = false;
+          this.$notify({
+            message:
+              "We have received your request for account recovery. Please check your email (" +
+              this.email +
+              ") in order to proceed.",
+            color: "success"
+          });
+        })
+        .catch(err => {
+          this.loading2 = false;
+          this.dialog = false;
+          this.$notify({
+            message:
+              "Could not associate your email (" +
+              this.email +
+              ") to any user account.",
+            color: "error"
+          });
+        });
     }
   }
 };

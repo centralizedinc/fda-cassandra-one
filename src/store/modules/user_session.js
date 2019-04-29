@@ -19,7 +19,7 @@ const mutations = {
     state.user = payload.user;
     state.token = payload.token;
     state.isAuthenticated = payload.isMatch;
-    new UserAPI(payload.token);
+    console.log('LOGIN STATE: ' + JSON.stringify(state))
   },
   LOGOUT: function(state) {
     state.user = {};
@@ -79,17 +79,22 @@ var actions = {
    */
   LOGIN: (context, credentials) => {
     return new Promise((resolve, reject) => {
-      api.login(credentials, (res, err) => {
-        if (!err) {
-          context.commit("LOGIN", res);
-          context.commit("INIT", res.token);
-          resolve(res);
-        } else {
-          console.log(JSON.stringify(err));
-          reject(err);
+      api.login(credentials)
+      .then(result =>{
+        if(result.data.success){
+          console.log("LOGIN: "+ JSON.stringify(result.data))
+          context.commit("INIT", result.data.model.token);
+          context.commit("LOGIN", result.data.model);          
+          resolve(result.data.model)
+        }else{
+          reject(result.data.error)
         }
-      });
-    });
+      })
+      .catch(err=>{
+        console.log(err);
+        reject(err);
+      })
+    })      
   },
 
   /**

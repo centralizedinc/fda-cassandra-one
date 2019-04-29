@@ -14,27 +14,14 @@ export default class UserAPI {
    * @param {Object} credentials 
    * @param {Function} cb 
    */
-  static login(credentials, cb) {
-    axios
-      .post(
-        "public/accounts/auth/admins", {role:'2'}, {
+  static login(credentials) {
+    return axios.post("/auth", {role:'2'}, {
           auth: {
             username: credentials.username,
             password: credentials.password
           }
         }
       )
-      .then(result => {
-        if (result.data.success) {
-          cb(result.data.model);
-        } else {
-          cb(null, result.data.errors);
-        }
-      })
-      .catch(err => {
-        console.log("err... " + err);
-        cb(null, err);
-      });
   }
 
 

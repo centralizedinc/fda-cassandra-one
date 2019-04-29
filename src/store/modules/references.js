@@ -4,13 +4,18 @@ const initialState = {
   clusters: [],
   regions: [],
   areas:[],
-  establishment_classification:[]
+  establishment_classification:[],
+  session_token:""
 };
 
 const state = initialState;
 
 //commits
 const mutations = {
+    INIT(state, token){
+        Object.assign(state, initialState);
+        state.session_token = token
+    },
     SET_REFERENCES(state, data){
         state = data
     },

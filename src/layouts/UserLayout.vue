@@ -28,7 +28,7 @@
         <v-btn icon slot="activator">
           <v-avatar size="40" color="teal">
             <img v-if="user.avatar" :src="check_avatar(user.avatar.location)" alt="alt">
-            <span v-else>{{user.first_name.substring(0,1) + user.last_name.substring(0,1)}}</span>
+            <span v-else>{{user.name.first.substring(0,1) + user.name.last.substring(0,1)}}</span>
           </v-avatar>
         </v-btn>
         <v-list two-line subheader>
@@ -82,15 +82,15 @@
             <v-list-tile-avatar class="mt-4">
               <v-btn fab icon slot="activator" @click="$defaultNavbar()">
                 <v-avatar size="50px" color="teal">
-                  <span class="white--text title">AB</span>
+                  <span class="white--text title">{{user.name.first.substring(0,1) + user.name.last.substring(0,1)}}</span>
                 </v-avatar>
               </v-btn>
             </v-list-tile-avatar>
             <v-spacer></v-spacer>
             <v-list-tile-content class="mt-4">
-              <v-list-tile-title class="body-2">Ariel Balita</v-list-tile-title>
+              <v-list-tile-title class="body-2">{{user.username}}</v-list-tile-title>
               <v-list-tile-sub-title class="caption">Last Logged in:</v-list-tile-sub-title>
-              <v-list-tile-sub-title class="caption">{{formatDate(new Date())}}</v-list-tile-sub-title>
+              <v-list-tile-sub-title class="caption">{{formatDate(user.last_login)}}</v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-action>
               <v-btn v-if="!$store.state.navbar.mini" flat icon @click="$miniNavbar()">
@@ -370,7 +370,14 @@ components:{notification},
       }
     };
   },
+  created(){
+    this.init();
+  },
   methods: {
+    init(){
+      console.log("State User: " + JSON.stringify(this.$store.state))
+      this.user = this.$store.state.user_session.user;
+    },
     activeRoute(route) {
       for (var i = 0; i < route.length; i++) {
         if (this.$route.name === route[i]) {
