@@ -249,15 +249,15 @@
                 </v-card-text>
                 <v-divider class="mb-3"></v-divider>
                 <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn outline color="secondary">Cancel</v-btn>
-                    <v-btn color="primary" @click="submit()">Submit</v-btn>
+                    <!-- <v-spacer></v-spacer> -->
+                    <v-btn :disabled="isLoading" color="secondary">Cancel</v-btn>
+                    <v-btn :loading="isLoading" color="primary" @click="submit()">Submit</v-btn>
                 </v-card-actions>
             </v-card>
         </v-flex> 
         <fab-buttons 
             :hide-default="true" 
-            :buttons="[{label:'Submit', action:'submit', icon:'send'},
+            :buttons="[{label:'Submit', action:'submit', icon:'send', loading:isLoading},
                         {label:'Cancel', action:'back', icon:'undo'}]"
             @submit="submit"
             @back="$router.push('/app')">
@@ -274,6 +274,7 @@ export default {
     components:{SiteMap, Uploader, FabButtons},
     data(){
         return {
+            isLoading:false,
             date_dialogs:[],
             docket:{},
             references:{},
@@ -300,15 +301,18 @@ export default {
             this.uploadedFiles = data.uploadedFiles;
         },
         submit(){
+            this.isLoading=true;
             //set initial activity
             this.docket.activities = [{stage:0,status:5}]
             this.$store.dispatch('NEW_DOCKET',{docket: this.docket, documents:this.formData})
-            .then(results=>{                
+            .then(results=>{   
+                this.isLoading=false;             
                 console.log('RESULTS: ' +JSON.stringify(results))
                 this.$notify({message:'New Case Created! \n Docket Number: ' + results.dtn})
-                // this.$router.push('/app')
+                this.$router.push('/app')
             })
             .catch(error=>{
+                this.isLoading=false;
                 console.error(error)
                 this.$notifyError(error)
             })

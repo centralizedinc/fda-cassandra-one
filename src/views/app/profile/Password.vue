@@ -46,7 +46,24 @@
 import FabButtons from '@/components/FabButton'
 
 export default {
-    components:{FabButtons}
+    components:{FabButtons},
+    data(){
+        return{
+            new_password:"",
+            user:{}
+        }
+    },
+    created(){
+        this.init()
+    },
+    methods:{
+        init(){
+            this.user = this.$store.state.user_session.user
+        },
+        save(){
+            
+        }
+    }
 }
 </script>
 
