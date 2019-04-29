@@ -343,7 +343,7 @@ export default {
         if_legal_order:this.value,
         comment:this.remarks,        
       })
-      this.docket.current_status=2;
+      this.docket.current_status=1;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
         console.log("evaluate update docket result: " + JSON.stringify(result))
