@@ -70,7 +70,8 @@ export default {
     components:{FabButtons},
     data(){
         return{
-            user:null
+            user:null,
+            isLoading:false
         }
     },
     created(){
@@ -78,10 +79,21 @@ export default {
     },
     methods:{
         init(){
-            this.user = this.$store.state.user_session.user
+            this.user = JSON.parse(JSON.stringify(this.$store.state.user_session.user))
         },
         save(){
-            
+            this.isLoading = true
+            this.$store.dispatch('UPDATE_ACCOUNT', this.user)
+            .then(result=>{
+                console.log(JSON.stringify(result))
+                this.isLoading = false
+                this.$notify({message:'Updated Profile!', color:'success'})
+            })
+            .catch(error=>{
+                console.error(error)
+                this.isLoading = false
+                this.$notifyError(error)
+            })
         }
     }
     

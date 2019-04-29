@@ -11,4 +11,12 @@ export default class DocketAPI {
     static init(){
         return axios.get('/references/');
     }
+
+    static findAll(){
+        return axios.get('/references/all')
+    }
+
+    static add(item){
+        return axios.post('/references', item)
+    }
 }

@@ -104,7 +104,7 @@
           <v-list-tile-action>
             <v-tooltip right>
               <v-btn slot="activator" icon>
-            <v-icon>email</v-icon> </v-btn> Inbox </v-tooltip>
+            <v-icon>archive</v-icon> </v-btn> Inbox </v-tooltip>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title class="body-1 font-weight-light">Inbox</v-list-tile-title>
@@ -243,6 +243,55 @@
           </v-list-tile-content>
         </v-list-tile>
         <v-divider></v-divider>
+
+        <v-tooltip right>
+          <v-list-group prepend-icon="settings" slot="activator" append-icon="expand_more">
+            <v-list-tile slot="activator">
+              <v-list-tile-title class="body-1 font-weight-light">System Administration</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile
+              @click="goTo('/app/admin/users')"
+              class="ma-1"
+              :style="activeRoute(['User Administration'])"
+            >
+              <v-list-tile-action>
+                <v-icon class="pl-4" small>account_circle</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title class="body-1 font-weight-light">Users</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <!-- PER  -->
+            <v-list-tile
+              @click="goTo('/app/admin/roles')"
+              class="ma-1"
+              :style="activeRoute(['Role Administration'])"
+            >
+              <v-list-tile-action>
+                <v-icon class="pl-4" small>supervisor_account</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title class="body-1 font-weight-light">Roles/Groups</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile
+              @click="goTo('/app/admin/tables')"
+              class="ma-1"
+              :style="activeRoute(['Reference Tables'])"
+            >
+              <v-list-tile-action>
+                <v-icon class="pl-4" small>dvr</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title class="body-1 font-weight-light">References</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list-group>Settings
+        </v-tooltip>
+
+        
+
+
         <!-- My Profile -->
         <v-list-tile @click="goTo('/app/profile')" :style="activeRoute(['My Profile'])">
           <v-list-tile-action>
