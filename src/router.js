@@ -26,6 +26,21 @@ export default new Router({
           component: () => import('@/views/app/Dashboard.vue')
         },
         {
+          path: 'admin/users',
+          name: 'User Administration',
+          component: () => import('@/views/app/admin/Users.vue')
+        },
+        {
+          path: 'admin/roles',
+          name: 'Role Administration',
+          component: () => import('@/views/app/admin/Roles.vue')
+        },
+        {
+          path: 'admin/tables',
+          name: 'Reference Tables',
+          component: () => import('@/views/app/admin/Reference.vue')
+        },
+        {
           path: 'dockets',
           name: 'Dockets',
           component: () => import('@/views/app/dockets/DocketList.vue')

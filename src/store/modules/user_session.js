@@ -102,7 +102,7 @@ var actions = {
    */
   LOGOUT: context => {
     context.commit("LOGOUT");
-    context.commit("CLEAR");
+    context.commit("INIT");
   },
 
   /**
