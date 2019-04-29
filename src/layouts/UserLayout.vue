@@ -110,7 +110,7 @@
             <v-list-tile slot="activator">
               <v-list-tile-title class="body-1 font-weight-light">Docket Management</v-list-tile-title>
             </v-list-tile>
-            <v-list-tile class="ma-1" @click="goTo('/app/dockets/new')" :style="activeRoute(['New Docket'])">
+            <v-list-tile v-if="allowed_access('DOCKET_CREATE')" class="ma-1" @click="goTo('/app/dockets/new')" :style="activeRoute(['New Docket'])">
               <v-list-tile-action>
                 <v-icon class="pl-4" small>add</v-icon>
               </v-list-tile-action>
@@ -119,7 +119,7 @@
               </v-list-tile-content>
             </v-list-tile>
             <!-- Evaluate  -->
-            <v-list-tile class="ma-1" @click="goTo('/app/cases/evaluate')" :style="activeRoute(['Evaluate Case'])">
+            <v-list-tile v-if="allowed_access('DOCKET_EVAL')" class="ma-1" @click="goTo('/app/cases/evaluate')" :style="activeRoute(['Evaluate Case'])">
               <v-list-tile-action>
                 <v-icon class="pl-4" small>description</v-icon>
               </v-list-tile-action>
@@ -128,7 +128,7 @@
               </v-list-tile-content>
             </v-list-tile>
             <!-- Review  -->
-            <v-list-tile class="ma-1" @click="goTo('/app/cases/review')" :style="activeRoute(['Review Case'])">
+            <v-list-tile v-if="allowed_access('DOCKET_REVIEW')" class="ma-1" @click="goTo('/app/cases/review')" :style="activeRoute(['Review Case'])">
               <v-list-tile-action>
                 <v-icon class="pl-4" small>rate_review</v-icon>
               </v-list-tile-action>
@@ -137,7 +137,7 @@
               </v-list-tile-content>
             </v-list-tile>
             <!-- Approve  -->
-            <v-list-tile class="ma-1" @click="goTo('/app/cases/approve')" :style="activeRoute(['Approve Case'])">
+            <v-list-tile v-if="allowed_access('DOCKET_APPROVAL')" class="ma-1" @click="goTo('/app/cases/approve')" :style="activeRoute(['Approve Case'])">
               <v-list-tile-action>
                 <v-icon class="pl-4" small>thumb_up</v-icon>
               </v-list-tile-action>
@@ -146,7 +146,7 @@
               </v-list-tile-content>
             </v-list-tile>
             <!-- Finalize  -->
-            <v-list-tile class="ma-1" @click="goTo('/app/cases/finalize')" :style="activeRoute(['Finalize Case'])">
+            <v-list-tile v-if="allowed_access('DOCKET_FINALIZATION')" class="ma-1" @click="goTo('/app/cases/finalize')" :style="activeRoute(['Finalize Case'])">
               <v-list-tile-action>
                 <v-icon class="pl-4" small>check_circle</v-icon>
               </v-list-tile-action>
@@ -155,12 +155,21 @@
               </v-list-tile-content>
             </v-list-tile>
             <!-- Execute  -->
-            <v-list-tile class="ma-1" @click="goTo('/app/cases/execute')" :style="activeRoute(['Execute Case'])">
+            <v-list-tile v-if="allowed_access('DOCKET_EXECUTION')" class="ma-1" @click="goTo('/app/cases/execute')" :style="activeRoute(['Execute Case'])">
               <v-list-tile-action>
                 <v-icon class="pl-4" small>playlist_add_check</v-icon>
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-title class="body-1 font-weight-light">Execution</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+
+            <v-list-tile v-if="allowed_access('DOCKET_APPEAL')" class="ma-1" @click="goTo('/app/cases/execute')" :style="activeRoute(['Execute Case'])">
+              <v-list-tile-action>
+                <v-icon class="pl-4" small>gavel</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title class="body-1 font-weight-light">Appeals</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
             <!-- appeal case
@@ -192,7 +201,7 @@
           </v-list-group>Docket Management
         </v-tooltip>
         <!-- Appeal -->
-        <v-tooltip right>
+        <!-- <v-tooltip right>
           <v-list-group prepend-icon="move_to_inbox" slot="activator" append-icon="expand_more">
             <v-list-tile slot="activator">
               <v-list-tile-title class="body-1 font-weight-light">Cases on Appeal</v-list-tile-title>
@@ -205,7 +214,6 @@
                 <v-list-tile-title class="body-1 font-weight-light">Motion for Reconsideration</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
-            <!-- PER  -->
             <v-list-tile @click="goTo('/app/cases/per')" class="ma-1" :style="activeRoute(['Post Execution Report'])">
               <v-list-tile-action>
                 <v-icon class="pl-4" small>playlist_add_check</v-icon>
@@ -215,10 +223,10 @@
               </v-list-tile-content>
             </v-list-tile>
           </v-list-group>Cases on Appeal
-        </v-tooltip>
-        <v-divider></v-divider>
+        </v-tooltip> -->
+        <!-- <v-divider></v-divider> -->
         <!-- Search case -->
-        <v-list-tile @click="searchDialog = true" :style="activeRoute(['Search Case'])">
+        <v-list-tile v-if="allowed_access('CASE_SEARCH')" @click="searchDialog = true" :style="activeRoute(['Search Case'])">
           <v-list-tile-action>
             <v-icon>search</v-icon>
           </v-list-tile-action>
@@ -240,7 +248,7 @@
           </v-card>
         </v-dialog>
         <!-- Case Board -->
-        <v-list-tile @click="goTo('/app')" :style="activeRoute(['Case Board'])">
+        <v-list-tile v-if="allowed_access('CASE_BOARD')" @click="goTo('/app/cases/board')" :style="activeRoute(['Case Board'])">
           <v-list-tile-action>
             <v-icon>view_column</v-icon>
           </v-list-tile-action>
@@ -248,14 +256,14 @@
             <v-list-tile-title class="body-1 font-weight-light">Case Board</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-divider></v-divider>
+        <!-- <v-divider></v-divider> -->
 
-        <v-tooltip right>
+        <v-tooltip right v-if="allowed_access('USERS') || allowed_access('ROLES') || allowed_access('TABLES')">
           <v-list-group prepend-icon="settings" slot="activator" append-icon="expand_more">
             <v-list-tile slot="activator">
               <v-list-tile-title class="body-1 font-weight-light">System Administration</v-list-tile-title>
             </v-list-tile>
-            <v-list-tile
+            <v-list-tile v-if="allowed_access('USERS')"
               @click="goTo('/app/admin/users')"
               class="ma-1"
               :style="activeRoute(['User Administration'])"
@@ -268,7 +276,7 @@
               </v-list-tile-content>
             </v-list-tile>
             <!-- PER  -->
-            <v-list-tile
+            <v-list-tile v-if="allowed_access('ROLES')"
               @click="goTo('/app/admin/roles')"
               class="ma-1"
               :style="activeRoute(['Role Administration'])"
@@ -280,7 +288,7 @@
                 <v-list-tile-title class="body-1 font-weight-light">Roles/Groups</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile
+            <v-list-tile v-if="allowed_access('TABLES')"
               @click="goTo('/app/admin/tables')"
               class="ma-1"
               :style="activeRoute(['Reference Tables'])"
@@ -362,6 +370,7 @@
     },
     data() {
       return {
+        
         isLoading: false,
         searchDialog: false,
         miniNav: false,
@@ -381,6 +390,11 @@
       init() {
         console.log("State User: " + JSON.stringify(this.$store.state))
         this.user = this.$store.state.user_session.user;
+        //find access
+        this.$store.dispatch('FIND_ROLE', this.user.role)
+        .then(results=>{          
+          this.$store.commit('SET_USER_PERMISSIONS',results.data.model.permissions)
+        })
       },
       activeRoute(route) {
         for (var i = 0; i < route.length; i++) {
