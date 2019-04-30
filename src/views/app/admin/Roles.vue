@@ -29,7 +29,7 @@
          <fab-button
             :hide-default="true" 
             :buttons="[{label:'New Role', action:'add', icon:'add'}]"
-            @add="add_dialog = true">   
+            @add="add">   
         </fab-button> 
 
         <v-dialog
@@ -44,7 +44,7 @@
                 </v-toolbar>               
                     <v-card-text>
                          <v-form ref="user_form">
-                             <v-text-field
+                             <v-text-field :disabled="isEdit"
                                 name="code"
                                 label="Code"
                                 id="code"
@@ -111,19 +111,20 @@
                                                         
 
                                                         <v-card-text>
-                                                            <v-list-tile avatar>
+                                                            <span class="font-weight-light">  {{element.name}}</span>
+                                                            <!-- <v-list-tile avatar> -->
                                                                 <!-- <v-list-tile-action>
                                                                     <v-icon color="success">error_outline</v-icon>
                                                                 </v-list-tile-action> -->
-                                                                <v-list-tile-content>
+                                                                <!-- <v-list-tile-content>
                                                                     <v-list-tile-title><span class="font-weight-light">  {{element.name}}</span></v-list-tile-title>
-                                                                </v-list-tile-content>
-                                                                <v-list-tile-action>
+                                                                </v-list-tile-content> -->
+                                                                <!-- <v-list-tile-action>
                                                                     <v-btn small flat icon color="error">
                                                                         <v-icon small>close</v-icon>
                                                                     </v-btn>
-                                                                </v-list-tile-action>
-                                                            </v-list-tile>
+                                                                </v-list-tile-action> -->
+                                                            <!-- </v-list-tile> -->
                                                              
                                                         </v-card-text>
                                                     </v-card>
@@ -140,7 +141,8 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn outline color="secondary" dark @click="add_dialog=false">Cancel</v-btn>
-                    <v-btn color="primary" @click="save" :loading="isLoading">Save</v-btn>
+                    <v-btn v-if="!isEdit" color="primary" @click="save" :loading="isLoading">Save</v-btn>
+                    <v-btn v-else color="primary" @click="edit" :loading="isLoading">Edit</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog> 
@@ -156,7 +158,9 @@ export default {
     components:{fabButton,draggable},
     data(){
         return{
-            selection_list:[
+            isEdit:false,
+            selection_list:[],
+            init_selection_list:[
                 {name:'Docket Creation', value:'DOCKET_CREATE'},
                 {name:'Docket Evaluation', value:'DOCKET_EVAL'},
                 {name:'Docket Review', value:'DOCKET_REVIEW'},
@@ -224,6 +228,37 @@ export default {
                 this.$notifyError(error)
             })
         },
+        edit(){
+            this.$store.dispatch('EDIT_ROLE', this.role)
+            .then(results=>{
+                this.$notify({message: 'Role edited.', color:'success'})
+                this.add_dialog = false;
+                this.init()
+            })
+            .catch(error =>{
+                console.error(error)
+                this.add_dialog = false;
+                this.$notifyError(error)
+            })
+        },
+        view(item){
+            this.isEdit = true;
+            this.role=JSON.parse(JSON.stringify(item));            
+            this.add_dialog = true;
+            this.selection_list = this.init_selection_list
+            this.selection_list = this.selection_list.filter(({ value: id1 }) => !this.role.permissions.some(({ value: id2 }) => id2 === id1));
+            
+        },
+        add(){
+            this.isEdit = false;
+            this.role={
+                permissions:[
+                    {name:'Add Items', value:''}
+                ]
+            };
+            this.add_dialog = true;
+            this.selection_list = this.init_selection_list
+        }
     }
 
 }

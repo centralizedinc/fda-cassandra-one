@@ -180,6 +180,7 @@
                 outline
                 label="Notes"
                 name="name"
+                v-model="remarks"
                 textarea
                 multi-line
                 counter
@@ -214,18 +215,22 @@
 </template>
 
 <script>
+import pdf from 'vue-pdf'
 import Uploader from "@/components/Uploader";
 import FabButtons from "@/components/FabButton";
 export default {
   components: {
     Uploader,
-    FabButtons
+    FabButtons,
+    pdf
   },
   data() {
     return {
       tabs: null,
       finalAction: ["Legal Order", "Remand"],
+      user_data:{},
       docket: {},
+      remarks: "",
      items: [
         // {
         //   header: "Today"
@@ -277,6 +282,7 @@ export default {
       this.$miniNavbar();
       this.docket = this.$store.state.dockets.active
       console.log("this is docket of finalize: " + JSON.stringify(this.docket))
+      this.user_data = this.$store.state.user_session.user
       // this.$notify({message:'Evaluating Case No: ', color:'success'})
     },
     prettify(name) {
@@ -293,16 +299,30 @@ export default {
         window.open(url, '_blank')
     },
     printSummon(){
+      var stage_case = 0
+      this.docket.activities.forEach(element => {
+        if(element.status === 4)
+          stage_case = 1
+      });
       this.docket.activities.push({
-        stage: 0,
+        stage: stage_case,
         status: 3,
+        comment:this.remarks,
+        user:{
+          username: this.user_data.username,
+          first_name: this.user_data.name.first,
+          last_name: this.user_data.name.last,
+          middle_name: this.user_data.name.middle,
+          email: this.user_data.email
+        }  
       })
       this.docket.current_status=4;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
          var details ={};
+         console.log("review update docket result: " + JSON.stringify(result))
       this.$download(details, "SUMMON", "summon.pdf");
-        console.log("review update docket result: " + JSON.stringify(result))
+      //  this.$download(this.docket, "RCPT", "fda-receipt.pdf");
       })
       .catch(error=>{
         console.error(error)

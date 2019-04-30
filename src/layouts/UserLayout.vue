@@ -182,9 +182,11 @@
               </v-list-tile-content>
             </v-list-tile>
 
-            <v-list-tile v-if="allowed_access('DOCKET_APPEAL')" class="ma-1" @click="goTo('/app/cases/execute')" :style="activeRoute(['Execute Case'])">
+            <v-list-tile v-if="allowed_access('DOCKET_APPEAL')" class="ma-1" @click="goTo('/app/cases/appeal')" :style="activeRoute(['Cases on Appeal'])">
               <v-list-tile-action>
-                <v-icon class="pl-4" small>gavel</v-icon>
+                 <v-tooltip right>
+              <v-btn slot="activator" icon>
+                <v-icon class="pl-4" small>gavel</v-icon> </v-btn> Cases on Appeal </v-tooltip>
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-title class="body-1 font-weight-light">Appeals</v-list-tile-title>
@@ -479,7 +481,7 @@
 <style>
   .bg {
     /* The image used */
-    background-image: url("https://i.postimg.cc/c4L0Zg5x/bg.png");
+    background-image: url("https://pixinvent.com/materialize-material-design-admin-template/app-assets/images/gallery/breadcrumb-bg.jpg");
     /* Full height */
     height: 100%;
     /* Center and scale the image nicely */

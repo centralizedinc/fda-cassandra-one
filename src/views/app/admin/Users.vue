@@ -31,7 +31,7 @@
         <fab-button
             :hide-default="true" 
             :buttons="[{label:'New User', action:'add', icon:'add'}]"
-            @add="add_dialog = true">   
+            @add="add">   
         </fab-button> 
 
         <v-dialog
@@ -52,7 +52,7 @@
                                 id="name"
                                 v-model="account.username"
                             ></v-text-field>
-                            <v-text-field
+                            <v-text-field v-if="!isEdit"
                             type="password"
                                 name="password"
                                 label="Password"
@@ -91,7 +91,8 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn outline color="secondary" dark @click="add_dialog=false">Cancel</v-btn>
-                    <v-btn color="primary" @click="save" :loading="isLoading">Save</v-btn>
+                    <v-btn v-if="!isEdit" color="primary" @click="save" :loading="isLoading">Save</v-btn>
+                    <v-btn v-else color="primary" @click="edit" :loading="isLoading">Edit</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>       
@@ -104,6 +105,7 @@ export default {
     components:{fabButton},
     data(){
         return{
+            isEdit:false,
             isLoading: false,
             add_dialog:false,
             roles:[],
@@ -138,18 +140,48 @@ export default {
             })
         },
         view(item){
-            this.account = item;
+            this.isEdit = true;
+            this.account = JSON.parse(JSON.stringify(item));
+            this.add_dialog = true;
+        },
+        add(){
+            this.isEdit = false;
+            this.account = {};
             this.add_dialog = true;
         },
         save(){
             this.isLoading = true
             this.$store.dispatch('ADD_ACCOUNT', this.account)
             .then(results=>{
-                console.log(JSON.stringify(results.data))
+                console.log('ADDING ACCOUNT: '+JSON.stringify(results.data))
                 this.isLoading=false;
-                this.$notify({message:'New User created.'})
-                this.add_dialog=false;
-                this.init()
+                if(results.data.success){                    
+                    this.$notify({message:'New User created.'})
+                    this.add_dialog=false;
+                    this.init()
+                }else{
+                    this.$notifyError(this.data.errors)
+                }
+            })
+            .catch(error=>{
+                console.error(error)
+                this.isLoading = false;
+                this.$notifyError(error)
+            })
+        },
+        edit(){
+            this.isLoading = true
+            this.$store.dispatch('EDIT_ACCOUNT', this.account)
+            .then(results=>{
+                console.log('EDIT ACCOUNT: '+JSON.stringify(results.data))
+                this.isLoading=false;
+                if(results.data.success){                    
+                    this.$notify({message:'Modified User.'})
+                    this.add_dialog=false;
+                    this.init()
+                }else{
+                    this.$notifyError(this.data.errors)
+                }
             })
             .catch(error=>{
                 console.error(error)
