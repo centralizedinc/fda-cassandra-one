@@ -376,7 +376,7 @@ export default {
       .then(result=>{
         console.log("evaluate update docket result: " + JSON.stringify(result))
         this.$notify({ message: "Success to Review!" });
-          this.$router.push("/app/cases/execute");
+          this.$router.push("/app/cases/evaluate");
       })
       .catch(error=>{
         console.error(error)
