@@ -327,6 +327,7 @@ export default {
           last_name: this.user_data.name.last,
           middle_name: this.user_data.name.middle,
           email: this.user_data.email
+<<<<<<< HEAD
         }
       });
       this.docket.current_status = 4;
@@ -344,6 +345,22 @@ export default {
           console.error(error);
           this.$notifyError(error);
         });
+=======
+        }  
+      })
+      // this.docket.current_status=4;
+      this.$store.dispatch('UPDATE_DOCKET', this.docket)
+      .then(result=>{
+         var details ={};
+         console.log("review update docket result: " + JSON.stringify(result))
+         this.$download(this.docket, "SUMMON", "summon.pdf");
+      //  this.$download(this.docket, "RCPT", "fda-receipt.pdf");
+      })
+      .catch(error=>{
+        console.error(error)
+        this.$notifyError(error)
+      })
+>>>>>>> e4f629c6b1bb16325bf109f9f0c8cfb3c51c00be
     }
   }
 };
