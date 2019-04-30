@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-card-text>
-      <span class="title">Sample Case Name</span>
+      <span class="title">Docket Number {{docket.dtn}}</span>
       <v-tabs
         class="elevation-1 mt-2"
         v-model="tabs"
@@ -18,7 +18,7 @@
             <v-card-text>
               <v-container grid-list-xl>
                 <v-layout row wrap>
-                    <v-flex xs6>
+                  <v-flex xs6>
                     <span class="font-weight-bold">Case Number</span>
                     <br>
                     <span>{{docket.case_number}}</span>
@@ -27,7 +27,7 @@
                   <v-flex xs6>
                     <span class="font-weight-bold">Ref/DTN #</span>
                     <br>
-                    <span>{{docket.dtn}} </span>
+                    <span>{{docket.dtn}}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
@@ -39,7 +39,7 @@
                   <v-flex xs6>
                     <span class="font-weight-bold">Date Docketed</span>
                     <br>
-                    <span>{{  formatDate(docket.date_docketed) }}</span>
+                    <span>{{ formatDate(docket.date_docketed) }}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
@@ -84,7 +84,7 @@
                     <span>{{docket.action_taken}}</span>
                   </v-flex>
                   <br>
-                   <v-flex xs6>
+                  <v-flex xs6>
                     <span class="font-weight-bold">Legal Order</span>
                     <br>
                     <span>{{docket.if_legal_order}}</span>
@@ -111,41 +111,44 @@
           <v-card flat>
             <v-card-text>
               <v-layout row wrap>
-                <v-flex v-for="item in docket.documents" :key="item.originalname" xs12 md4 pa-2 d-flex>
-                    <v-card  @click="viewFile(item.location)" style="cursor:zoom-in">
-                    <v-toolbar
-                        dark
-                    >
-                        {{prettify(item.originalname)}}
-                    </v-toolbar>
+                <v-flex
+                  v-for="item in docket.documents"
+                  :key="item.originalname"
+                  xs12
+                  md4
+                  pa-2
+                  d-flex
+                >
+                  <v-card @click="viewFile(item.location)" style="cursor:zoom-in">
+                    <v-toolbar dark>{{prettify(item.originalname)}}</v-toolbar>
                     <v-card-text>
-                        <v-layout row wrap align-center justify-center ma-0>
-                            <v-img
-                            v-if="item.mimetype != 'application/pdf'"
-                            :src="item.location"
-                            class="grey lighten-2"
-                            max-height="200"
-                            max-width="100"
-                            contain
-                            >
-                                <v-layout slot="placeholder" fill-height align-center justify-center ma-0>
-                                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                                </v-layout>
-                            </v-img>
-                            <div v-else>
-                                <pdf :src="'https://cors-anywhere.herokuapp.com/'+item.location"></pdf>
-                                <!-- <v-progress-circular  v-show="!loaded" indeterminate color="primary"></v-progress-circular> -->
-                            </div>
-                        </v-layout>
-                      </v-card-text>
-                    </v-card>
+                      <v-layout row wrap align-center justify-center ma-0>
+                        <v-img
+                          v-if="item.mimetype != 'application/pdf'"
+                          :src="item.location"
+                          class="grey lighten-2"
+                          max-height="200"
+                          max-width="100"
+                          contain
+                        >
+                          <v-layout slot="placeholder" fill-height align-center justify-center ma-0>
+                            <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                          </v-layout>
+                        </v-img>
+                        <div v-else>
+                          <pdf :src="'https://cors-anywhere.herokuapp.com/'+item.location"></pdf>
+                          <!-- <v-progress-circular  v-show="!loaded" indeterminate color="primary"></v-progress-circular> -->
+                        </div>
+                      </v-layout>
+                    </v-card-text>
+                  </v-card>
                 </v-flex>
               </v-layout>
             </v-card-text>
           </v-card>
         </v-tab-item>
         <!--recent activity  -->
-        <v-tab ripple>Recent Activity</v-tab>
+        <!-- <v-tab ripple>Recent Activity</v-tab>
         <v-tab-item>
           <v-card flat>
             <v-card-text>
@@ -162,6 +165,30 @@
                       <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
                     </v-list-tile-content>
                   </v-list-tile>
+                </template>
+              </v-list>
+            </v-card-text>
+          </v-card>
+        </v-tab-item>
+        </v-tabs>-->
+
+        <!--recent activity  -->
+        <v-tab ripple>Recent Activity</v-tab>
+        <v-tab-item>
+          <v-card flat>
+            <v-card-text>
+              <v-list three-line>
+                <template v-for="(item, index) in docket.activities">
+                  <v-list-tile :key="index" avatar>
+                    <v-list-tile-avatar>
+                      <v-img src="http://i.pravatar.cc/61"></v-img>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                      <v-list-tile-title v-html="item.user"></v-list-tile-title>
+                      <v-list-tile-sub-title v-html="createActivityDesc(item)"></v-list-tile-sub-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-divider inset :key="index"></v-divider>
                 </template>
               </v-list>
             </v-card-text>
@@ -185,7 +212,15 @@
               v-model="selected_action"
               autocomplete
             ></v-select>
-            <v-text-field outline label="Remarks" name="name" textarea multi-line counter></v-text-field>
+            <v-text-field
+              outline
+              label="Remarks"
+              name="name"
+              textarea
+              multi-line
+              counter
+              v-model="remarks"
+            ></v-text-field>
             <span class="subheading font-weight-light primary--text">Add Supporting Documents</span>
             <v-divider class="mb-3"></v-divider>
             <uploader class="caption"></uploader>
@@ -203,12 +238,12 @@
               >
                 <v-icon>save</v-icon>
               </v-btn>save
-            </v-tooltip> -->
+            </v-tooltip>-->
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn block color="primary" @click="approver()">Submit for Approval</v-btn>
-            <v-btn block color="primary" @click="decline()">Decline</v-btn>
+            <v-btn block color="primary" v-if="selected_action!=='Approved'" @click="decline()">Back to Evaluator</v-btn>
+            <v-btn block color="primary" v-else @click="approver()">Submit for Approval</v-btn>
             <!-- <v-btn
               block
               color="primary"
@@ -228,50 +263,52 @@ export default {
   },
   data() {
     return {
-      docket:{},
+      docket: {},
       tabs: null,
       actionTaken: ["Approved", "Major Revision", "Minor Revision"],
       selected_action: "",
+      remarks: "",
+      user_data: {},
       items: [
-        {
-          header: "Today"
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "Joel C. Ubalde, Special Investigator IV",
-          subtitle:
-            "<span class='text--primary'>about 21 hours ago</span> &mdash; Evaluated this case and Submit for Review"
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-          title: "Friane Gaitan, Special Investigator II",
-          subtitle:
-            "<span class='text--primary'>about 18 hours ago</span> &mdash; Updated this case and Evaluate Action/Status "
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-          title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
-          subtitle:
-            "<span class='text--primary'>about 15 hours ago</span> &mdash;  Uploaded a new case document "
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
-          subtitle:
-            "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
-        }
+        // {
+        //   header: "Today"
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+        //   title: "Joel C. Ubalde, Special Investigator IV",
+        //   subtitle:
+        //     "<span class='text--primary'>about 21 hours ago</span> &mdash; Evaluated this case and Submit for Review"
+        // },
+        // {
+        //   divider: true,
+        //   inset: true
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
+        //   title: "Friane Gaitan, Special Investigator II",
+        //   subtitle:
+        //     "<span class='text--primary'>about 18 hours ago</span> &mdash; Updated this case and Evaluate Action/Status "
+        // },
+        // {
+        //   divider: true,
+        //   inset: true
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
+        //   title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
+        //   subtitle:
+        //     "<span class='text--primary'>about 15 hours ago</span> &mdash;  Uploaded a new case document "
+        // },
+        // {
+        //   divider: true,
+        //   inset: true
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+        //   title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
+        //   subtitle:
+        //     "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
+        // }
       ]
     };
   },
@@ -279,77 +316,122 @@ export default {
     this.init();
   },
   methods: {
-    init(){
+    init() {
       this.$miniNavbar();
-      this.docket = this.$store.state.dockets.active
-      console.log("this is docket of reviewer: " + JSON.stringify(this.docket))
+      this.docket = this.$store.state.dockets.active;
+      console.log("this is docket of reviewer: " + JSON.stringify(this.docket));
+      this.user_data = this.$store.state.user_session.user;
       // this.$notify({message:'Evaluating Case No: ', color:'success'})
     },
     prettify(name) {
-        if (name.length > 15) {
-            return name.substring(0, 15) + " ..." + name.substring(name.length -3, name.length);
-        } else {
-            return name;
-        }
+      if (name.length > 15) {
+        return (
+          name.substring(0, 15) +
+          " ..." +
+          name.substring(name.length - 3, name.length)
+        );
+      } else {
+        return name;
+      }
     },
-    createActivityDesc(item){
-      return "<span class='primary--text'>"+this.formatDate(item.date_created)+"</span> &mdash;  Created Case Docket (Docket Number: "+this.docket.dtn+")"
+    // createActivityDesc(item){
+    //   return "<span class='primary--text'>"+this.formatDate(item.date_created)+"</span> &mdash;  Created Case Docket (Docket Number: "+this.docket.dtn+")"
+    // },
+    viewFile(url) {
+      window.open(url, "_blank");
     },
-    viewFile(url){
-        window.open(url, '_blank')
-    },
-    approver(){
+    approver() {
+      var stage_case = 0;
+      this.docket.activities.forEach(element => {
+        if (element.status === 4) stage_case = 1;
+      });
       this.docket.activities.push({
-        stage: 0,
+        stage: stage_case,
         status: 1,
+        action_taken: this.selected_action,
+        // if_legal_order:this.value,
+        comment: this.remarks,
+        user: {
+          username: this.user_data.username,
+          first_name: this.user_data.name.first,
+          last_name: this.user_data.name.last,
+          middle_name: this.user_data.name.middle,
+          email: this.user_data.email
+        }
         // out data on ff. var
         // action_taken_by_SL: ,
         // comment: ,
         // action_taken_OIC_LSSC: ,
         // final_action: ,
-        // reason_for_remanding: 
-      })
-      this.docket.current_status=2;
-      this.$store.dispatch('UPDATE_DOCKET', this.docket)
-      .then(result=>{
-        console.log("review update docket result: " + JSON.stringify(result))
-      })
-      .catch(error=>{
-        console.error(error)
-        this.$notifyError(error)
-      })
+        // reason_for_remanding:
+      });
+
+      this.docket.current_status = 2;
+      this.$store
+        .dispatch("UPDATE_DOCKET", this.docket)
+        .then(result => {
+          console.log("review update docket result: " + JSON.stringify(result));
+          this.$notify({ message: "Success to Approve!" });
+          this.$router.push("/app/cases/review");
+        })
+        .catch(error => {
+          console.error(error);
+          this.$notifyError(error);
+        });
     },
-    decline(){
-      console.info("evaluate data: " + JSON.stringify(this.docket))
+    decline() {
+      console.info("evaluate data: " + JSON.stringify(this.docket));
+      var stage_case = 0;
+      this.docket.activities.forEach(element => {
+        if (element.status === 4) stage_case = 1;
+      });
       this.docket.activities.push({
-        stage: 0,
-        status: 0,
-        action_taken:this.selected_action,
-        if_legal_order:this.value,
-        comment:this.remarks,        
-      })
-      this.docket.current_status=0;
-      this.$store.dispatch('UPDATE_DOCKET', this.docket)
-      .then(result=>{
-        console.log("evaluate update docket result: " + JSON.stringify(result))
-      })
-      .catch(error=>{
-        console.error(error)
-        this.$notifyError(error)
-      })
+        stage: stage_case,
+        status: 1,
+        action_taken: this.selected_action,
+        // if_legal_order:this.value,
+        comment: this.remarks,
+        user: {
+          username: this.user_data.username,
+          first_name: this.user_data.name.first,
+          last_name: this.user_data.name.last,
+          middle_name: this.user_data.name.middle,
+          email: this.user_data.email
+        }
+        // out data on ff. var
+        // action_taken_by_SL: ,
+        // comment: ,
+        // action_taken_OIC_LSSC: ,
+        // final_action: ,
+        // reason_for_remanding:
+      });
+      this.docket.current_status = 0;
+      this.$store
+        .dispatch("UPDATE_DOCKET", this.docket)
+        .then(result => {
+          console.log(
+            "evaluate update docket result: " + JSON.stringify(result)
+          );
+        })
+        .catch(error => {
+          console.error(error);
+          this.$notifyError(error);
+        });
     },
-    edit(){
+    edit() {
       this.docket.edit = true;
-      this.$store.dispatch('UPDATE_DOCKET', this.docket)
-      .then(result=>{
-        console.log("evaluate update docket result: " + JSON.stringify(result))
-        this.$router.push('/app/dockets/new') 
-      })
-      .catch(error=>{
-        console.error(error)
-        this.$notifyError(error)
-      })
-      
+      this.$store
+        .dispatch("UPDATE_DOCKET", this.docket)
+        .then(result => {
+          console.log(
+            "evaluate update docket result: " + JSON.stringify(result)
+          );
+          this.$router.push("/app/dockets/new");
+        })
+        .catch(error => {
+          console.error(error);
+          this.$notifyError(error);
+        });
     }
   }
 };

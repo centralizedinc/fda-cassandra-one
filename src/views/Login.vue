@@ -1,108 +1,117 @@
 <template>
-<div>
-  <v-container grid-list-md text-xs-left>
-  <v-layout align-center justify-center>
-     <v-flex xs12 md6 mr-5 pa-1>
-        <v-card class="tCard elevation-10">
-          <v-img :src="require('@/assets/logo.png')" aspect-ratio="2.75"></v-img>
-          <v-card-text
-            class="subheading black--text"
-          >Cassandra 1.0 is a centralized Docket Management System and serves as the official repository for the administrative proceedings for the Food and Drug Administration (FDA) Philippines. The system allows the Legal Services Support Team to access FDA's administrative proceedings and rule-making documents more readily, including Federal Registers, Petitions, supporting documents and comments.</v-card-text>
-        </v-card>
-      </v-flex>
-    <v-flex xs12 md6 ml-5 mr-5 pa-2>
-      <v-card>
-        <v-toolbar dark color="primary">
-          <span class="font-weight-light title">Login</span>
-          <v-spacer></v-spacer>
-        </v-toolbar>
-        <v-divider></v-divider>
-        <v-form class="mt-4 login" @submit.prevent="login">  
-          <v-card-text>
-            
-                                  
-            <v-text-field 
-            outline
-              name="name" 
-              label="Username" 
-              @keypress.enter="login" 
-              id="username"
-              autocomplete="username"
-              v-model="credentials.username"
-              color="primary"></v-text-field>
-            <v-text-field
-            outline
-              name="name"
-              label="Enter your password"
-              min="8"
-              autocomplete="current-password"
-              @keypress.enter="login"
-              :append-icon="value ? 'visibility' : 'visibility_off'"
-              @click:append="() => (value = !value)"
-              :type="value ? 'password' : 'text'"
-              v-model="credentials.password"
-              color="primary"
-            ></v-text-field>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn 
-              outline 
-              color="secondary" 
-              class="caption font-weight-light"
-              @click="signup()">Sign-up</v-btn>
-            <v-btn
-              color="primary"
-              :loading="loading"
-              type="submit"
-              class="caption font-weight-light">Login</v-btn>              
-          </v-card-actions>  
-          <v-divider></v-divider>    
-          <v-btn 
-            flat 
-            block 
-            color="primary" 
-            class="caption font-weight-light"
-            @click.native="dialog =true">Forgot Password?</v-btn>
+  <div>
+    <v-container grid-list-md text-xs-left>
+      <v-layout align-center justify-center>
+        <v-flex xs12 md6 mr-5 pa-1>
+          <v-card class="tCard elevation-10">
+            <v-img :src="require('@/assets/logo.png')" aspect-ratio="2.75"></v-img>
+            <v-card-text
+              class="subheading black--text"
+            >Cassandra 1.0 is a centralized Docket Management System and serves as the official repository for the administrative proceedings for the Food and Drug Administration (FDA) Philippines. The system allows the Legal Services Support Team to access FDA's administrative proceedings and rule-making documents more readily, including Federal Registers Petitions, supporting documents and comments.</v-card-text>
+          </v-card>
+        </v-flex>
+        <v-flex xs12 md6 ml-5 mr-5 pa-2>
+          <v-card class="elevation-15">
+            <v-toolbar dark color="primary">
+              <span class="font-weight-light title">Login</span>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+            <v-divider></v-divider>
+            <v-form class="mt-4 login" @submit.prevent="login">
+              <v-card-text>
+                <v-text-field
+                  outline
+                  name="name"
+                  label="Username"
+                  @keypress.enter="login"
+                  id="username"
+                  autocomplete="username"
+                  v-model="credentials.username"
+                  color="primary"
+                ></v-text-field>
+                <v-text-field
+                  outline
+                  name="name"
+                  label="Enter your password"
+                  min="8"
+                  autocomplete="current-password"
+                  @keypress.enter="login"
+                  :append-icon="value ? 'visibility' : 'visibility_off'"
+                  @click:append="() => (value = !value)"
+                  :type="value ? 'password' : 'text'"
+                  v-model="credentials.password"
+                  color="primary"
+                ></v-text-field>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  outline
+                  color="secondary"
+                  class="caption font-weight-light"
+                  @click="signup()"
+                >Sign-up</v-btn>
+                <v-btn
+                  color="primary"
+                  :loading="loading"
+                  type="submit"
+                  class="caption font-weight-light"
+                >Login</v-btn>
+              </v-card-actions>
+              <v-divider></v-divider>
+              <v-btn
+                flat
+                block
+                color="primary"
+                class="caption font-weight-light"
+                @click.native="dialog =true"
+              >Forgot Password?</v-btn>
             </v-form>
-      </v-card>
-    </v-flex>
-    <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="300px"
-      transition="dialog-transition"
-    >
-      <v-card>
-        <v-toolbar dark color="primary">
-          <span class="title font-weight-light">Forgot Password</span>
-          <v-spacer></v-spacer>
-          <v-btn flat icon @click.native="dialog=false">
-            <v-icon>close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-card-text>
-          <span class="subheading font-weight-thin">Enter your email address to recover your account.</span>
-          <v-text-field
-          class="font-weight-thin"
-          outline
-          v-model="email"
-            name="name"
-            label="Email Address"
-            id="email"
-          ></v-text-field>
-          <v-divider></v-divider>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn outline color="secondary" class="caption font-weight-light" @click.native="dialog =false">Cancel</v-btn>
-          <v-btn color="primary" class="caption font-weight-light" :loading="loading2" @click="forgot_password">Submit</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-layout>
-  </v-container>
-</div>
+          </v-card>
+        </v-flex>
+        <v-dialog v-model="dialog" persistent max-width="300px" transition="dialog-transition">
+          <v-card>
+            <v-toolbar dark color="primary">
+              <span class="title font-weight-light">Forgot Password</span>
+              <v-spacer></v-spacer>
+              <v-btn flat icon @click.native="dialog=false">
+                <v-icon>close</v-icon>
+              </v-btn>
+            </v-toolbar>
+            <v-card-text>
+              <span
+                class="subheading font-weight-thin"
+              >Enter your email address to recover your account.</span>
+              <v-text-field
+                class="font-weight-thin"
+                outline
+                v-model="email"
+                name="name"
+                label="Email Address"
+                id="email"
+              ></v-text-field>
+              <v-divider></v-divider>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                outline
+                color="secondary"
+                class="caption font-weight-light"
+                @click.native="dialog =false"
+              >Cancel</v-btn>
+              <v-btn
+                color="primary"
+                class="caption font-weight-light"
+                :loading="loading2"
+                @click="forgot_password"
+              >Submit</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -198,4 +207,3 @@ export default {
   will-change: box-shadow, transform;
 }
 </style>
-

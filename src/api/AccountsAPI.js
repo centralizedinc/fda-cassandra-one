@@ -11,4 +11,8 @@ export default class AccountsAPI {
     static add(account){
         return axios.post('/accounts', account)
     }
+
+    static edit(account){
+        return axios.post('/accounts/'+account._id, account)
+    }
 }
