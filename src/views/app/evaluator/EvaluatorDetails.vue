@@ -375,6 +375,8 @@ export default {
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
         console.log("evaluate update docket result: " + JSON.stringify(result))
+        this.$notify({ message: "Success to Review!" });
+          this.$router.push("/app/cases/execute");
       })
       .catch(error=>{
         console.error(error)

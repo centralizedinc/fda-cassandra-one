@@ -336,14 +336,9 @@ export default {
     viewFile(url) {
       window.open(url, "_blank");
     },
-<<<<<<< HEAD
-    save() {
-      var stage_case = 0;
-=======
     save(){
       var stage_case = 0
       console.log("this is docket execute details: " + JSON.stringify(this.docket))
->>>>>>> e4f629c6b1bb16325bf109f9f0c8cfb3c51c00be
       this.docket.activities.forEach(element => {
         if (element.status === 4) stage_case = 1;
       });
@@ -363,7 +358,7 @@ export default {
         .dispatch("UPDATE_DOCKET", this.docket)
         .then(result => {
           console.log("review update docket result: " + JSON.stringify(result));
-          this.$notify({ message: "Success to Appeal!" });
+          this.$notify({ message: "Success to Save!" });
           this.$router.push("/app/cases/execute");
         })
         .catch(error => {
