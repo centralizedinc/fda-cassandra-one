@@ -320,7 +320,8 @@ export default {
     init(){
       this.$miniNavbar();
       this.docket = this.$store.state.dockets.active
-      console.log("this is docket of evaluator: " + JSON.stringify(this.docket))      
+      console.log("this is docket of evaluator: " + JSON.stringify(this.docket))
+      console.log("this is docket activities: " + JSON.stringify(this.docket.activities))      
        console.log("this is user data: " + JSON.stringify(this.$store.state.user_session.user))
       this.user_data = this.$store.state.user_session.user
       // this.$notify({message:'Evaluating Case No: ', color:'success'})
@@ -353,7 +354,7 @@ export default {
         if_legal_order:this.value,
         comment:this.remarks,   
         user:{
-          username: this.ser_data.username,
+          username: this.user_data.username,
           first_name: this.user_data.name.first,
           last_name: this.user_data.name.last,
           middle_name: this.user_data.name.middle,

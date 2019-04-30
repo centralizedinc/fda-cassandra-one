@@ -49,8 +49,12 @@ export default {
         },
         createActivityDesc(item){
           console.log("Item#########" + JSON.stringify(item))
-          return "<span class='primary--text'>"+this.formatDate(item.date_created)+"</span> &mdash;  Created Case Docket (Docket Number: "+this.docket.dtn+")"
+          return "<span class='primary--text'>"+this.formatDate(item.date_created)+"</span> &mdash;  Created Case Docket (Docket Number: "+this.docket.dtn+")  Date Modified "+this.docket.date_modified+""
         },
+        // createActivityDesc(item){
+        //   console.log("Item#########" + JSON.stringify(item))
+        //   return "<span class='primary--text'>"+this.formatDate(item.date_created)+"</span> &mdash;  Created Case Docket (Docket Number: "+this.docket.dtn+")  Date Modified "+this.formatDate(item.date_modified)+""
+        // },
       }
     })
   }
