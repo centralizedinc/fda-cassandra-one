@@ -40,7 +40,7 @@
                         </v-flex>                        
                         <v-flex xs12 >
                             <v-layout row wrap>
-                                <template v-for="(item, index) in dockets_analytics.data">
+                                <template v-for="(item, index) in dockets_analytics.data" v-if="item.count">
                                     <v-flex xs5 :key="`a${index}`">
                                         <v-tooltip bottom>
                                             <span slot="activator" class="caption white--text">{{getCaseStatus(item.current_status)}}</span>
@@ -49,7 +49,7 @@
                                     </v-flex>
                                     <v-flex xs7 align-center justify-center d-flex :key="`b${index}`">
                                         <v-tooltip bottom>
-                                            <v-progress-linear slot="activator" color="success" height="3" :value="item.count"></v-progress-linear>
+                                            <v-progress-linear slot="activator" :color="getProgressColor(item.current_status)" height="3" :value="parseFloat(item.count/dockets_analytics.total)*100"></v-progress-linear>
                                             {{item.count}}
                                         </v-tooltip>
                                     </v-flex>
@@ -80,7 +80,7 @@
                         </v-flex>                        
                         <v-flex xs12 >
                             <v-layout row wrap>
-                                <template v-for="(item, index) in cases_analytics.data">
+                                <template v-for="(item, index) in cases_analytics.data" v-if="item.count">
                                     <v-flex xs5 :key="`a${index}`">
                                         <v-tooltip bottom>
                                             <span slot="activator" class="caption white--text">{{getCaseStatus(item.current_status)}}</span>
@@ -89,7 +89,7 @@
                                     </v-flex>
                                     <v-flex xs7 align-center justify-center d-flex :key="`b${index}`">
                                         <v-tooltip bottom>
-                                            <v-progress-linear slot="activator" color="success" height="3" :value="item.count"></v-progress-linear>
+                                            <v-progress-linear slot="activator" :color="getProgressColor(item.current_status)" height="3" :value="parseFloat(item.count/cases_analytics.total)*100"></v-progress-linear>
                                             {{item.count}}
                                         </v-tooltip>
                                     </v-flex>
@@ -120,7 +120,7 @@
                         </v-flex>                        
                         <v-flex xs12 >
                             <v-layout row wrap>
-                                <template v-for="(item, index) in appeals_analytics.data">
+                                <template v-for="(item, index) in appeals_analytics.data" v-if="item.count">
                                     <v-flex xs5 :key="`a${index}`">
                                         <v-tooltip bottom>
                                             <span slot="activator" class="caption white--text">{{getCaseStatus(item.current_status)}}</span>
@@ -129,7 +129,7 @@
                                     </v-flex>
                                     <v-flex xs7 align-center justify-center d-flex :key="`b${index}`">
                                         <v-tooltip bottom>
-                                            <v-progress-linear slot="activator" color="success" height="3" :value="item.count"></v-progress-linear>
+                                            <v-progress-linear slot="activator" :color="getProgressColor(item.current_status)" height="3" :value="parseFloat(item.count/appeals_analytics.total)*100"></v-progress-linear>
                                             {{item.count}}
                                         </v-tooltip>
                                     </v-flex>
@@ -213,24 +213,24 @@
                 <v-divider></v-divider>
                 <v-card-text>
                     <v-timeline align-top dense>
-                        <v-timeline-item v-for="n in 7" :key="n"
-                        color="success"
-                            small
-                            >
-                        <template v-slot:icon>
-                            <v-avatar size="40">
-                            <img :src="'http://i.pravatar.cc/6'+n">                                
-                            </v-avatar>
-                        </template>
-                        <v-alert
-                            :value="true"
-                            color="new_releases"
-                            icon="check"
-                            >
-                            <!-- <div class="caption font-weight-thin">{{new Date()}}</div> -->
-                                <div class="caption font-weight-light">New Case Docket Created</div>
-                                <div class="caption font-weight-thin">Docket Number: 2019-12346</div> 
-                        </v-alert>
+                        <v-timeline-item v-for="(item, index) in activities_analytics" :key="index"
+                            color="success"
+                            small>
+                            <template v-slot:icon>
+                                <v-avatar size="40">
+                                    <img :src="'http://i.pravatar.cc/6'+index">                                
+                                </v-avatar>
+                            </template>
+                            <v-alert
+                                :value="true"
+                                color="new_releases"
+                                icon="check">
+                                <!-- <div class="caption font-weight-thin">{{new Date()}}</div> -->
+                                <div class="caption font-weight-light">{{getCaseType(item.stage)}} {{getCaseStatus(item.status)}}</div>
+                                <div class="caption font-weight-thin" v-if="item.dtn">Docket Number: {{item.dtn}}</div> 
+                                <div class="caption font-weight-thin" v-if="item.case_number">Case Number: {{item.case_number}}</div> 
+                                <div class="caption font-weight-thin">{{formatDate(item.date_created)}}</div> 
+                            </v-alert>
                         <!-- <v-card>
                             <v-card-text>
                                 <div class="caption font-weight-thin">{{new Date()}}</div>
@@ -331,6 +331,9 @@ export default {
     },
     appeals_analytics() {
       return this.$store.state.analytics.appeals;
+    },
+    activities_analytics() {
+      return this.$store.state.analytics.activities;
     }
   },
   methods: {
@@ -342,6 +345,9 @@ export default {
         })
         .then(result => {
           return this.$store.dispatch("GET_APPEALS_ANALYTICS", refresh);
+        })
+        .then(result => {
+          return this.$store.dispatch("GET_ACTIVITIES_ANALYTICS", refresh);
         })
         .catch(err => {
           this.$notifyError(err);

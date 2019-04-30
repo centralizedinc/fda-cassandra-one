@@ -74,6 +74,12 @@
           ></v-text-field>
           <v-text-field
             class="right-input input"
+            label="Product Involved"
+            readonly
+            :value="selected_item.product_involved"
+          ></v-text-field>
+          <v-text-field
+            class="right-input input"
             label="Complainant"
             readonly
             :value="selected_item.complainant_name"
@@ -88,7 +94,7 @@
         <v-divider></v-divider>
         <v-card-actions>
           <!-- <v-spacer></v-spacer> -->
-          <v-btn color="primary" block @click="view">Review</v-btn>
+          <v-btn color="primary" block @click="view">Open Case</v-btn>
         </v-card-actions>
       </v-card>
     </v-navigation-drawer>

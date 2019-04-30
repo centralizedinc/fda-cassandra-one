@@ -13,6 +13,7 @@ const initialState = {
         total: 0,
         data: []
     },
+    activities: [],
     session_token: ""
 };
 
@@ -32,12 +33,15 @@ const mutations = {
     SET_APPEALS_ANALYTICS(state, data) {
         state.appeals = data;
     },
+    SET_ACTIVITIES_ANALYTICS(state, data) {
+        state.activities = data;
+    }
 };
 
 const actions = {
     GET_DOCKETS_ANALYTICS(context, refresh) {
         return new Promise((resolve, reject) => {
-            if (context.state.dockets.data.length === 0 || refresh) {
+            if (!context.state.dockets.data.length || refresh) {
                 api
                     .getDockets()
                     .then(results => {
@@ -60,7 +64,7 @@ const actions = {
 
     GET_CASES_ANALYTICS(context, refresh) {
         return new Promise((resolve, reject) => {
-            if (context.state.cases.data.length === 0 || refresh) {
+            if (!context.state.cases.data.length || refresh) {
                 api
                     .getCases()
                     .then(results => {
@@ -83,7 +87,7 @@ const actions = {
 
     GET_APPEALS_ANALYTICS(context, refresh) {
         return new Promise((resolve, reject) => {
-            if (context.state.appeals.data.length === 0 || refresh) {
+            if (!context.state.appeals.data.length || refresh) {
                 api
                     .getAppeals()
                     .then(results => {
@@ -100,6 +104,28 @@ const actions = {
                     });
             } else {
                 resolve(context.state.appeals);
+            }
+        });
+    },
+
+    GET_ACTIVITIES_ANALYTICS(context, refresh) {
+        return new Promise((resolve, reject) => {
+            if (!context.state.activities.length || refresh) {
+                api.getActivities()
+                    .then(results => {
+                        if (results.data.success) {
+                            context.commit("SET_ACTIVITIES_ANALYTICS", results.data.model);
+                            resolve(results.data.model);
+                        } else {
+                            context.commit("SET_ACTIVITIES_ANALYTICS", context.state.activities);
+                            reject(results.data.errors);
+                        }
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+            } else {
+                resolve(context.state.activities);
             }
         });
     }

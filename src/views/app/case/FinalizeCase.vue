@@ -18,7 +18,7 @@
         </v-card-title>
         <v-data-table :headers="headers" :items="items" :search="search" class="pa-1">
           <template v-slot:items="props">
-            <tr @click="view(props.item)" style="cursor:pointer">
+            <tr @click="preview(props.item)" style="cursor:pointer">
               <td>{{ props.item.dtn }}</td>
               <td>{{ formatDate(props.item.date_docketed) }}</td>
               <td>{{ props.item.establishment_name }}</td>
@@ -38,6 +38,66 @@
         </v-data-table>
       </v-card>
     </v-flex>
+    <v-navigation-drawer right app temporary v-model="previewNav">
+      <v-card>
+        <v-toolbar dark color="primary">
+          <span class="title font-weight-light">Finalization Preview</span>
+          <v-spacer></v-spacer>
+          <v-btn flat icon @click="view">
+            <v-icon>launch</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <v-card-text>
+          <v-text-field
+            class="right-input input"
+            label="Docket Number"
+            readonly
+            :value="selected_item.dtn"
+          ></v-text-field>
+          <v-text-field
+            class="right-input input"
+            label="Date Docketed"
+            readonly
+            :value="formatDate(selected_item.date_docketed)"
+          ></v-text-field>
+          <v-text-field
+            class="right-input input"
+            label="Establishment Name"
+            readonly
+            :value="selected_item.establishment_name"
+          ></v-text-field>
+          <v-text-field
+            class="right-input input"
+            label="Establishment Owner"
+            readonly
+            :value="selected_item.establishment_owner"
+          ></v-text-field>
+          <v-text-field
+            class="right-input input"
+            label="Product Involved"
+            readonly
+            :value="selected_item.product_involved"
+          ></v-text-field>
+          <v-text-field
+            class="right-input input"
+            label="Complainant"
+            readonly
+            :value="selected_item.complainant_name"
+          ></v-text-field>
+          <v-textarea
+            rows="2"
+            label="Cause of Complaint"
+            readonly
+            :value="selected_item.complaint_cause"
+          ></v-textarea>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <!-- <v-spacer></v-spacer> -->
+          <v-btn color="primary" block @click="view">Open Case</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-navigation-drawer>
   </v-layout>
 </template>
 
@@ -45,6 +105,8 @@
 export default {
   data() {
     return {
+      previewNav: false,
+      selected_item: {},
       search: "",
       headers: [
         {
@@ -106,19 +168,24 @@ export default {
         .dispatch("GET_DOCKETS_FINALIZE", true)
         .then(results => {
           this.items = results;
-          console.log("GET_DOCKETS_FINALIZE: " + JSON.stringify(this.items));
         })
         .catch(error => {});
     },
-    view(docket) {
+    view() {
+      console.log("finalize case: " + JSON.stringify(this.selected_item));
+      this.$store.commit("SET_ACTIVE_DOCKET", this.selected_item);
       this.$router.push("/app/finalize/details");
     },
-    create() {
-      this.$router.push("/app/dockets/new");
+    preview(docket) {
+      this.selected_item = docket;
+      this.previewNav = true;
     }
   }
 };
 </script>
 
 <style>
+.right-input input {
+  text-align: right;
+}
 </style>

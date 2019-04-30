@@ -311,6 +311,16 @@ export default {
         },
         submit(){
             this.isLoading=true;
+            this.docket.activities.push({
+                comment:"Edit form",    
+                user:{
+                username: this.ser_data.username,
+                first_name: this.user_data.name.first,
+                last_name: this.user_data.name.last,
+                middle_name: this.user_data.name.middle,
+                email: this.user_data.email
+                }     
+            })
             if(this.update){
                 this.$store.dispatch('UPDATE_DOCKET', this.docket)
             .then(result=>{
@@ -325,7 +335,13 @@ export default {
             })
             }else{
                 //set initial activity
-            this.docket.activities = [{stage:0,status:5}]
+            this.docket.activities = [{stage:0,status:5,user:{
+          username: this.ser_data.username,
+          first_name: this.user_data.name.first,
+          last_name: this.user_data.name.last,
+          middle_name: this.user_data.name.middle,
+          email: this.user_data.email
+        }   }]
             this.$store.dispatch('NEW_DOCKET',{docket: this.docket, documents:this.formData})
             .then(results=>{   
                 this.isLoading=false;             
