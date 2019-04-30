@@ -20,6 +20,9 @@ const initialState = {
       },
       ADD_ACCOUNT(context, account){
         return api.add(account)
+      },
+      EDIT_ACCOUNT(context, account){
+        return api.edit(account)
       }
      
   }

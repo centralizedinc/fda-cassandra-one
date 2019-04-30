@@ -46,7 +46,11 @@ export default {
         logout() {
           this.$store.dispatch("LOGOUT");
           this.$router.push("/login");
-        }
+        },
+        createActivityDesc(item){
+          console.log("Item#########" + JSON.stringify(item))
+          return "<span class='primary--text'>"+this.formatDate(item.date_created)+"</span> &mdash;  Created Case Docket (Docket Number: "+this.docket.dtn+")"
+        },
       }
     })
   }

@@ -332,9 +332,9 @@ export default {
             return name;
         }
     },
-    createActivityDesc(item){
-      return "<span class='primary--text'>"+this.formatDate(item.date_created)+"</span> &mdash;  Created Case Docket (Docket Number: "+this.docket.dtn+")"
-    },
+    // createActivityDesc(item){
+    //   return "<span class='primary--text'>"+this.formatDate(item.date_created)+"</span> &mdash; "+this.docket.user+" Created Case Docket (Docket Number: "+this.docket.dtn+")"
+    // },
     viewFile(url){
         window.open(url, '_blank')
     },
