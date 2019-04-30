@@ -349,83 +349,6 @@ export default {
     viewFile(url) {
       window.open(url, "_blank");
     },
-<<<<<<< HEAD
-    evaluate() {
-      console.info("evaluate data: " + JSON.stringify(this.docket.activities));
-      var stage_case = false;
-      this.docket.activities.forEach(element => {
-        if (element.status === 4) stage_case = true;
-      });
-      if (stage_case) {
-        this.docket.activities.push({
-          stage: 1,
-          status: 0,
-          action_taken: this.selected_action,
-          if_legal_order: this.value,
-          comment: this.remarks,
-          user: {
-            username: this.ser_data.username,
-            first_name: this.user_data.name.first,
-            last_name: this.user_data.name.last,
-            middle_name: this.user_data.name.middle,
-            email: this.user_data.email
-          }
-        });
-      } else {
-        this.docket.activities.push({
-          stage: 0,
-          status: 0,
-          action_taken: this.selected_action,
-          if_legal_order: this.value,
-          comment: this.remarks,
-          user: {
-            username: this.user_data.username,
-            first_name: this.user_data.name.first,
-            last_name: this.user_data.name.last,
-            middle_name: this.user_data.name.middle,
-            email: this.user_data.email
-          }
-        });
-      }
-
-      this.docket.current_status = 1;
-      this.$store
-        .dispatch("UPDATE_DOCKET", this.docket)
-        .then(result => {
-          console.log(
-            "evaluate update docket result: " + JSON.stringify(result)
-          );
-          this.$notify({message:'Success to Review!'})
-          this.$router.push("/app/cases/evaluate");
-        })
-        .catch(error => {
-          console.error(error);
-          this.$notifyError(error);
-        });
-    },
-    decline() {
-      console.info("evaluate data: " + JSON.stringify(this.docket));
-      this.docket.activities.push({
-        stage: 0,
-        status: 0,
-        action_taken: this.selected_action,
-        if_legal_order: this.value,
-        comment: this.remarks
-      });
-      this.docket.current_status = 0;
-      this.$store
-        .dispatch("UPDATE_DOCKET", this.docket)
-        .then(result => {
-          console.log(
-            "evaluate update docket result: " + JSON.stringify(result)
-          );
-          this.$router.push("/app/cases/evaluate");
-        })
-        .catch(error => {
-          console.error(error);
-          this.$notifyError(error);
-        });
-=======
     evaluate(){
       console.info("evaluate data: " + JSON.stringify(this.docket.activities))
       var stage_case = 0
@@ -452,6 +375,8 @@ export default {
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
         console.log("evaluate update docket result: " + JSON.stringify(result))
+        this.$notify({ message: "Success to Review!" });
+          this.$router.push("/app/cases/execute");
       })
       .catch(error=>{
         console.error(error)
@@ -489,7 +414,6 @@ export default {
         console.error(error)
         this.$notifyError(error)
       })
->>>>>>> e4f629c6b1bb16325bf109f9f0c8cfb3c51c00be
     },
     edit() {
       this.docket.edit = true;
