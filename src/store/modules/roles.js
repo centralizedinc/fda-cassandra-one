@@ -27,6 +27,10 @@ const actions = {
 
     ADD_ROLE(context, role){
         return api.add(role)
+    },
+
+    EDIT_ROLE(context, role){
+        return api.edit(role)
     }
 
 }
