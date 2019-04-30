@@ -145,7 +145,7 @@
           </v-card>
         </v-tab-item>
         <!--recent activity  -->
-        <v-tab ripple>Recent Activity</v-tab>
+        <!-- <v-tab ripple>Recent Activity</v-tab>
         <v-tab-item>
           <v-card flat>
             <v-card-text>
@@ -162,6 +162,31 @@
                       <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
                     </v-list-tile-content>
                   </v-list-tile>
+                </template>
+              </v-list>
+            </v-card-text>
+          </v-card>
+        </v-tab-item>
+      </v-tabs> -->
+
+      <!--recent activity  -->
+        <v-tab ripple>Recent Activity</v-tab>
+        <v-tab-item>
+          <v-card flat>
+            <v-card-text>
+              <v-list three-line>
+                <template v-for="(item, index) in docket.activities">
+                  
+                  <v-list-tile :key="index" avatar>
+                    <v-list-tile-avatar>
+                      <v-img src="http://i.pravatar.cc/61"></v-img>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                      <v-list-tile-title v-html="item.user"></v-list-tile-title>
+                      <v-list-tile-sub-title v-html="createActivityDesc(item)"></v-list-tile-sub-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-divider inset :key="index"></v-divider>
                 </template>
               </v-list>
             </v-card-text>
@@ -185,7 +210,7 @@
               v-model="selected_action"
               autocomplete
             ></v-select>
-            <v-text-field outline label="Remarks" name="name" textarea multi-line counter></v-text-field>
+            <v-text-field outline label="Remarks" name="name" textarea multi-line counter v-model="remarks"></v-text-field>
             <span class="subheading font-weight-light primary--text">Add Supporting Documents</span>
             <v-divider class="mb-3"></v-divider>
             <uploader class="caption"></uploader>
@@ -232,46 +257,48 @@ export default {
       tabs: null,
       actionTaken: ["Approved", "Major Revision", "Minor Revision"],
       selected_action: "",
+      remarks: "",
+      user_data: {},
       items: [
-        {
-          header: "Today"
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "Joel C. Ubalde, Special Investigator IV",
-          subtitle:
-            "<span class='text--primary'>about 21 hours ago</span> &mdash; Evaluated this case and Submit for Review"
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-          title: "Friane Gaitan, Special Investigator II",
-          subtitle:
-            "<span class='text--primary'>about 18 hours ago</span> &mdash; Updated this case and Evaluate Action/Status "
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-          title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
-          subtitle:
-            "<span class='text--primary'>about 15 hours ago</span> &mdash;  Uploaded a new case document "
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
-          subtitle:
-            "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
-        }
+        // {
+        //   header: "Today"
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+        //   title: "Joel C. Ubalde, Special Investigator IV",
+        //   subtitle:
+        //     "<span class='text--primary'>about 21 hours ago</span> &mdash; Evaluated this case and Submit for Review"
+        // },
+        // {
+        //   divider: true,
+        //   inset: true
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
+        //   title: "Friane Gaitan, Special Investigator II",
+        //   subtitle:
+        //     "<span class='text--primary'>about 18 hours ago</span> &mdash; Updated this case and Evaluate Action/Status "
+        // },
+        // {
+        //   divider: true,
+        //   inset: true
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
+        //   title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
+        //   subtitle:
+        //     "<span class='text--primary'>about 15 hours ago</span> &mdash;  Uploaded a new case document "
+        // },
+        // {
+        //   divider: true,
+        //   inset: true
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+        //   title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
+        //   subtitle:
+        //     "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
+        // }
       ]
     };
   },
@@ -283,6 +310,7 @@ export default {
       this.$miniNavbar();
       this.docket = this.$store.state.dockets.active
       console.log("this is docket of reviewer: " + JSON.stringify(this.docket))
+      this.user_data = this.$store.state.user_session.user
       // this.$notify({message:'Evaluating Case No: ', color:'success'})
     },
     prettify(name) {
@@ -292,16 +320,31 @@ export default {
             return name;
         }
     },
-    createActivityDesc(item){
-      return "<span class='primary--text'>"+this.formatDate(item.date_created)+"</span> &mdash;  Created Case Docket (Docket Number: "+this.docket.dtn+")"
-    },
+    // createActivityDesc(item){
+    //   return "<span class='primary--text'>"+this.formatDate(item.date_created)+"</span> &mdash;  Created Case Docket (Docket Number: "+this.docket.dtn+")"
+    // },
     viewFile(url){
         window.open(url, '_blank')
     },
     approver(){
-      this.docket.activities.push({
-        stage: 0,
+      var stage_case = 0
+      this.docket.activities.forEach(element => {
+        if(element.status === 4)
+          stage_case = 1
+      });
+        this.docket.activities.push({
+        stage: stage_case,
         status: 1,
+        action_taken:this.selected_action,
+        // if_legal_order:this.value,
+        comment:this.remarks,
+        user:{
+          username: this.user_data.username,
+          first_name: this.user_data.name.first,
+          last_name: this.user_data.name.last,
+          middle_name: this.user_data.name.middle,
+          email: this.user_data.email
+        }    
         // out data on ff. var
         // action_taken_by_SL: ,
         // comment: ,
@@ -309,6 +352,8 @@ export default {
         // final_action: ,
         // reason_for_remanding: 
       })
+      
+      
       this.docket.current_status=2;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
@@ -321,12 +366,30 @@ export default {
     },
     decline(){
       console.info("evaluate data: " + JSON.stringify(this.docket))
-      this.docket.activities.push({
-        stage: 0,
-        status: 0,
+      var stage_case = 0
+      this.docket.activities.forEach(element => {
+        if(element.status === 4)
+          stage_case = 1
+      });
+        this.docket.activities.push({
+        stage: stage_case,
+        status: 1,
         action_taken:this.selected_action,
-        if_legal_order:this.value,
-        comment:this.remarks,        
+        // if_legal_order:this.value,
+        comment:this.remarks,
+        user:{
+          username: this.user_data.username,
+          first_name: this.user_data.name.first,
+          last_name: this.user_data.name.last,
+          middle_name: this.user_data.name.middle,
+          email: this.user_data.email
+        }    
+        // out data on ff. var
+        // action_taken_by_SL: ,
+        // comment: ,
+        // action_taken_OIC_LSSC: ,
+        // final_action: ,
+        // reason_for_remanding: 
       })
       this.docket.current_status=0;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)

@@ -236,46 +236,47 @@ export default {
       execute: ["Served", "Not Served"],
       execute_details: [],
       selected_execute: "",
+      user_data: {},
       items: [
-        {
-          header: "Today"
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "Joel C. Ubalde, Special Investigator IV",
-          subtitle:
-            "<span class='text--primary'>about 21 hours ago</span> &mdash; Evaluated this case and Submit for Review"
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-          title: "Friane Gaitan, Special Investigator II",
-          subtitle:
-            "<span class='text--primary'>about 18 hours ago</span> &mdash; Updated this case and Evaluate Action/Status "
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-          title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
-          subtitle:
-            "<span class='text--primary'>about 15 hours ago</span> &mdash;  Uploaded a new case document "
-        },
-        {
-          divider: true,
-          inset: true
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
-          subtitle:
-            "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
-        }
+        // {
+        //   header: "Today"
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+        //   title: "Joel C. Ubalde, Special Investigator IV",
+        //   subtitle:
+        //     "<span class='text--primary'>about 21 hours ago</span> &mdash; Evaluated this case and Submit for Review"
+        // },
+        // {
+        //   divider: true,
+        //   inset: true
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
+        //   title: "Friane Gaitan, Special Investigator II",
+        //   subtitle:
+        //     "<span class='text--primary'>about 18 hours ago</span> &mdash; Updated this case and Evaluate Action/Status "
+        // },
+        // {
+        //   divider: true,
+        //   inset: true
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
+        //   title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
+        //   subtitle:
+        //     "<span class='text--primary'>about 15 hours ago</span> &mdash;  Uploaded a new case document "
+        // },
+        // {
+        //   divider: true,
+        //   inset: true
+        // },
+        // {
+        //   avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+        //   title: "Taciana Daisy E. Pascual,  Admin Aide VI, LSSC",
+        //   subtitle:
+        //     "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
+        // }
       ],
       docket: {}
     };
@@ -306,6 +307,7 @@ export default {
       this.$miniNavbar();
       this.docket = this.$store.state.dockets.active
       console.log("this is docket of execute: " + JSON.stringify(this.docket))
+      this.user_data = this.$store.state.user_session.user
       // this.$notify({message:'Evaluating Case No: ', color:'success'})
     },
     prettify(name) {
@@ -322,9 +324,21 @@ export default {
         window.open(url, '_blank')
     },
     save(){
+      var stage_case = 0
+      this.docket.activities.forEach(element => {
+        if(element.status === 4)
+          stage_case = 1
+      });
       this.docket.activities.push({
-        stage: 0,
+        stage: stage_case,
         status: 4,
+        user:{
+          username: this.user_data.username,
+          first_name: this.user_data.name.first,
+          last_name: this.user_data.name.last,
+          middle_name: this.user_data.name.middle,
+          email: this.user_data.email
+        } 
       })
       this.docket.current_status=0;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
