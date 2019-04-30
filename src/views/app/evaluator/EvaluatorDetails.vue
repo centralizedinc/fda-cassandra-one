@@ -363,7 +363,7 @@ export default {
         if_legal_order:this.value,
         comment:this.remarks,   
         user:{
-          username: this.ser_data.username,
+          username: this.user_data.username,
           first_name: this.user_data.name.first,
           last_name: this.user_data.name.last,
           middle_name: this.user_data.name.middle,
