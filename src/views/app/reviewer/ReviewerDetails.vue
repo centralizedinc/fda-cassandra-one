@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-card-text>
-      <span class="title">Sample Case Name</span>
+      <span class="title">Docket Number {{docket.dtn}}</span>
       <v-tabs
         class="elevation-1 mt-2"
         v-model="tabs"
@@ -242,8 +242,8 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn block color="primary" @click="approver()">Submit for Approval</v-btn>
-            <v-btn block color="primary" @click="decline()">Decline</v-btn>
+            <v-btn block color="primary" v-if="selected_action!=='Approved'" @click="decline()">Back to Evaluator</v-btn>
+            <v-btn block color="primary" v-else @click="approver()">Submit for Approval</v-btn>
             <!-- <v-btn
               block
               color="primary"

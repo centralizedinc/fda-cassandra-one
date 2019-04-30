@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-card-text>
-      <span class="title">Sample Case Name</span>
+      <span class="title">Docket Number {{docket.dtn}}</span>
       <v-tabs
         class="elevation-1 mt-2"
         v-model="tabs"
@@ -243,7 +243,7 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-btn block color="primary" @click="evaluate()">Submit for Review</v-btn>
-            <v-btn block color="primary" @click="decline()">Decline</v-btn>
+            <!-- <v-btn block color="primary" @click="decline()">Decline</v-btn> -->
           </v-card-actions>
         </v-card>
       </v-navigation-drawer>
@@ -376,7 +376,7 @@ export default {
       .then(result=>{
         console.log("evaluate update docket result: " + JSON.stringify(result))
         this.$notify({ message: "Success to Review!" });
-          this.$router.push("/app/cases/execute");
+          this.$router.push("/app/cases/evaluate");
       })
       .catch(error=>{
         console.error(error)

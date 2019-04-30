@@ -13,6 +13,7 @@ import notify from "@/plugins/notify";
 import navbar from "@/plugins/navbar";
 
 
+
 import * as VueGoogleMaps from 'vue2-google-maps'
 
 Vue.config.productionTip = false

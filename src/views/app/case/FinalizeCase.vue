@@ -94,7 +94,7 @@
         <v-divider></v-divider>
         <v-card-actions>
           <!-- <v-spacer></v-spacer> -->
-          <v-btn color="primary" block @click="view">Evaluate</v-btn>
+          <v-btn color="primary" block @click="view">Open Case</v-btn>
         </v-card-actions>
       </v-card>
     </v-navigation-drawer>

@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-card-text>
-      <span class="title">Sample Case Name</span>
+      <span class="title">Docket Number {{docket.dtn}}</span>
       <v-tabs
         class="elevation-1 mt-2"
         v-model="tabs"
@@ -221,12 +221,14 @@
 </template>
 
 <script>
+import pdf from 'vue-pdf'
 import Uploader from "@/components/Uploader";
 import FabButtons from "@/components/FabButton";
 export default {
   components: {
     Uploader,
-    FabButtons
+    FabButtons,
+    pdf
   },
   data() {
     return {
@@ -334,8 +336,8 @@ export default {
       .then(result=>{
          var details ={};
          console.log("review update docket result: " + JSON.stringify(result))
-         this.$download(this.docket, "SUMMON", "summon.pdf");
-         this.$notify({ message: "Success to Print!" });
+         this.$print(this.docket, "SUMMON");
+         this.$notify({ message: "Summon for this case has been printed" });
           this.$router.push("/app/cases/finalize");
       //  this.$download(this.docket, "RCPT", "fda-receipt.pdf");
       })
