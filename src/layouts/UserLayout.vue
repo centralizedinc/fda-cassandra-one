@@ -479,7 +479,7 @@
 <style>
   .bg {
     /* The image used */
-    background-image: url("https://pixinvent.com/materialize-material-design-admin-template/app-assets/images/gallery/breadcrumb-bg.jpg");
+    background-image: url("https://i.postimg.cc/c4L0Zg5x/bg.png");
     /* Full height */
     height: 100%;
     /* Center and scale the image nicely */

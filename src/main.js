@@ -10,12 +10,15 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import mixins from "@/plugins/mixins"
 import notify from "@/plugins/notify";
 import navbar from "@/plugins/navbar";
+import print from 'fda-pdf-printer-plugin'
+
 
 import * as VueGoogleMaps from 'vue2-google-maps'
 
 Vue.config.productionTip = false
 
 Vue.use(mixins)
+Vue.use(print)
 Vue.use(notify, store)
 Vue.use(navbar, store)
 Vue.use(VueGoogleMaps, {

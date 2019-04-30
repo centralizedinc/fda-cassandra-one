@@ -205,7 +205,7 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
-              <v-btn block color="primary" @click="printSummon">Print</v-btn>
+              <v-btn block color="primary" @click="printSummon()">Print</v-btn>
             </v-card-actions>
           </v-card>
         </v-navigation-drawer>
@@ -300,7 +300,7 @@ export default {
       this.docket.current_status=4;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
-         var details ="";
+         var details ={};
       this.$download(details, "SUMMON", "summon.pdf");
         console.log("review update docket result: " + JSON.stringify(result))
       })
