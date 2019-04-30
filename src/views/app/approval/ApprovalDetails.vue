@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-card-text>
-      <span class="title">Sample Case Name</span>
+      <span class="title">Docket Number {{docket.dtn}}</span>
       <v-tabs
         class="elevation-1 mt-2"
         v-model="tabs"
