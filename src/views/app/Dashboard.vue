@@ -32,32 +32,22 @@
                 <v-card-text>
                     <v-layout row wrap>
                         <v-flex xs9>
-                            <span class="display-2 white--text font-weight-bold">10</span>
-                            <p class="title  white--text font-weight-bold mt-2">For Summon</p>
+                            <span class="display-2 white--text font-weight-bold">{{dockets_analytics.total}}</span>
+                            <p class="title  white--text font-weight-bold mt-2">For Dockets</p>
                         </v-flex>
                         <v-flex xs3 align-center justify-center d-flex>
                             <v-icon style="font-size:60px; color:rgba(0,0,0,.15)">gavel</v-icon>
                         </v-flex>                        
                         <v-flex xs12 >
                             <v-layout row wrap>
-                                <v-flex xs5>
-                                    <span class="caption white--text">Open</span>
-                                </v-flex>
-                                <v-flex xs7 align-center justify-center d-flex>
-                                    <v-progress-linear color="success" height="3" :value="30"></v-progress-linear>
-                                </v-flex>
-                                <v-flex xs5>
-                                    <span class="caption white--text">In Progress</span>
-                                </v-flex>
-                                <v-flex xs7 align-center justify-center d-flex>
-                                    <v-progress-linear color="warning" height="3" :value="60"></v-progress-linear>
-                                </v-flex>
-                                <v-flex xs5>
-                                    <span class="caption white--text">Close</span>
-                                </v-flex>
-                                <v-flex xs7 align-center justify-center d-flex>
-                                    <v-progress-linear color="error" height="3" :value="10"></v-progress-linear>
-                                </v-flex>
+                                <template v-for="(item, index) in dockets_analytics.data">
+                                    <v-flex xs5 :key="`a${index}`">
+                                        <span class="caption white--text">{{getCaseStatus(item.current_status)}}</span>
+                                    </v-flex>
+                                    <v-flex xs7 align-center justify-center d-flex :key="`b${index}`">
+                                        <v-progress-linear color="success" height="3" :value="item.count"></v-progress-linear>
+                                    </v-flex>
+                                </template>
                             </v-layout>
                         </v-flex>
                     </v-layout>                            
@@ -76,38 +66,22 @@
                 <v-card-text>
                     <v-layout row wrap>
                         <v-flex xs9>
-                            <span class="display-2 white--text font-weight-bold">20</span>
-                            <p class="title  white--text font-weight-bold mt-2">For Decision</p>
+                            <span class="display-2 white--text font-weight-bold">{{cases_analytics.total}}</span>
+                            <p class="title  white--text font-weight-bold mt-2">For Cases</p>
                         </v-flex>
                         <v-flex xs3 align-center justify-center d-flex>
                             <v-icon style="font-size:60px; color:rgba(0,0,0,.15)">folder_open</v-icon>
                         </v-flex>                        
                         <v-flex xs12 >
                             <v-layout row wrap>
-                                <v-flex xs5>
-                                    <span class="caption white--text">New</span>
-                                </v-flex>
-                                <v-flex xs7 align-center justify-center d-flex>
-                                    <v-progress-linear color="success" height="3" :value="30"></v-progress-linear>
-                                </v-flex>
-                                <v-flex xs5>
-                                    <span class="caption white--text">For Evaluation</span>
-                                </v-flex>
-                                <v-flex xs7 align-center justify-center d-flex>
-                                    <v-progress-linear color="warning" height="3" :value="60"></v-progress-linear>
-                                </v-flex>
-                                <v-flex xs5>
-                                    <span class="caption white--text">For Review</span>
-                                </v-flex>
-                                <v-flex xs7 align-center justify-center d-flex>
-                                    <v-progress-linear color="error" height="3" :value="10"></v-progress-linear>
-                                </v-flex>
-                                <v-flex xs5>
-                                    <span class="caption white--text">For Approval</span>
-                                </v-flex>
-                                <v-flex xs7 align-center justify-center d-flex>
-                                    <v-progress-linear color="error" height="3" :value="10"></v-progress-linear>
-                                </v-flex>
+                                <template v-for="(item, index) in cases_analytics.data">
+                                    <v-flex xs5 :key="`a${index}`">
+                                        <span class="caption white--text">{{getCaseStatus(item.current_status)}}</span>
+                                    </v-flex>
+                                    <v-flex xs7 align-center justify-center d-flex :key="`b${index}`">
+                                        <v-progress-linear color="success" height="3" :value="item.count"></v-progress-linear>
+                                    </v-flex>
+                                </template>
                             </v-layout>
                         </v-flex>
                     </v-layout>                            
@@ -126,7 +100,7 @@
                 <v-card-text>
                     <v-layout row wrap>
                         <v-flex xs9>
-                            <span class="display-2 white--text font-weight-bold">20</span>
+                            <span class="display-2 white--text font-weight-bold">{{appeals_analytics.total}}</span>
                             <p class="title  white--text font-weight-bold mt-2">Motion for Reconsideration</p>
                         </v-flex>
                         <v-flex xs3 align-center justify-center d-flex>
@@ -134,30 +108,14 @@
                         </v-flex>                        
                         <v-flex xs12 >
                             <v-layout row wrap>
-                                <v-flex xs5>
-                                    <span class="caption white--text">New</span>
-                                </v-flex>
-                                <v-flex xs7 align-center justify-center d-flex>
-                                    <v-progress-linear color="success" height="3" :value="30"></v-progress-linear>
-                                </v-flex>
-                                <v-flex xs5>
-                                    <span class="caption white--text">For Evaluation</span>
-                                </v-flex>
-                                <v-flex xs7 align-center justify-center d-flex>
-                                    <v-progress-linear color="warning" height="3" :value="60"></v-progress-linear>
-                                </v-flex>
-                                <v-flex xs5>
-                                    <span class="caption white--text">For Review</span>
-                                </v-flex>
-                                <v-flex xs7 align-center justify-center d-flex>
-                                    <v-progress-linear color="error" height="3" :value="10"></v-progress-linear>
-                                </v-flex>
-                                <v-flex xs5>
-                                    <span class="caption white--text">For Approval</span>
-                                </v-flex>
-                                <v-flex xs7 align-center justify-center d-flex>
-                                    <v-progress-linear color="error" height="3" :value="10"></v-progress-linear>
-                                </v-flex>
+                                <template v-for="(item, index) in appeals_analytics.data">
+                                    <v-flex xs5 :key="`a${index}`">
+                                        <span class="caption white--text">{{getCaseStatus(item.current_status)}}</span>
+                                    </v-flex>
+                                    <v-flex xs7 align-center justify-center d-flex :key="`b${index}`">
+                                        <v-progress-linear color="success" height="3" :value="item.count"></v-progress-linear>
+                                    </v-flex>
+                                </template>
                             </v-layout>
                         </v-flex>
                     </v-layout>                            
@@ -279,67 +237,105 @@
 </template>
 
 <script>
-
-import PieChart from '@/components/PieChart'
-import BarChart from '@/components/BarChart'
-import LineChart from '@/components/LineChart'
-import DashboardCard from '@/components/DashboardCard'
+import PieChart from "@/components/PieChart";
+import BarChart from "@/components/BarChart";
+import LineChart from "@/components/LineChart";
+import DashboardCard from "@/components/DashboardCard";
 
 export default {
-    components:{PieChart, BarChart, LineChart, DashboardCard},
-    data(){
-        return{
-        }
+  components: { PieChart, BarChart, LineChart, DashboardCard },
+  data() {
+    return {};
+  },
+  created() {
+    this.init();
+  },
+  computed: {
+    trend_cases() {
+      return [
+        Math.random() * (+30 - +0) + +0,
+        Math.random() * (+30 - +0) + +0,
+        Math.random() * (+30 - +0) + +0,
+        Math.random() * (+30 - +0) + +0,
+        Math.random() * (+30 - +0) + +0,
+        Math.random() * (+30 - +0) + +0,
+        Math.random() * (+30 - +0) + +0,
+        Math.random() * (+30 - +0) + +0,
+        Math.random() * (+30 - +0) + +0,
+        Math.random() * (+30 - +0) + +0,
+        Math.random() * (+30 - +0) + +0,
+        Math.random() * (+30 - +0) + +0
+      ];
     },
-    computed:{
-        trend_cases(){
-            return [
-                Math.random() * (+30 - +0) + +0,
-                Math.random() * (+30 - +0) + +0,
-                Math.random() * (+30 - +0) + +0,
-                Math.random() * (+30 - +0) + +0,
-                Math.random() * (+30 - +0) + +0,
-                Math.random() * (+30 - +0) + +0,
-                Math.random() * (+30 - +0) + +0,
-                Math.random() * (+30 - +0) + +0,
-                Math.random() * (+30 - +0) + +0,
-                Math.random() * (+30 - +0) + +0,
-                Math.random() * (+30 - +0) + +0,
-                Math.random() * (+30 - +0) + +0,
-            ]
-        },
-        random(){
-            return Math.random() * (+30 - +0) + +0;
-        },
-        chartdata(){
-            return {
-                labels: ['Jan','Feb','Mar','Apr', 'May', 'Jun' , 'Jul' , 'Aug' , 'Sep' , 'Oct' , 'Nov' , 'Dec'  ],                
-                datasets: [
-                    {
-                    label: 'New Case',
-                    data: this.trend_cases,
-                    backgroundColor:'#c3f2a7'
-                    },
-                    {
-                    label: 'Inprogress',
-                    data: this.trend_cases,
-                    backgroundColor:'#efe1a7'
-                    },
-                    {
-                    label: 'Closed Case',
-                    data:  this.trend_cases,
-                    backgroundColor:'#efb3a7'
-                    }
-                ]
-            }
-        }
+    random() {
+      return Math.random() * (+30 - +0) + +0;
+    },
+    chartdata() {
+      return {
+        labels: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec"
+        ],
+        datasets: [
+          {
+            label: "New Case",
+            data: this.trend_cases,
+            backgroundColor: "#c3f2a7"
+          },
+          {
+            label: "Inprogress",
+            data: this.trend_cases,
+            backgroundColor: "#efe1a7"
+          },
+          {
+            label: "Closed Case",
+            data: this.trend_cases,
+            backgroundColor: "#efb3a7"
+          }
+        ]
+      };
+    },
+    dockets_analytics() {
+      return this.$store.state.analytics.dockets;
+    },
+    cases_analytics() {
+      return this.$store.state.analytics.cases;
+    },
+    appeals_analytics() {
+      return this.$store.state.analytics.appeals;
     }
-}
+  },
+  methods: {
+    init(refresh) {
+      this.$store
+        .dispatch("GET_DOCKETS_ANALYTICS", refresh)
+        .then(result => {
+          return this.$store.dispatch("GET_CASES_ANALYTICS", refresh);
+        })
+        .then(result => {
+          return this.$store.dispatch("GET_APPEALS_ANALYTICS", refresh);
+        })
+        .catch(err => {
+          this.$notifyError(err);
+        });
+    }
+  }
+};
 </script>
 
 <style>
 .v-sheet--offset {
-    top: -10px;
-    position: relative;
-  }
+  top: -10px;
+  position: relative;
+}
 </style>
