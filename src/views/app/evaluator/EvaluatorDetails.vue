@@ -278,7 +278,8 @@ export default {
       selected_action: "",
       value:"",
       items: [],
-      remarks:""
+      remarks:"",
+      user_data: {}
     };
   },
   created() {
@@ -319,7 +320,9 @@ export default {
     init(){
       this.$miniNavbar();
       this.docket = this.$store.state.dockets.active
-      console.log("this is docket of evaluator: " + JSON.stringify(this.docket))
+      console.log("this is docket of evaluator: " + JSON.stringify(this.docket))      
+       console.log("this is user data: " + JSON.stringify(this.$store.state.user_session.user))
+      this.user_data = this.$store.state.user_session.user
       // this.$notify({message:'Evaluating Case No: ', color:'success'})
     },
     prettify(name) {
@@ -348,15 +351,30 @@ export default {
         status: 0,
         action_taken:this.selected_action,
         if_legal_order:this.value,
-        comment:this.remarks,        
+        comment:this.remarks,   
+        user:{
+          username: this.ser_data.username,
+          first_name: this.user_data.name.first,
+          last_name: this.user_data.name.last,
+          middle_name: this.user_data.name.middle,
+          email: this.user_data.email
+        }     
         })
+        
       }else{
         this.docket.activities.push({
         stage: 0,
         status: 0,
         action_taken:this.selected_action,
         if_legal_order:this.value,
-        comment:this.remarks,        
+        comment:this.remarks,
+        user:{
+          username: this.ser_data.username,
+          first_name: this.user_data.name.first,
+          last_name: this.user_data.name.last,
+          middle_name: this.user_data.name.middle,
+          email: this.user_data.email
+        }        
       })
       }
       
@@ -383,6 +401,7 @@ export default {
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
         console.log("evaluate update docket result: " + JSON.stringify(result))
+        this.$router.push('/app/cases/evaluate') 
       })
       .catch(error=>{
         console.error(error)

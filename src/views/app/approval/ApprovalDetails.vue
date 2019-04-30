@@ -179,13 +179,14 @@
                <v-select
                 label="1. Final Action"
                 :items="finalAction"
-                v-model="value"
+                v-model="selected_action"
                 autocomplete
               ></v-select>
               <v-text-field
                 outline
                 label="Notes"
                 name="name"
+                v-model="remarks"
                 textarea
                 multi-line
                 counter
@@ -232,6 +233,9 @@ export default {
       tabs: null,
       finalAction: ["Legal Order", "Remand"],
       docket: {},
+      user_data: {},
+      selected_action: "",
+      remarks: "",
      items: [
         // {
         //   header: "Today"
@@ -282,6 +286,7 @@ export default {
     init(){
       this.$miniNavbar();
       this.docket = this.$store.state.dockets.active
+      this.user_data = this.$store.state.user_session.user
       console.log("this is docket of approver: " + JSON.stringify(this.docket))
       // this.$notify({message:'Evaluating Case No: ', color:'success'})
     },
@@ -299,22 +304,36 @@ export default {
         window.open(url, '_blank')
     },
     final(){
+      var stage_case = 0
+
+      this.docket.activities.forEach(element => {
+        if(element.status === 4)
+          stage_case = 1
+      });
       this.docket.activities.push({
-        stage: 0,
-        status: 3,
+        stage: stage_case,
+        status: 2,
+        action_taken:this.selected_action,
+        comment:this.remarks,
+        user:{
+          username: this.user_data.username,
+          first_name: this.user_data.name.first,
+          last_name: this.user_data.name.last,
+          middle_name: this.user_data.name.middle,
+          email: this.user_data.email
+        }  
         // decision: 
       })
        this.docket.current_status=3;
-      this.$store.dispatch('UPDATE_DOCKET', this.docket)
+       console.log("review update docket result: " + JSON.stringify(this.docket))
+       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
         console.log("review update docket result: " + JSON.stringify(result))
-        
       })
       .catch(error=>{
         console.error(error)
         this.$notifyError(error)
-      })
-      this.$router.push("/app/approval/details");
+      })      
     }
   }
 };
