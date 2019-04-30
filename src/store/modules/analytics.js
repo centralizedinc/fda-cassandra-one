@@ -60,7 +60,7 @@ const actions = {
 
     GET_CASES_ANALYTICS(context, refresh) {
         return new Promise((resolve, reject) => {
-            if (context.state.dockets.data.length === 0 || refresh) {
+            if (context.state.cases.data.length === 0 || refresh) {
                 api
                     .getCases()
                     .then(results => {
@@ -68,7 +68,7 @@ const actions = {
                             context.commit("SET_CASES_ANALYTICS", results.data.model);
                             resolve(results.data.model);
                         } else {
-                            context.commit("SET_CASES_ANALYTICS", context.state.dockets);
+                            context.commit("SET_CASES_ANALYTICS", context.state.cases);
                             reject(results.data.errors);
                         }
                     })
@@ -76,14 +76,14 @@ const actions = {
                         reject(error);
                     });
             } else {
-                resolve(context.state.dockets);
+                resolve(context.state.cases);
             }
         });
     },
 
     GET_APPEALS_ANALYTICS(context, refresh) {
         return new Promise((resolve, reject) => {
-            if (context.state.dockets.data.length === 0 || refresh) {
+            if (context.state.appeals.data.length === 0 || refresh) {
                 api
                     .getAppeals()
                     .then(results => {
@@ -91,7 +91,7 @@ const actions = {
                             context.commit("SET_APPEALS_ANALYTICS", results.data.model);
                             resolve(results.data.model);
                         } else {
-                            context.commit("SET_APPEALS_ANALYTICS", context.state.dockets);
+                            context.commit("SET_APPEALS_ANALYTICS", context.state.appeals);
                             reject(results.data.errors);
                         }
                     })
@@ -99,7 +99,7 @@ const actions = {
                         reject(error);
                     });
             } else {
-                resolve(context.state.dockets);
+                resolve(context.state.appeals);
             }
         });
     }

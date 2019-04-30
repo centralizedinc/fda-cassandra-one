@@ -42,10 +42,16 @@
                             <v-layout row wrap>
                                 <template v-for="(item, index) in dockets_analytics.data">
                                     <v-flex xs5 :key="`a${index}`">
-                                        <span class="caption white--text">{{getCaseStatus(item.current_status)}}</span>
+                                        <v-tooltip bottom>
+                                            <span slot="activator" class="caption white--text">{{getCaseStatus(item.current_status)}}</span>
+                                            {{item.count}}
+                                        </v-tooltip>
                                     </v-flex>
                                     <v-flex xs7 align-center justify-center d-flex :key="`b${index}`">
-                                        <v-progress-linear color="success" height="3" :value="item.count"></v-progress-linear>
+                                        <v-tooltip bottom>
+                                            <v-progress-linear slot="activator" color="success" height="3" :value="item.count"></v-progress-linear>
+                                            {{item.count}}
+                                        </v-tooltip>
                                     </v-flex>
                                 </template>
                             </v-layout>
@@ -76,10 +82,16 @@
                             <v-layout row wrap>
                                 <template v-for="(item, index) in cases_analytics.data">
                                     <v-flex xs5 :key="`a${index}`">
-                                        <span class="caption white--text">{{getCaseStatus(item.current_status)}}</span>
+                                        <v-tooltip bottom>
+                                            <span slot="activator" class="caption white--text">{{getCaseStatus(item.current_status)}}</span>
+                                            {{item.count}}
+                                        </v-tooltip>
                                     </v-flex>
                                     <v-flex xs7 align-center justify-center d-flex :key="`b${index}`">
-                                        <v-progress-linear color="success" height="3" :value="item.count"></v-progress-linear>
+                                        <v-tooltip bottom>
+                                            <v-progress-linear slot="activator" color="success" height="3" :value="item.count"></v-progress-linear>
+                                            {{item.count}}
+                                        </v-tooltip>
                                     </v-flex>
                                 </template>
                             </v-layout>
@@ -101,7 +113,7 @@
                     <v-layout row wrap>
                         <v-flex xs9>
                             <span class="display-2 white--text font-weight-bold">{{appeals_analytics.total}}</span>
-                            <p class="title  white--text font-weight-bold mt-2">Motion for Reconsideration</p>
+                            <p class="title  white--text font-weight-bold mt-2">For Appeals</p>
                         </v-flex>
                         <v-flex xs3 align-center justify-center d-flex>
                             <v-icon style="font-size:60px; color:rgba(0,0,0,.15)">folder_open</v-icon>
@@ -110,10 +122,16 @@
                             <v-layout row wrap>
                                 <template v-for="(item, index) in appeals_analytics.data">
                                     <v-flex xs5 :key="`a${index}`">
-                                        <span class="caption white--text">{{getCaseStatus(item.current_status)}}</span>
+                                        <v-tooltip bottom>
+                                            <span slot="activator" class="caption white--text">{{getCaseStatus(item.current_status)}}</span>
+                                            {{item.count}}
+                                        </v-tooltip>
                                     </v-flex>
                                     <v-flex xs7 align-center justify-center d-flex :key="`b${index}`">
-                                        <v-progress-linear color="success" height="3" :value="item.count"></v-progress-linear>
+                                        <v-tooltip bottom>
+                                            <v-progress-linear slot="activator" color="success" height="3" :value="item.count"></v-progress-linear>
+                                            {{item.count}}
+                                        </v-tooltip>
                                     </v-flex>
                                 </template>
                             </v-layout>
