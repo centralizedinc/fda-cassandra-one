@@ -27,7 +27,7 @@
                   <v-flex xs6>
                     <span class="font-weight-bold">Ref/DTN #</span>
                     <br>
-                    <span>{{docket.dtn}} </span>
+                    <span>{{docket.dtn}}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
@@ -39,7 +39,7 @@
                   <v-flex xs6>
                     <span class="font-weight-bold">Date Docketed</span>
                     <br>
-                    <span>{{  formatDate(docket.date_docketed) }}</span>
+                    <span>{{ formatDate(docket.date_docketed) }}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
@@ -84,7 +84,7 @@
                     <span>{{docket.action_taken}}</span>
                   </v-flex>
                   <br>
-                   <v-flex xs6>
+                  <v-flex xs6>
                     <span class="font-weight-bold">Legal Order</span>
                     <br>
                     <span>{{docket.if_legal_order}}</span>
@@ -106,39 +106,42 @@
           </v-card>
         </v-tab-item>
         <!--documents  -->
-         <v-tab ripple>Case Documents Uploaded</v-tab>
+        <v-tab ripple>Case Documents Uploaded</v-tab>
         <v-tab-item>
           <v-card flat>
             <v-card-text>
               <v-layout row wrap>
-                <v-flex v-for="item in docket.documents" :key="item.originalname" xs12 md4 pa-2 d-flex>
-                    <v-card  @click="viewFile(item.location)" style="cursor:zoom-in">
-                    <v-toolbar
-                        dark
-                    >
-                        {{prettify(item.originalname)}}
-                    </v-toolbar>
+                <v-flex
+                  v-for="item in docket.documents"
+                  :key="item.originalname"
+                  xs12
+                  md4
+                  pa-2
+                  d-flex
+                >
+                  <v-card @click="viewFile(item.location)" style="cursor:zoom-in">
+                    <v-toolbar dark>{{prettify(item.originalname)}}</v-toolbar>
                     <v-card-text>
-                        <v-layout row wrap align-center justify-center ma-0>
-                            <v-img
-                            v-if="item.mimetype != 'application/pdf'"
-                            :src="item.location"
-                            class="grey lighten-2"
-                            max-height="200"
-                            max-width="100"
-                            contain
-                            >
-                                <v-layout slot="placeholder" fill-height align-center justify-center ma-0>
-                                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                                </v-layout>
-                            </v-img>
-                            <div v-else>
-                                <pdf :src="'https://cors-anywhere.herokuapp.com/'+item.location"></pdf>
-                                <!-- <v-progress-circular  v-show="!loaded" indeterminate color="primary"></v-progress-circular> -->
-                            </div>
-                        </v-layout>
-                      </v-card-text>
-                    </v-card>
+                      <v-layout row wrap align-center justify-center ma-0>
+                        <v-img
+                          v-if="item.mimetype != 'application/pdf'"
+                          :src="item.location"
+                          class="grey lighten-2"
+                          max-height="200"
+                          max-width="100"
+                          contain
+                        >
+                          <v-layout slot="placeholder" fill-height align-center justify-center ma-0>
+                            <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                          </v-layout>
+                        </v-img>
+                        <div v-else>
+                          <pdf :src="'https://cors-anywhere.herokuapp.com/'+item.location"></pdf>
+                          <!-- <v-progress-circular  v-show="!loaded" indeterminate color="primary"></v-progress-circular> -->
+                        </div>
+                      </v-layout>
+                    </v-card-text>
+                  </v-card>
                 </v-flex>
               </v-layout>
             </v-card-text>
@@ -303,53 +306,64 @@ export default {
     this.init();
   },
   methods: {
-    init(){
+    init() {
       this.$miniNavbar();
-      this.docket = this.$store.state.dockets.active
-      console.log("this is docket of execute: " + JSON.stringify(this.docket))
-      this.user_data = this.$store.state.user_session.user
+      this.docket = this.$store.state.dockets.active;
+      console.log("this is docket of execute: " + JSON.stringify(this.docket));
+      this.user_data = this.$store.state.user_session.user;
       // this.$notify({message:'Evaluating Case No: ', color:'success'})
     },
     prettify(name) {
-        if (name.length > 15) {
-            return name.substring(0, 15) + " ..." + name.substring(name.length -3, name.length);
-        } else {
-            return name;
-        }
+      if (name.length > 15) {
+        return (
+          name.substring(0, 15) +
+          " ..." +
+          name.substring(name.length - 3, name.length)
+        );
+      } else {
+        return name;
+      }
     },
-    createActivityDesc(item){
-      return "<span class='primary--text'>"+this.formatDate(item.date_created)+"</span> &mdash;  Created Case Docket (Docket Number: "+this.docket.dtn+")"
+    createActivityDesc(item) {
+      return (
+        "<span class='primary--text'>" +
+        this.formatDate(item.date_created) +
+        "</span> &mdash;  Created Case Docket (Docket Number: " +
+        this.docket.dtn +
+        ")"
+      );
     },
-    viewFile(url){
-        window.open(url, '_blank')
+    viewFile(url) {
+      window.open(url, "_blank");
     },
-    save(){
-      var stage_case = 0
+    save() {
+      var stage_case = 0;
       this.docket.activities.forEach(element => {
-        if(element.status === 4)
-          stage_case = 1
+        if (element.status === 4) stage_case = 1;
       });
       this.docket.activities.push({
         stage: stage_case,
         status: 4,
-        user:{
+        user: {
           username: this.user_data.username,
           first_name: this.user_data.name.first,
           last_name: this.user_data.name.last,
           middle_name: this.user_data.name.middle,
           email: this.user_data.email
-        } 
-      })
-      this.docket.current_status=0;
-      this.$store.dispatch('UPDATE_DOCKET', this.docket)
-      .then(result=>{
-        console.log("review update docket result: " + JSON.stringify(result))
-
-      })
-      .catch(error=>{
-        console.error(error)
-        this.$notifyError(error)
-      })
+        }
+      });
+      this.docket.current_status = 0;
+      this.$store
+        .dispatch("UPDATE_DOCKET", this.docket)
+        .then(result => {
+          console.log("review update docket result: " + JSON.stringify(result));
+          this.$notify({ message: "Success to Appeal!" });
+          this.$router.push("/app/cases/execute");
+        })
+        .catch(error => {
+          console.error(error);
+          this.$notifyError(error);
+        });
     }
   }
 };
