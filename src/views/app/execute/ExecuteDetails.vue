@@ -325,6 +325,7 @@ export default {
     },
     save(){
       var stage_case = 0
+      console.log("this is docket execute details: " + JSON.stringify(this.docket))
       this.docket.activities.forEach(element => {
         if(element.status === 4)
           stage_case = 1

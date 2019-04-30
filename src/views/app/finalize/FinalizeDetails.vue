@@ -314,13 +314,13 @@ export default {
           email: this.user_data.email
         }  
       })
-      this.docket.current_status=4;
+      // this.docket.current_status=4;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
          var details ={};
          console.log("review update docket result: " + JSON.stringify(result))
-      // this.$download(details, "SUMMON", "summon.pdf");
-       this.$download(this.docket, "RCPT", "fda-receipt.pdf");
+         this.$download(this.docket, "SUMMON", "summon.pdf");
+      //  this.$download(this.docket, "RCPT", "fda-receipt.pdf");
       })
       .catch(error=>{
         console.error(error)

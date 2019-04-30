@@ -340,14 +340,13 @@ export default {
     },
     evaluate(){
       console.info("evaluate data: " + JSON.stringify(this.docket.activities))
-      var stage_case = false
+      var stage_case = 0
       this.docket.activities.forEach(element => {
         if(element.status === 4)
-          stage_case = true
+          stage_case = 1
       });
-      if(stage_case){
         this.docket.activities.push({
-        stage: 1,
+        stage: stage_case,
         status: 0,
         action_taken:this.selected_action,
         if_legal_order:this.value,
@@ -360,23 +359,6 @@ export default {
           email: this.user_data.email
         }     
         })
-        
-      }else{
-        this.docket.activities.push({
-        stage: 0,
-        status: 0,
-        action_taken:this.selected_action,
-        if_legal_order:this.value,
-        comment:this.remarks,
-        user:{
-          username: this.ser_data.username,
-          first_name: this.user_data.name.first,
-          last_name: this.user_data.name.last,
-          middle_name: this.user_data.name.middle,
-          email: this.user_data.email
-        }        
-      })
-      }
       
       this.docket.current_status=1;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
@@ -389,13 +371,25 @@ export default {
       })
     },
     decline(){
+      var stage_case = 0
+      this.docket.activities.forEach(element => {
+        if(element.status === 4)
+          stage_case = 1
+      });
       console.info("evaluate data: " + JSON.stringify(this.docket))
       this.docket.activities.push({
         stage: 0,
         status: 0,
         action_taken:this.selected_action,
         if_legal_order:this.value,
-        comment:this.remarks,        
+        comment:this.remarks,    
+        user:{
+          username: this.ser_data.username,
+          first_name: this.user_data.name.first,
+          last_name: this.user_data.name.last,
+          middle_name: this.user_data.name.middle,
+          email: this.user_data.email
+        }     
       })
       this.docket.current_status=0;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
