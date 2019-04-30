@@ -251,7 +251,7 @@
 
 <script>
 import Uploader from "@/components/Uploader";
-import pdf from 'vue-pdf'
+import pdf from "vue-pdf";
 export default {
   props: {
     docket_pick: {
@@ -264,7 +264,7 @@ export default {
   },
   data() {
     return {
-      docket:{},
+      docket: {},
       tabs: null,
       natureViolation: [
         "Violative Products",
@@ -276,9 +276,9 @@ export default {
       actionTaken: ["Legal Order", "Remand"],
       action_details: [],
       selected_action: "",
-      value:"",
+      value: "",
       items: [],
-      remarks:""
+      remarks: ""
     };
   },
   created() {
@@ -316,93 +316,111 @@ export default {
     }
   },
   methods: {
-    init(){
+    init() {
       this.$miniNavbar();
-      this.docket = this.$store.state.dockets.active
-      console.log("this is docket of evaluator: " + JSON.stringify(this.docket))
+      this.docket = this.$store.state.dockets.active;
+      console.log(
+        "this is docket of evaluator: " + JSON.stringify(this.docket)
+      );
       // this.$notify({message:'Evaluating Case No: ', color:'success'})
     },
     prettify(name) {
-        if (name.length > 15) {
-            return name.substring(0, 15) + " ..." + name.substring(name.length -3, name.length);
-        } else {
-            return name;
-        }
-    },
-    createActivityDesc(item){
-      return "<span class='primary--text'>"+this.formatDate(item.date_created)+"</span> &mdash;  Created Case Docket (Docket Number: "+this.docket.dtn+")"
-    },
-    viewFile(url){
-        window.open(url, '_blank')
-    },
-    evaluate(){
-      console.info("evaluate data: " + JSON.stringify(this.docket.activities))
-      var stage_case = false
-      this.docket.activities.forEach(element => {
-        if(element.status === 4)
-          stage_case = true
-      });
-      if(stage_case){
-        this.docket.activities.push({
-        stage: 1,
-        status: 0,
-        action_taken:this.selected_action,
-        if_legal_order:this.value,
-        comment:this.remarks,        
-        })
-      }else{
-        this.docket.activities.push({
-        stage: 0,
-        status: 0,
-        action_taken:this.selected_action,
-        if_legal_order:this.value,
-        comment:this.remarks,        
-      })
+      if (name.length > 15) {
+        return (
+          name.substring(0, 15) +
+          " ..." +
+          name.substring(name.length - 3, name.length)
+        );
+      } else {
+        return name;
       }
-      
-      this.docket.current_status=1;
-      this.$store.dispatch('UPDATE_DOCKET', this.docket)
-      .then(result=>{
-        console.log("evaluate update docket result: " + JSON.stringify(result))
-      })
-      .catch(error=>{
-        console.error(error)
-        this.$notifyError(error)
-      })
     },
-    decline(){
-      console.info("evaluate data: " + JSON.stringify(this.docket))
+    createActivityDesc(item) {
+      return (
+        "<span class='primary--text'>" +
+        this.formatDate(item.date_created) +
+        "</span> &mdash;  Created Case Docket (Docket Number: " +
+        this.docket.dtn +
+        ")"
+      );
+    },
+    viewFile(url) {
+      window.open(url, "_blank");
+    },
+    evaluate() {
+      console.info("evaluate data: " + JSON.stringify(this.docket.activities));
+      var stage_case = false;
+      this.docket.activities.forEach(element => {
+        if (element.status === 4) stage_case = true;
+      });
+      if (stage_case) {
+        this.docket.activities.push({
+          stage: 1,
+          status: 0,
+          action_taken: this.selected_action,
+          if_legal_order: this.value,
+          comment: this.remarks
+        });
+      } else {
+        this.docket.activities.push({
+          stage: 0,
+          status: 0,
+          action_taken: this.selected_action,
+          if_legal_order: this.value,
+          comment: this.remarks
+        });
+      }
+
+      this.docket.current_status = 1;
+      this.$store
+        .dispatch("UPDATE_DOCKET", this.docket)
+        .then(result => {
+          console.log(
+            "evaluate update docket result: " + JSON.stringify(result)
+          );
+        })
+        .catch(error => {
+          console.error(error);
+          this.$notifyError(error);
+        });
+    },
+    decline() {
+      console.info("evaluate data: " + JSON.stringify(this.docket));
       this.docket.activities.push({
         stage: 0,
         status: 0,
-        action_taken:this.selected_action,
-        if_legal_order:this.value,
-        comment:this.remarks,        
-      })
-      this.docket.current_status=0;
-      this.$store.dispatch('UPDATE_DOCKET', this.docket)
-      .then(result=>{
-        console.log("evaluate update docket result: " + JSON.stringify(result))
-      })
-      .catch(error=>{
-        console.error(error)
-        this.$notifyError(error)
-      })
+        action_taken: this.selected_action,
+        if_legal_order: this.value,
+        comment: this.remarks
+      });
+      this.docket.current_status = 0;
+      this.$store
+        .dispatch("UPDATE_DOCKET", this.docket)
+        .then(result => {
+          console.log(
+            "evaluate update docket result: " + JSON.stringify(result)
+          );
+        })
+        .catch(error => {
+          console.error(error);
+          this.$notifyError(error);
+        });
     },
-    edit(){
+    edit() {
       this.docket.edit = true;
-      this.$store.dispatch('UPDATE_DOCKET', this.docket)
-      .then(result=>{
-        console.log("evaluate update docket result: " + JSON.stringify(result))
-        this.$router.push('/app/dockets/new') 
-      })
-      .catch(error=>{
-        console.error(error)
-        this.$notifyError(error)
-      })
-      
+      this.$store
+        .dispatch("UPDATE_DOCKET", this.docket)
+        .then(result => {
+          console.log(
+            "evaluate update docket result: " + JSON.stringify(result)
+          );
+          this.$router.push("/app/dockets/new");
+        })
+        .catch(error => {
+          console.error(error);
+          this.$notifyError(error);
+        });
     }
-   
   }
 };
 </script>

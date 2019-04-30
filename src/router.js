@@ -26,6 +26,11 @@ export default new Router({
           component: () => import('@/views/app/Dashboard.vue')
         },
         {
+          path: 'inbox',
+          name: 'Inbox',
+          component: () => import('@/views/app/inbox/Inbox.vue')
+        },
+        {
           path: 'admin/users',
           name: 'User Administration',
           component: () => import('@/views/app/admin/Users.vue')

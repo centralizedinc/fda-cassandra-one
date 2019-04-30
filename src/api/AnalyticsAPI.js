@@ -16,4 +16,8 @@ export default class AnalyticsAPI {
         return axios.get('/analytics/appeals');
     }
 
+    static getActivities() {
+        return axios.get('/analytics/activities');
+    }
+
 }
