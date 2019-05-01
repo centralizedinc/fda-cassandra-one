@@ -192,7 +192,7 @@
               </v-list>
             </v-card-text>
           </v-card>
-
+</v-tab-item>
         <v-tab ripple>
           Comments
         </v-tab>
