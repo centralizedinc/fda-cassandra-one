@@ -148,29 +148,6 @@
           </v-card>
         </v-tab-item>
         <!--recent activity  -->
-        <!-- <v-tab ripple>Recent Activity</v-tab>
-        <v-tab-item>
-          <v-card flat>
-            <v-card-text>
-              <v-list three-line>
-                <template v-for="(item, index) in items.slice(0, 8)">
-                  <v-subheader v-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
-                  <v-divider v-else-if="item.divider" :key="index" :inset="item.inset"></v-divider>
-                  <v-list-tile v-else :key="item.title" avatar>
-                    <v-list-tile-avatar>
-                      <img :src="item.avatar">
-                    </v-list-tile-avatar>
-                    <v-list-tile-content>
-                      <v-list-tile-title v-html="item.title"></v-list-tile-title>
-                      <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                </template>
-              </v-list>
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
-      </v-tabs> -->
 
        <v-tab ripple>Recent Activity</v-tab>
         <v-tab-item>
