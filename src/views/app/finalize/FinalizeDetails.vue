@@ -170,7 +170,6 @@
             </v-card-text>
           </v-card>
         </v-tab-item>
-<<<<<<< HEAD
       </v-tabs> -->
 
        <v-tab ripple>Recent Activity</v-tab>
@@ -193,14 +192,12 @@
               </v-list>
             </v-card-text>
           </v-card>
-=======
 
         <v-tab ripple>
           Comments
         </v-tab>
         <v-tab-item>
           <comments></comments>
->>>>>>> 51f795f65fc52009e9a16824b4dc0c65080b595a
         </v-tab-item>
       </v-tabs>
 
