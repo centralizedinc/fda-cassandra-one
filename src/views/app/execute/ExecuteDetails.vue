@@ -75,7 +75,7 @@
                   <v-flex xs6>
                     <span class="font-weight-bold">Product/s Involved (if any)</span>
                     <br>
-                    <span>{{docket_product_involved}}</span>
+                    <span>{{docket.product_involved}}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
@@ -170,6 +170,7 @@
             </v-card-text>
           </v-card>
         </v-tab-item>
+<<<<<<< HEAD
       </v-tabs> -->
 
        <v-tab ripple>Recent Activity</v-tab>
@@ -192,6 +193,14 @@
               </v-list>
             </v-card-text>
           </v-card>
+=======
+
+        <v-tab ripple>
+          Comments
+        </v-tab>
+        <v-tab-item>
+          <comments></comments>
+>>>>>>> 51f795f65fc52009e9a16824b4dc0c65080b595a
         </v-tab-item>
       </v-tabs>
 
@@ -251,10 +260,12 @@
 <script>
 import Uploader from "@/components/Uploader";
 import FabButtons from "@/components/FabButton";
+import Comments from '../comment/Comment'
 export default {
   components: {
     Uploader,
-    FabButtons
+    FabButtons,
+    Comments
   },
   data() {
     return {

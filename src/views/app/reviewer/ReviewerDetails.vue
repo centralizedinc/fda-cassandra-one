@@ -194,6 +194,13 @@
             </v-card-text>
           </v-card>
         </v-tab-item>
+        
+        <v-tab ripple>
+          Comments
+        </v-tab>
+        <v-tab-item>
+          <comments></comments>
+        </v-tab-item>
       </v-tabs>
 
       <!-- Nav to Review -->
@@ -257,9 +264,11 @@
 
 <script>
 import Uploader from "@/components/Uploader";
+import Comments from '../comment/Comment'
 export default {
   components: {
-    Uploader
+    Uploader,
+    Comments
   },
   data() {
     return {

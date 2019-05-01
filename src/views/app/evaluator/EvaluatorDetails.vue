@@ -183,6 +183,13 @@
             </v-card-text>
           </v-card>
         </v-tab-item>
+
+        <v-tab ripple>
+          Comments
+        </v-tab>
+        <v-tab-item>
+          <comments></comments>
+        </v-tab-item>
       </v-tabs>
 
       <!-- Nav to Evaluate -->
@@ -245,7 +252,14 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn block color="primary" @click="evaluate()">Submit for Review</v-btn>
+            <v-layout row wrap>
+              <v-flex xs12 mb-2>
+                <v-btn block color="primary" @click="evaluate()">Submit for Review</v-btn>
+              </v-flex>
+              <v-flex xs12>
+                <v-btn block color="success" @click="comment()">Add to Comment</v-btn>
+              </v-flex>
+            </v-layout>
             <!-- <v-btn block color="primary" @click="decline()">Decline</v-btn> -->
           </v-card-actions>
         </v-card>
@@ -257,6 +271,8 @@
 <script>
 import Uploader from "@/components/Uploader";
 import pdf from "vue-pdf";
+import Comments from '../comment/Comment'
+
 export default {
   props: {
     docket_pick: {
@@ -265,7 +281,8 @@ export default {
   },
   components: {
     Uploader,
-    pdf
+    pdf,
+    Comments
   },
   data() {
     return {
@@ -431,6 +448,37 @@ export default {
             "evaluate update docket result: " + JSON.stringify(result)
           );
           this.$router.push("/app/dockets/new");
+        })
+        .catch(error => {
+          console.error(error);
+          this.$notifyError(error);
+        });
+    },
+    comment(){
+      var comment = {
+        details: {
+          action: this.selected_action,
+          sub_action: this.value,
+          comment: this.remarks
+        },
+        dtn: this.docket.dtn,
+        created_by: this.user_data.username,
+        user: {
+          username: this.user_data.username,
+          first_name: this.user_data.name.first,
+          last_name: this.user_data.name.last,
+          middle_name: this.user_data.name.middle,
+          email: this.user_data.email
+        },
+        date_created: new Date()
+      }
+      this.$store.dispatch('ADD_COMMENT', comment)
+        .then(result => {
+          console.log(
+            "comment docket result: " + JSON.stringify(result)
+          );
+          this.$notify({ message: "Success to Added a comment!" });
+          this.$router.push("/app/cases/evaluate");
         })
         .catch(error => {
           console.error(error);
