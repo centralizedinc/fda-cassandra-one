@@ -75,7 +75,7 @@
                   <v-flex xs6>
                     <span class="font-weight-bold">Product/s Involved (if any)</span>
                     <br>
-                    <span>{{docket_product_involved}}</span>
+                    <span>{{docket.product_involved}}</span>
                   </v-flex>
                   <br>
                   <v-flex xs6>
@@ -170,6 +170,13 @@
             </v-card-text>
           </v-card>
         </v-tab-item>
+
+        <v-tab ripple>
+          Comments
+        </v-tab>
+        <v-tab-item>
+          <comments></comments>
+        </v-tab-item>
       </v-tabs>
 
       <!-- Nav to finalize -->
@@ -224,11 +231,13 @@
 import pdf from 'vue-pdf'
 import Uploader from "@/components/Uploader";
 import FabButtons from "@/components/FabButton";
+import Comments from '../comment/Comment'
 export default {
   components: {
     Uploader,
     FabButtons,
-    pdf
+    pdf,
+    Comments
   },
   data() {
     return {
