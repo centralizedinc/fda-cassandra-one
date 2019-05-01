@@ -104,7 +104,7 @@
                   <v-flex xs6>
                     <span class="font-weight-bold">Product/s Involved (if any)</span>
                     <br>
-                    <span>{{docket_product_involved}}</span>
+                    <span>{{docket.product_involved}}</span>
                   </v-flex>
                   <br>
                 </v-layout>
@@ -166,9 +166,12 @@
               <v-list three-line>
                 <template v-for="(item, index) in docket.activities">
                   <v-list-tile :key="index" avatar>
-                    <v-list-tile-avatar>
-                      <v-img src="http://i.pravatar.cc/61"></v-img>
+                    <v-list-tile-avatar size="40" color="teal">
+                      <v-img :src="item.user + item.user"></v-img>
                     </v-list-tile-avatar>
+                    <!-- <v-list-tile-avatar size="40" color="teal">
+                      <v-img :src="item.user.first_name.substring(0,1) + item.user.last_name.substring(0,1)"></v-img>
+                    </v-list-tile-avatar> -->
                     <v-list-tile-content>
                       <v-list-tile-title v-html="item.user"></v-list-tile-title>
                       <v-list-tile-sub-title v-html="createActivityDesc(item)"></v-list-tile-sub-title>
