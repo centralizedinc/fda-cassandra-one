@@ -69,7 +69,7 @@
 
             <v-card class="ma-1" style="width: 350px">
                 <v-toolbar dark color="primary">
-                    <span class="title font-weight-light">Evaluation</span>
+                    <span class="title font-weight-light">Approval</span>
                     <v-spacer></v-spacer>
                     <v-btn flat icon>
                         <v-icon>more_vert</v-icon>
@@ -101,7 +101,7 @@
 
             <v-card class="ma-1" style="width: 350px">
                 <v-toolbar dark color="primary">
-                    <span class="title font-weight-light">Evaluation</span>
+                    <span class="title font-weight-light">Finalization</span>
                     <v-spacer></v-spacer>
                     <v-btn flat icon>
                         <v-icon>more_vert</v-icon>
@@ -133,7 +133,7 @@
 
             <v-card class="ma-1" style="width: 350px">
                 <v-toolbar dark color="primary">
-                    <span class="title font-weight-light">Evaluation</span>
+                    <span class="title font-weight-light">Execution</span>
                     <v-spacer></v-spacer>
                     <v-btn flat icon>
                         <v-icon>more_vert</v-icon>
