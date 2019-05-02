@@ -167,7 +167,7 @@
                 <template v-for="(item, index) in docket.activities">
                   <v-list-tile :key="index" avatar>
                     <v-list-tile-avatar size="40" color="teal">
-                      <v-img :src="item.user + item.user"></v-img>
+                      <!-- <v-img :src="item.user + item.user"></v-img> -->
                     </v-list-tile-avatar>
                     <!-- <v-list-tile-avatar size="40" color="teal">
                       <v-img :src="item.user.first_name.substring(0,1) + item.user.last_name.substring(0,1)"></v-img>
@@ -459,28 +459,37 @@ export default {
       this.formData = data.formData;
     },
     comment() {
-      var comment = {
-        details: {
-          action: this.selected_action,
-          sub_action: this.value,
-          comment: this.remarks
-        },
-        dtn: this.docket.dtn,
-        created_by: this.user_data.username,
+      console.info("evaluate data: " + JSON.stringify(this.docket.activities));
+      var stage_case = 0;
+      this.docket.activities.forEach(element => {
+        if (element.status === 4) stage_case = 1;
+      });
+      var activity = {
+        stage: stage_case,
+        status: 0,
+        action_taken: this.selected_action,
+        if_legal_order: this.value,
+        comment: this.remarks,
         user: {
           username: this.user_data.username,
           first_name: this.user_data.name.first,
           last_name: this.user_data.name.last,
           middle_name: this.user_data.name.middle,
           email: this.user_data.email
-        },
-        date_created: new Date()
+        }
       };
+
       this.$store
-        .dispatch("ADD_COMMENT", { comment, formData: this.formData })
+        .dispatch("ADD_COMMENT", {
+          docket: this.docket,
+          activity,
+          formData: this.formData
+        })
         .then(result => {
-          console.log("comment docket result: " + JSON.stringify(result));
-          this.$notify({ message: "Success to Added a comment!" });
+          console.log(
+            "comment update docket result: " + JSON.stringify(result)
+          );
+          this.$notify({ message: "Success to Added a comment!!" });
           this.$router.push("/app/cases/evaluate");
         })
         .catch(error => {

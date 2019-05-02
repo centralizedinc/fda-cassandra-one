@@ -94,7 +94,14 @@
         <v-divider></v-divider>
         <v-card-actions>
           <!-- <v-spacer></v-spacer> -->
-          <v-btn color="primary" block @click="view">Review</v-btn>
+          <v-layout row wrap>
+            <v-flex xs12>
+              <v-btn color="primary" block @click="view">View Details</v-btn>
+            </v-flex>
+            <v-flex xs12>
+              <v-btn color="success" block @click="openAssignDialog=true">Assign to</v-btn>
+            </v-flex>
+          </v-layout>
         </v-card-actions>
       </v-card>
     </v-navigation-drawer>
@@ -166,7 +173,8 @@ export default {
           value: "stage"
         }
       ],
-      items: []
+      items: [],
+      openAssignDialog: false
     };
   },
   created() {

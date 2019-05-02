@@ -372,25 +372,28 @@ export default {
       this.formData = data.formData;
     },
     comment() {
-      var comment = {
-        details: {
-          // action: this.selected_action,
-          // sub_action: this.value,
-          comment: this.remarks
-        },
-        dtn: this.docket.dtn,
-        created_by: this.user_data.username,
+      var stage_case = 0;
+      this.docket.activities.forEach(element => {
+        if (element.status === 4) stage_case = 1;
+      });
+      var activity = {
+        stage: stage_case,
+        status: 3,
+        comment: this.remarks,
         user: {
           username: this.user_data.username,
           first_name: this.user_data.name.first,
           last_name: this.user_data.name.last,
           middle_name: this.user_data.name.middle,
           email: this.user_data.email
-        },
-        date_created: new Date()
+        }
       };
       this.$store
-        .dispatch("ADD_COMMENT", { comment, formData: this.formData })
+        .dispatch("ADD_COMMENT", {
+          docket: this.docket,
+          activity,
+          formData: this.formData
+        })
         .then(result => {
           console.log("comment docket result: " + JSON.stringify(result));
           this.$notify({ message: "Success to Added a comment!" });
