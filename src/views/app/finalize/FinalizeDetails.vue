@@ -149,29 +149,9 @@
         </v-tab-item>
         <!--recent activity  -->
 
-       <v-tab ripple>Recent Activity</v-tab>
-        <v-tab-item>
-          <v-card flat>
-            <v-card-text>
-              <v-list three-line>
-                <template v-for="(item, index) in docket.activities">
-                  <v-list-tile :key="index" avatar>
-                    <v-list-tile-avatar size="40" color="teal">
-                      <v-img :src="item.user + item.user"></v-img>
-                    </v-list-tile-avatar>
-                    <v-list-tile-content>
-                      <v-list-tile-title v-html="item.user"></v-list-tile-title>
-                      <v-list-tile-sub-title v-html="createActivityDesc(item)"></v-list-tile-sub-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                  <v-divider inset :key="index"></v-divider>
-                </template>
-              </v-list>
-            </v-card-text>
-          </v-card>
-</v-tab-item>
+       
         <v-tab ripple>
-          Comments
+          Proceedings
         </v-tab>
         <v-tab-item>
           <comments></comments>

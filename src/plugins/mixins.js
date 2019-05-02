@@ -9,7 +9,8 @@ export default {
             'For Review',
             'For Approval',
             'For Finalization',
-            'For Execution'
+            'For Execution',
+            'Created'
           ]
           return arr[status]
         },
@@ -26,6 +27,8 @@ export default {
             return "Docketed"
           } else if (status = 0) {
             return "Evaluated"
+          } else if (status = 1) {
+            return "Reviewed"
           } else if (status = 2) {
             return "Approved"
           } else if (status = 3) {
