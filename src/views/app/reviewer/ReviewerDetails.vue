@@ -173,15 +173,15 @@
         </v-tabs>-->
 
         <!--recent activity  -->
-        <v-tab ripple>Recent Activity</v-tab>
+         <v-tab ripple>Recent Activity</v-tab>
         <v-tab-item>
           <v-card flat>
             <v-card-text>
               <v-list three-line>
                 <template v-for="(item, index) in docket.activities">
-                  <v-list-tile :key="index" avatar>
-                    <v-list-tile-avatar>
-                      <v-img src="http://i.pravatar.cc/61"></v-img>
+                  <v-list-tile :key="index" avatar>  
+                    <v-list-tile-avatar size="40" color="teal">
+                      <v-img :src="item.user + item.user"></v-img>
                     </v-list-tile-avatar>
                     <v-list-tile-content>
                       <v-list-tile-title v-html="item.user"></v-list-tile-title>
@@ -193,6 +193,13 @@
               </v-list>
             </v-card-text>
           </v-card>
+        </v-tab-item>
+        
+        <v-tab ripple>
+          Comments
+        </v-tab>
+        <v-tab-item>
+          <comments></comments>
         </v-tab-item>
       </v-tabs>
 
@@ -223,7 +230,7 @@
             ></v-text-field>
             <span class="subheading font-weight-light primary--text">Add Supporting Documents</span>
             <v-divider class="mb-3"></v-divider>
-            <uploader class="caption"></uploader>
+            <uploader class="caption" @upload="upload"></uploader>
             <!-- fab button save -->
             <!-- <v-tooltip top>
               <v-btn
@@ -242,8 +249,17 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn block color="primary" v-if="selected_action!=='Approved'" @click="decline()">Back to Evaluator</v-btn>
-            <v-btn block color="primary" v-else @click="approver()">Submit for Approval</v-btn>
+            <v-layout row wrap>
+              <v-flex xs12 v-if="selected_action!=='Approved'" mb-2>
+                <v-btn block color="primary" @click="decline()">Back to Evaluator</v-btn>
+              </v-flex>
+              <v-flex xs12 v-else mb-2>
+                <v-btn block color="primary" @click="approver()">Submit for Approval</v-btn>
+              </v-flex>
+              <v-flex xs12>
+                <v-btn block color="success" @click="comment()">Add to Comment</v-btn>
+              </v-flex>
+            </v-layout>
             <!-- <v-btn
               block
               color="primary"
@@ -257,9 +273,11 @@
 
 <script>
 import Uploader from "@/components/Uploader";
+import Comments from "../comment/Comment";
 export default {
   components: {
-    Uploader
+    Uploader,
+    Comments
   },
   data() {
     return {
@@ -309,7 +327,8 @@ export default {
         //   subtitle:
         //     "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
         // }
-      ]
+      ],
+      formData: null
     };
   },
   created() {
@@ -427,6 +446,39 @@ export default {
             "evaluate update docket result: " + JSON.stringify(result)
           );
           this.$router.push("/app/dockets/new");
+        })
+        .catch(error => {
+          console.error(error);
+          this.$notifyError(error);
+        });
+    },
+    upload(data) {
+      this.formData = data.formData;
+    },
+    comment() {
+      var comment = {
+        details: {
+          action: this.selected_action,
+          // sub_action: this.value,
+          comment: this.remarks
+        },
+        dtn: this.docket.dtn,
+        created_by: this.user_data.username,
+        user: {
+          username: this.user_data.username,
+          first_name: this.user_data.name.first,
+          last_name: this.user_data.name.last,
+          middle_name: this.user_data.name.middle,
+          email: this.user_data.email
+        },
+        date_created: new Date()
+      };
+      this.$store
+        .dispatch("ADD_COMMENT", { comment, formData: this.formData })
+        .then(result => {
+          console.log("comment docket result: " + JSON.stringify(result));
+          this.$notify({ message: "Success to Added a comment!" });
+          this.$router.push("/app/cases/review");
         })
         .catch(error => {
           console.error(error);
