@@ -68,7 +68,7 @@
         </v-flex>
         <!-- total docket card -->
         <v-flex xs12 md3 pa-1>
-            <v-card style="background: linear-gradient(to right, #02aab0, #00cdac); box-shadow: 0 6px 20px rgba(101, 198, 187, 1);">          
+            <v-card style="background:linear-gradient(360deg, #297373 0%, #5FA391 100%); box-shadow: 0 6px 20px rgba(101, 198, 187, 1);">          
                 <v-card-text>
                     <v-layout row wrap>
                         <v-flex xs9>
@@ -108,7 +108,7 @@
         </v-flex>
         <!-- total docket card -->
         <v-flex xs12 md3 pa-1>
-            <v-card style="background: linear-gradient(to right, #02aab0, #00cdac); box-shadow: 0 6px 20px rgba(101, 198, 187, 1);">          
+            <v-card style="background:linear-gradient(360deg, #297373 0%, #5FA391 100%); box-shadow: 0 6px 20px rgba(101, 198, 187, 1);">          
                 <v-card-text>
                     <v-layout row wrap>
                         <v-flex xs9>
@@ -217,14 +217,21 @@
                             color="success"
                             small>
                             <template v-slot:icon>
-                                <v-avatar size="40">
+                                <!-- <v-avatar size="40">
                                     <img :src="'http://i.pravatar.cc/6'+index">                                
+                                </v-avatar> -->
+                                <v-avatar v-if="item.user" size="40" color="teal">
+                                    <span style="width: 40px"
+                                    class="subheading white--text "
+                                    >{{item.user.first_name.substring(0,1) + item.user.last_name.substring(0,1)}}</span>
                                 </v-avatar>
+                                <img style="width: 45px" v-else src="http://www.sbcs.edu.tt/wp-content/uploads/2016/04/profile-default.png" alt="">
                             </template>
                             <v-alert
                                 :value="true"
                                 color="new_releases"
-                                icon="check">
+                                class="white--text"
+                                :icon="getIconByStatus(item.status)">
                                 <!-- <div class="caption font-weight-thin">{{new Date()}}</div> -->
                                 <div class="caption font-weight-light">{{getCaseType(item.stage)}} {{getCaseStatus(item.status)}}</div>
                                 <div class="caption font-weight-thin" v-if="item.dtn">Docket Number: {{item.dtn}}</div> 
@@ -333,7 +340,7 @@ export default {
       return this.$store.state.analytics.appeals;
     },
     activities_analytics() {
-      return this.$store.state.analytics.activities;
+      return this.$store.state.analytics.activities.slice(0, 10);
     }
   },
   methods: {
@@ -361,5 +368,9 @@ export default {
 .v-sheet--offset {
   top: -10px;
   position: relative;
+}
+
+i.v-icon.material-icons.theme--light.v-alert__icon {
+  color: white;
 }
 </style>

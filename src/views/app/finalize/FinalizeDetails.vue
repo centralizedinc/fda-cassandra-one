@@ -149,29 +149,9 @@
         </v-tab-item>
         <!--recent activity  -->
 
-       <v-tab ripple>Recent Activity</v-tab>
-        <v-tab-item>
-          <v-card flat>
-            <v-card-text>
-              <v-list three-line>
-                <template v-for="(item, index) in docket.activities">
-                  <v-list-tile :key="index" avatar>
-                    <v-list-tile-avatar size="40" color="teal">
-                      <v-img :src="item.user + item.user"></v-img>
-                    </v-list-tile-avatar>
-                    <v-list-tile-content>
-                      <v-list-tile-title v-html="item.user"></v-list-tile-title>
-                      <v-list-tile-sub-title v-html="createActivityDesc(item)"></v-list-tile-sub-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                  <v-divider inset :key="index"></v-divider>
-                </template>
-              </v-list>
-            </v-card-text>
-          </v-card>
-</v-tab-item>
+       
         <v-tab ripple>
-          Comments
+          Proceedings
         </v-tab>
         <v-tab-item>
           <comments></comments>
@@ -347,7 +327,7 @@ export default {
           email: this.user_data.email
         }
       });
-      // this.docket.current_status=4;
+      this.docket.current_status = 4;
       this.$store
         .dispatch("UPDATE_DOCKET", this.docket)
         .then(result => {
@@ -355,13 +335,15 @@ export default {
           console.log("review update docket result: " + JSON.stringify(result));
           if (stage_case === 0) {
             this.$print(this.docket, "SUMMON");
+            this.$notify({ message: "Summon for this case has been printed" });
+            this.$router.push("/app/cases/finalize");
           } else {
             this.$print(this.docket, "DECISION");
+            this.$notify({
+              message: "Decision for this case has been printed"
+            });
+            this.$router.push("/app/cases/finalize");
           }
-
-          this.$notify({ message: "Summon for this case has been printed" });
-          this.$router.push("/app/cases/finalize");
-          //  this.$download(this.docket, "RCPT", "fda-receipt.pdf");
         })
         .catch(error => {
           console.error(error);
@@ -397,7 +379,6 @@ export default {
         .then(result => {
           console.log("comment docket result: " + JSON.stringify(result));
           this.$notify({ message: "Success to Added a comment!" });
-          this.$router.push("/app/cases/finalize");
         })
         .catch(error => {
           console.error(error);

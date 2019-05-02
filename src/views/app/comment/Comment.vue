@@ -1,28 +1,29 @@
 <template>
     <v-card flat>
         <v-card-text>
-            <v-layout row wrap v-for="(item, index) in comments" v-if="comments && comments.length" :key="`a${index}`" mb-2>
+            <v-layout row wrap v-for="(item, index) in comments" :key="`a${index}`" mb-2>
                 <v-flex xs1>
-                    <v-avatar size="45" color="teal">
+                    <v-avatar v-if="item.user" size="45" color="teal">
                         <span
                         class="subheading white--text "
                         >{{item.user.first_name.substring(0,1) + item.user.last_name.substring(0,1)}}</span>
                     </v-avatar>
+                    <img style="width: 45px" v-else src="http://www.sbcs.edu.tt/wp-content/uploads/2016/04/profile-default.png" alt="">
                 </v-flex>
                 <v-flex xs11>
                     <v-layout row wrap>
                         <v-flex xs12>
-                            <span class="body-2">{{item.user.username}}</span> - <i class="body-1">{{formatDate(item.date_created)}}</i>
+                            <span class="body-2">{{item.user? item.user.username: "user"}}</span> - <i class="body-1">{{formatDate(item.date_created)}}</i> (<b>{{getCaseType(item.stage)}}</b>)
                         </v-flex>
                         <v-flex xs12 style="text-indent: 40px">
-                            <p>{{item.details.comment}}</p>
+                            <p><b>{{getCaseStatus(item.status)}}</b> - {{item.comment}}</p>
                         </v-flex>
-                        <v-flex xs12 v-if="item.details.files && item.details.files.length">
+                        <v-flex xs12 v-if="item.documents && item.documents.length">
                             <v-layout row wrap>
                                 <v-flex xs12 class="body-2">
                                     ATTACHMENTS:
                                 </v-flex>
-                                <v-flex xs2 v-for="(file, i) in item.details.files" :key="i">
+                                <v-flex xs2 v-for="(file, i) in item.documents" :key="i">
                                     <v-card
                                         tile
                                         class="d-flex"
@@ -45,7 +46,7 @@
                     <v-divider></v-divider>
                 </v-flex>
             </v-layout>
-            <i class="subheading" v-else>No Comments</i>
+            <!-- <i class="subheading" v-else>No Comments</i> -->
         </v-card-text>
     </v-card>
 </template>
@@ -64,7 +65,7 @@ export default {
   },
   computed: {
     comments() {
-      return this.$store.state.comments.comments;
+      return this.$store.state.dockets.active.activities;
     }
   },
   created() {

@@ -9,10 +9,9 @@
         dark
         height="60px"
         slider-color="yellow"
-        fixed-tabs
       >
         <!-- case information -->
-        <v-tab ripple>Case Information</v-tab>
+        <v-tab ripple>Details</v-tab>
         <v-tab-item>
           <v-card flat>
             <v-card-text>
@@ -117,7 +116,7 @@
           </v-card>
         </v-tab-item>
         <!--documents  -->
-        <v-tab ripple>Case Documents Uploaded</v-tab>
+        <v-tab ripple>Documents</v-tab>
         <v-tab-item>
           <v-card flat>
             <v-card-text>
@@ -159,33 +158,10 @@
           </v-card>
         </v-tab-item>
         <!--recent activity  -->
-        <v-tab ripple>Recent Activity</v-tab>
-        <v-tab-item>
-          <v-card flat>
-            <v-card-text>
-              <v-list three-line>
-                <template v-for="(item, index) in docket.activities">
-                  <v-list-tile :key="index" avatar>
-                    <v-list-tile-avatar size="40" color="teal">
-                      <!-- <v-img :src="item.user + item.user"></v-img> -->
-                    </v-list-tile-avatar>
-                    <!-- <v-list-tile-avatar size="40" color="teal">
-                      <v-img :src="item.user.first_name.substring(0,1) + item.user.last_name.substring(0,1)"></v-img>
-                    </v-list-tile-avatar> -->
-                    <v-list-tile-content>
-                      <v-list-tile-title v-html="item.user"></v-list-tile-title>
-                      <v-list-tile-sub-title v-html="createActivityDesc(item)"></v-list-tile-sub-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                  <v-divider inset :key="index"></v-divider>
-                </template>
-              </v-list>
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
+        
 
         <v-tab ripple>
-          Comments
+          Proceedings
         </v-tab>
         <v-tab-item>
           <comments></comments>
