@@ -344,7 +344,12 @@ export default {
       .then(result=>{
          var details ={};
          console.log("review update docket result: " + JSON.stringify(result))
-         this.$print(this.docket, "SUMMON");
+         if(stage_case===0){
+          this.$print(this.docket, "SUMMON");
+         }else{           
+           this.$print(this.docket, "DECISION");
+         }
+         
          this.$notify({ message: "Summon for this case has been printed" });
           this.$router.push("/app/cases/finalize");
       //  this.$download(this.docket, "RCPT", "fda-receipt.pdf");
