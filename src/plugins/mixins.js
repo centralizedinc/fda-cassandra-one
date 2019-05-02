@@ -74,7 +74,8 @@ export default {
             return "<span class='primary--text'> Case Docket Created</span> &mdash;"+ this.formatDate(item.date_created)
           }
 
-          return "<span class='primary--text'>" + this.formatDate(item.date_created) + "</span> &mdash; " + this.caseStatus(item.status) + " by " + item.username + "   Remarks: " + item.comment + "  Type: " + this.getCaseType(item.stage) + ""
+          return "<span class='primary--text'>" 
+          + this.formatDate(item.date_created) + "</span> &mdash; " + this.caseStatus(item.status) + " by " + item.username + "   Remarks: " + item.comment + "  Type: " + this.getCaseType(item.stage) + ""
         }
 
 

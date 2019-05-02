@@ -146,7 +146,9 @@ export default {
         },
         add(){
             this.isEdit = false;
-            this.account = {};
+            this.account = {
+                 name:{}
+            };
             this.add_dialog = true;
         },
         save(){
