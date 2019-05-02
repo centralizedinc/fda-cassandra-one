@@ -68,7 +68,7 @@
         </v-flex>
         <!-- total docket card -->
         <v-flex xs12 md3 pa-1>
-            <v-card style="background: linear-gradient(to right, #02aab0, #00cdac); box-shadow: 0 6px 20px rgba(101, 198, 187, 1);">          
+            <v-card style="background:linear-gradient(360deg, #297373 0%, #5FA391 100%); box-shadow: 0 6px 20px rgba(101, 198, 187, 1);">          
                 <v-card-text>
                     <v-layout row wrap>
                         <v-flex xs9>
@@ -108,7 +108,7 @@
         </v-flex>
         <!-- total docket card -->
         <v-flex xs12 md3 pa-1>
-            <v-card style="background: linear-gradient(to right, #02aab0, #00cdac); box-shadow: 0 6px 20px rgba(101, 198, 187, 1);">          
+            <v-card style="background:linear-gradient(360deg, #297373 0%, #5FA391 100%); box-shadow: 0 6px 20px rgba(101, 198, 187, 1);">          
                 <v-card-text>
                     <v-layout row wrap>
                         <v-flex xs9>

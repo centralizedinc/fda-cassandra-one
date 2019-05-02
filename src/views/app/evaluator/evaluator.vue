@@ -15,7 +15,8 @@
           Cases List
           <v-spacer></v-spacer>
         </v-card-title>
-        <v-data-table :headers="headers" :items="dockets" :search="search">
+        <v-data-table :headers="headers" :items="dockets" :search="search" :loading="isLoading">
+          <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
           <template v-slot:items="props">
             <tr @click="view(props.item)" style="cursor:pointer">
               <td>{{ props.item.dtn }}</td>
@@ -54,6 +55,7 @@
 export default {
   data() {
     return {
+      isLoading:false,
       search: "",
       dockets: [],
       headers: [
@@ -116,13 +118,16 @@ export default {
   },
   methods: {
     init() {
+      this.isLoading = true;
       this.$store
         .dispatch("GET_DOCKETS")
         .then(results => {
+          this.isLoading = false;
           this.dockets = results;
           console.log(JSON.stringify(results));
         })
         .catch(error => {
+          this.isLoading = false;
           // this.$notifyError(error)
           console.error(error);
         });

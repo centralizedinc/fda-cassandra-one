@@ -9,10 +9,9 @@
         dark
         height="60px"
         slider-color="yellow"
-        fixed-tabs
       >
         <!-- case information -->
-        <v-tab ripple>Case Information</v-tab>
+        <v-tab ripple>Details</v-tab>
         <v-tab-item>
           <v-card flat>
             <v-card-text>
@@ -117,7 +116,7 @@
           </v-card>
         </v-tab-item>
         <!--documents  -->
-        <v-tab ripple>Case Documents Uploaded</v-tab>
+        <v-tab ripple>Documents</v-tab>
         <v-tab-item>
           <v-card flat>
             <v-card-text>
@@ -159,7 +158,7 @@
           </v-card>
         </v-tab-item>
         <!--recent activity  -->
-        <v-tab ripple>Recent Activity</v-tab>
+        <v-tab ripple>Proceedings</v-tab>
         <v-tab-item>
           <v-card flat>
             <v-card-text>
