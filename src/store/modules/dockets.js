@@ -1,15 +1,15 @@
-import api from "@/api/DocketsAPI";
+import api from "../../api/DocketsAPI";
 
 const initialState = {
   list: [],
-  eval_list:[],
-  review_list:[],
-  approval_list:[],
-  finalization_list:[],
-  execution_list:[],
-  appeal_list:[],
+  eval_list: [],
+  review_list: [],
+  approval_list: [],
+  finalization_list: [],
+  execution_list: [],
+  appeal_list: [],
   active: {},
-  session_token:""
+  session_token: ""
 };
 
 const state = initialState;
@@ -144,7 +144,7 @@ const actions = {
     });
   },
 
-   /**
+  /**
    * @description finds all dockets in the DB if there are no values found in the current session
    * @param {*} context
    * @param {Boolean} refresh
@@ -236,8 +236,67 @@ const actions = {
     return api.createDocket(details);
   },
 
-  UPDATE_DOCKET(context, details) {
-    return api.updateDocket(details);
+  UPDATE_DOCKET(context, docket) {
+    return new Promise((resolve, reject) => {
+      api.updateDocket(docket)
+        .then(results => {
+          if (results.data.success) {
+            context.dispatch('GET_DOCKETS_APPROVAL', true)
+            resolve();
+          } else {
+            reject(results.data.errors);
+          }
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+
+  ADD_COMMENT(context, {
+    docket,
+    activity,
+    formData
+  }) {
+    return new Promise((resolve, reject) => {
+      if (formData) {
+        api.uploadFile({
+            dtn: docket.dtn,
+            formData
+          }).then((result) => {
+            var files = result.data.model
+            docket.documents.concat(files)
+            activity.documents = files
+            docket.activities.push(activity)
+            return api.updateDocket(docket)
+          })
+          .then(results => {
+            if (results.data.success) {
+              context.dispatch('GET_DOCKETS_APPROVAL', true)
+              resolve();
+            } else {
+              reject(results.data.errors);
+            }
+          })
+          .catch((err) => {
+
+          });
+      } else {
+        docket.activities.push(activity)
+        api.updateDocket(docket)
+          .then(results => {
+            if (results.data.success) {
+              context.dispatch('GET_DOCKETS_APPROVAL', true)
+              resolve();
+            } else {
+              reject(results.data.errors);
+            }
+          })
+          .catch(error => {
+            reject(error);
+          });
+      }
+    });
   }
 };
 

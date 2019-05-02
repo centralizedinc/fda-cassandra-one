@@ -325,27 +325,65 @@ export default {
           last_name: this.user_data.name.last,
           middle_name: this.user_data.name.middle,
           email: this.user_data.email
-        }  
-      })
-      this.docket.current_status=4;
-      this.$store.dispatch('UPDATE_DOCKET', this.docket)
-      .then(result=>{
-         var details ={};
-         console.log("review update docket result: " + JSON.stringify(result))
-         if(stage_case === 0){
-          this.$print(this.docket, "SUMMON");
-          this.$notify({ message: "Summon for this case has been printed" });
-          this.$router.push("/app/cases/finalize");
-         }else{           
-           this.$print(this.docket, "DECISION");
-           this.$notify({ message: "Decision for this case has been printed" });
-          this.$router.push("/app/cases/finalize");
-         }
-      })
-      .catch(error=>{
-        console.error(error)
-        this.$notifyError(error)
-      })
+        }
+      });
+      this.docket.current_status = 4;
+      this.$store
+        .dispatch("UPDATE_DOCKET", this.docket)
+        .then(result => {
+          var details = {};
+          console.log("review update docket result: " + JSON.stringify(result));
+          if (stage_case === 0) {
+            this.$print(this.docket, "SUMMON");
+            this.$notify({ message: "Summon for this case has been printed" });
+            this.$router.push("/app/cases/finalize");
+          } else {
+            this.$print(this.docket, "DECISION");
+            this.$notify({
+              message: "Decision for this case has been printed"
+            });
+            this.$router.push("/app/cases/finalize");
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          this.$notifyError(error);
+        });
+    },
+    upload(data) {
+      this.formData = data.formData;
+    },
+    comment() {
+      var stage_case = 0;
+      this.docket.activities.forEach(element => {
+        if (element.status === 4) stage_case = 1;
+      });
+      var activity = {
+        stage: stage_case,
+        status: 3,
+        comment: this.remarks,
+        user: {
+          username: this.user_data.username,
+          first_name: this.user_data.name.first,
+          last_name: this.user_data.name.last,
+          middle_name: this.user_data.name.middle,
+          email: this.user_data.email
+        }
+      };
+      this.$store
+        .dispatch("ADD_COMMENT", {
+          docket: this.docket,
+          activity,
+          formData: this.formData
+        })
+        .then(result => {
+          console.log("comment docket result: " + JSON.stringify(result));
+          this.$notify({ message: "Success to Added a comment!" });
+        })
+        .catch(error => {
+          console.error(error);
+          this.$notifyError(error);
+        });
     }
   }
 };

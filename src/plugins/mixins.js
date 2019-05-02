@@ -58,7 +58,7 @@ export default {
           var dt = new Date(date).toLocaleString("en-US", format);
           return dt;
         },
-        allowed_access(module_access) {          
+        allowed_access(module_access) {
           if (this.$store.state.user_session.permissions.find(o => o.value === module_access)) {
             return true
           } else {
@@ -73,14 +73,24 @@ export default {
           this.$router.push("/login");
         },
         createActivityDesc(item) {
-          if(item.status == 5){
-            return "<span class='primary--text'> Case Docket Created</span> &mdash;"+ this.formatDate(item.date_created)
+          if (item.status == 5) {
+            return "<span class='primary--text'> Case Docket Created</span> &mdash;" + this.formatDate(item.date_created)
           }
 
-          return "<span class='primary--text'>" 
-          + this.formatDate(item.date_created) + "</span> &mdash; " + this.caseStatus(item.status) + " by " + item.username + "   Remarks: " + item.comment + "  Type: " + this.getCaseType(item.stage) + ""
+          return "<span class='primary--text'>" +
+            this.formatDate(item.date_created) + "</span> &mdash; " + this.caseStatus(item.status) + " by " + item.username + "   Remarks: " + item.comment + "  Type: " + this.getCaseType(item.stage) + ""
+        },
+        getIconByStatus(status) {
+          var icons = [
+            'description',
+            'rate_review',
+            'thumb_up',
+            'check_circle',
+            'playlist_add_check',
+            'fiber_new'
+          ]
+          return icons[status]
         }
-
 
       }
     })

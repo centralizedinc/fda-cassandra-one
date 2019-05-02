@@ -401,96 +401,99 @@
 </template>
 
 <script>
-  import notification from "@/components/Notification";
-  export default {
-    components: {
-      notification
-    },
-    data() {
-      return {
-        user_role:"",
-        isLoading: false,
-        searchDialog: false,
-        miniNav: false,
-        showNav: true,
-        mini: false,
-        user: {
-          first_name: "Ariel",
-          last_name: "Balita"
-        },
-        show_logout: false
-      };
-    },
-    created() {
-      this.init();
-    },
-    methods: {
-      init() {
-        console.log("State User: " + JSON.stringify(this.$store.state))
-        this.user = this.$store.state.user_session.user;
-        //find access
-        this.$store.dispatch('FIND_ROLE', this.user.role)
-        .then(results=>{   
-          this.user_role = results.data.model.name
-          this.$store.commit('SET_USER_PERMISSIONS',results.data.model.permissions)
-        })
+import notification from "@/components/Notification";
+export default {
+  components: {
+    notification
+  },
+  data() {
+    return {
+      user_role: "",
+      isLoading: false,
+      searchDialog: false,
+      miniNav: false,
+      showNav: true,
+      mini: false,
+      user: {
+        first_name: "Ariel",
+        last_name: "Balita"
       },
-      activeRoute(route) {
-        for (var i = 0; i < route.length; i++) {
-          if (this.$route.name === route[i]) {
-            return "background-image:linear-gradient(45deg, #0288d1, #26c6da); color:white";
-          }
+      show_logout: false
+    };
+  },
+  created() {
+    this.init();
+  },
+  methods: {
+    init() {
+      console.log("State User: " + JSON.stringify(this.$store.state));
+      this.user = this.$store.state.user_session.user;
+      //find access
+      this.$store.dispatch("FIND_ROLE", this.user.role).then(results => {
+        this.user_role = results.data.model.name;
+        this.$store.commit(
+          "SET_USER_PERMISSIONS",
+          results.data.model.permissions
+        );
+      });
+    },
+    activeRoute(route) {
+      for (var i = 0; i < route.length; i++) {
+        if (this.$route.name === route[i]) {
+          return "background-image:linear-gradient(45deg, #0288d1, #26c6da); color:white";
         }
-        return;
-      },
-      goTo(path) {
-        this.$router.push(path);
-      },
-      search() {
-        this.isLoading = true;
-        this.$router.push("/app/cases/search");
-        this.isLoading = false;
-        this.searchDialog = false;
-      },
-      showLogout() {
-        this.show_logout = true;
-      },
-      confirmLogout() {
-        this.$store.dispatch("LOGOUT");
-        this.$router.push("/");
-      },
-    },
-    computed: {
-      page_name() {
-        return this.$route.name;
-      },
-      breadcrumbs() {
-        return [{
-            name: "Dashboard"
-          },
-          {
-            name: "Cases"
-          }
-        ];
-      },
-      isMiniView() {
-        console.log("smAndDown: " + this.$vuetify.breakpoint.smAndDown);
-        // this.showNav = false;
-        return this.$vuetify.breakpoint.smAndDown;
       }
+      return;
+    },
+    goTo(path) {
+      this.$router.push(path);
+    },
+    search() {
+      this.isLoading = true;
+      this.$router.push("/app/cases/search");
+      this.isLoading = false;
+      this.searchDialog = false;
+    },
+    showLogout() {
+      this.show_logout = true;
+    },
+    confirmLogout() {
+      this.$store.dispatch("LOGOUT");
+      this.$router.push("/");
     }
-  };
+  },
+  computed: {
+    page_name() {
+      return this.$route.name;
+    },
+    breadcrumbs() {
+      return [
+        {
+          name: "Dashboard"
+        },
+        {
+          name: "Cases"
+        }
+      ];
+    },
+    isMiniView() {
+      console.log("smAndDown: " + this.$vuetify.breakpoint.smAndDown);
+      // this.showNav = false;
+      return this.$vuetify.breakpoint.smAndDown;
+    }
+  }
+};
 </script>
 
 <style>
-  .bg {
-    /* The image used */
-    background-image: url("https://pixinvent.com/materialize-material-design-admin-template/app-assets/images/gallery/breadcrumb-bg.jpg");
-    /* Full height */
-    height: 100%;
-    /* Center and scale the image nicely */
-    background-position: top;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
+.bg {
+  /* The image used */
+  background-image: url("https://pixinvent.com/materialize-material-design-admin-template/app-assets/images/gallery/breadcrumb-bg.jpg");
+  /* Full height */
+  height: 100%;
+  /* Center and scale the image nicely */
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 </style>
