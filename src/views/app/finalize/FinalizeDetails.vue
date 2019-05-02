@@ -149,38 +149,9 @@
         </v-tab-item>
         <!--recent activity  -->
 
-       <v-tab ripple>Recent Activity</v-tab>
-        <v-tab-item>
-          <v-card flat>
-            <v-card-text>
-              <v-list three-line>
-                <template v-for="(item, index) in docket.activities">
-                  <v-list-tile :key="`a${index}`" avatar>
-                  <v-list-tile-avatar>
-                            <v-avatar size="40" color="teal">
-                                <span
-                                class="subheading white--text "
-                                >{{item.user.first_name.substring(0,1) + item.user.last_name.substring(0,1)}}</span>
-                            </v-avatar>
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                          <v-list-tile-title>
-                                <span class="body-2">{{getCaseStatus(item.user.status)}}</span>
-                            </v-list-tile-title>
-                            <v-list-tile-title>
-                                <span class="body-2">{{item.user.username}}</span> - <i class="body-1">{{formatDate(item.date_created)}}</i>
-                            </v-list-tile-title>
-                            <v-list-tile-sub-title>{{item.user.comment}}</v-list-tile-sub-title>
-                        </v-list-tile-content>
-                  </v-list-tile>
-                  <v-divider inset :key="index"></v-divider>
-                </template>
-              </v-list>
-            </v-card-text>
-          </v-card>
-</v-tab-item>
+       
         <v-tab ripple>
-          Comments
+          Proceedings
         </v-tab>
         <v-tab-item>
           <comments></comments>
@@ -208,7 +179,7 @@
             ></v-text-field>
             <span class="subheading font-weight-light primary--text">Add Supporting Documents</span>
             <v-divider class="mb-3"></v-divider>
-            <uploader class="caption"></uploader>
+            <uploader class="caption" @upload="upload"></uploader>
             <!-- fab button save -->
             <v-tooltip top>
               <v-btn
@@ -227,7 +198,14 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn block color="primary" @click="printSummon()">Print</v-btn>
+            <v-layout row wrap>
+              <v-flex xs12 mb-2>
+                <v-btn block color="primary" @click="printSummon()">Print</v-btn>
+              </v-flex>
+              <v-flex xs12>
+                <v-btn block color="success" @click="comment()">Add to Comment</v-btn>
+              </v-flex>
+            </v-layout>
           </v-card-actions>
         </v-card>
       </v-navigation-drawer>
@@ -236,10 +214,10 @@
 </template>
 
 <script>
-import pdf from 'vue-pdf'
+import pdf from "vue-pdf";
 import Uploader from "@/components/Uploader";
 import FabButtons from "@/components/FabButton";
-import Comments from '../comment/Comment'
+import Comments from "../comment/Comment";
 export default {
   components: {
     Uploader,
@@ -294,7 +272,8 @@ export default {
         //   subtitle:
         //     "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
         // }
-      ]
+      ],
+      formData: null
     };
   },
   created() {
@@ -348,15 +327,20 @@ export default {
           email: this.user_data.email
         }  
       })
-      // this.docket.current_status=4;
+      this.docket.current_status=4;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
          var details ={};
          console.log("review update docket result: " + JSON.stringify(result))
-         this.$print(this.docket, "SUMMON");
-         this.$notify({ message: "Summon for this case has been printed" });
+         if(stage_case === 0){
+          this.$print(this.docket, "SUMMON");
+          this.$notify({ message: "Summon for this case has been printed" });
           this.$router.push("/app/cases/finalize");
-      //  this.$download(this.docket, "RCPT", "fda-receipt.pdf");
+         }else{           
+           this.$print(this.docket, "DECISION");
+           this.$notify({ message: "Decision for this case has been printed" });
+          this.$router.push("/app/cases/finalize");
+         }
       })
       .catch(error=>{
         console.error(error)

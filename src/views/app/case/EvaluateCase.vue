@@ -16,10 +16,11 @@
             v-model="search"
           ></v-text-field>
         </v-card-title>
-        <v-data-table :headers="headers" :items="items" :search="search" class="pa-1">
+        <v-data-table :headers="headers" :items="items" :search="search" class="pa-1" :loading="isLoading">
+          <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
           <template v-slot:items="props">
             <tr @click="preview(props.item)" style="cursor:pointer">
-              <td>{{ props.item.dtn }}</td>
+              <td>{{ '2019-00'+props.item.dtn }}</td>
               <td>{{ formatDate(props.item.date_docketed) }}</td>
               <td>{{ props.item.establishment_name }}</td>
               <td>{{ props.item.product_involved }}</td>
@@ -105,6 +106,7 @@
 export default {
   data() {
     return {
+      isLoading:false,
       previewNav: false,
       selected_item: {},
       search: "",
@@ -214,12 +216,16 @@ export default {
   },
   methods: {
     init() {
+      this.isLoading=true;
       this.$store
         .dispatch("GET_DOCKETS_EVALUATION", true)
         .then(results => {
+          this.isLoading=false;
           this.items = results;
         })
-        .catch(error => {});
+        .catch(error => {
+          this.isLoading=false;
+        });
     },
     view() {
       console.log("evaluator case: " + JSON.stringify(this.selected_item));

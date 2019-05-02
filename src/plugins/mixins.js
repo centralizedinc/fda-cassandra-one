@@ -9,7 +9,8 @@ export default {
             'For Review',
             'For Approval',
             'For Finalization',
-            'For Execution'
+            'For Execution',
+            'Created'
           ]
           return arr[status]
         },
@@ -57,8 +58,7 @@ export default {
           var dt = new Date(date).toLocaleString("en-US", format);
           return dt;
         },
-        allowed_access(module_access) {
-          console.log("MODULE_ACCESS: " + this.$store.state.user_session.permissions.find(o => o.value === module_access))
+        allowed_access(module_access) {          
           if (this.$store.state.user_session.permissions.find(o => o.value === module_access)) {
             return true
           } else {
@@ -73,13 +73,13 @@ export default {
           this.$router.push("/login");
         },
         createActivityDesc(item) {
+          if(item.status == 5){
+            return "<span class='primary--text'> Case Docket Created</span> &mdash;"+ this.formatDate(item.date_created)
+          }
 
-          return "<span class='primary--text'>" + this.formatDate(item.date_created) + "</span> &mdash; " + this.caseStatus(item.status) + " by " + item.user.username + " Type: " + this.getCaseType(item.stage) + ""
+          return "<span class='primary--text'>" 
+          + this.formatDate(item.date_created) + "</span> &mdash; " + this.caseStatus(item.status) + " by " + item.username + "   Remarks: " + item.comment + "  Type: " + this.getCaseType(item.stage) + ""
         }
-        //   console.log("Item#########" + JSON.stringify(item))
-        //   return "<span class='primary--text'>"+this.formatDate(item.date_created)+"</span> &mdash;  Created Case Docket (Docket Number: "+this.docket.dtn+")  Date Modified "+this.formatDate(item.date_modified)+""
-        //   date name status type },
-        // date - 
 
 
       }

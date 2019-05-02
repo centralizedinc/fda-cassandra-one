@@ -276,11 +276,14 @@ export default {
         return {
             isLoading:false,
             date_dialogs:[],
-            docket:{},
+            docket:{
+                activities:[]
+            },
             references:{},
             formData:{},
             uploadedFiles:[],
-            update: false            
+            update: false,
+            user_data:{}            
         }
     },
     created(){
@@ -288,18 +291,19 @@ export default {
     },
     methods:{
         init(){
+            this.user_data = this.$store.state.user_session.user
             this.$store.dispatch('GET_REFERENCE')
             .then(result =>{
                 console.log(JSON.stringify(result))
                 this.references = result
                 console.log("this is edit data: " + JSON.stringify(this.$store.state.dockets.active))
-            if(this.$store.state.dockets.active.edit){
-                this.update = true
-                this.$store.state.dockets.active.edit = false;
-                this.docket = this.$store.state.dockets.active
-                this.docket.license_validity = formatDate(this.docket.license_validity)
-                this.docket.inspection_date = formatDate(this.docket.inspection_date)
-            }
+                if(this.$store.state.dockets.active.edit){
+                    this.update = true
+                    this.$store.state.dockets.active.edit = false;
+                    this.docket = this.$store.state.dockets.active
+                    this.docket.license_validity = formatDate(this.docket.license_validity)
+                    this.docket.inspection_date = formatDate(this.docket.inspection_date)
+                }
             })  
             .catch(error=>{
                 console.error(error)
@@ -311,42 +315,46 @@ export default {
         },
         submit(){
             this.isLoading=true;
-            this.docket.activities.push({
-                comment:"Edit form",    
-                user:{
-                username: this.ser_data.username,
-                first_name: this.user_data.name.first,
-                last_name: this.user_data.name.last,
-                middle_name: this.user_data.name.middle,
-                email: this.user_data.email
-                }     
-            })
+            
             if(this.update){
+                this.docket.activities.push({
+                    comment:"Edit form",    
+                    user:{
+                    username: this.user_data.username,
+                    first_name: this.user_data.name.first,
+                    last_name: this.user_data.name.last,
+                    middle_name: this.user_data.name.middle,
+                    email: this.user_data.email
+                    }     
+                })
                 this.$store.dispatch('UPDATE_DOCKET', this.docket)
-            .then(result=>{
-                 this.isLoading=false;
-                this.$router.push('/app')
-                console.log("evaluate update docket result: " + JSON.stringify(result))
-            })
-            .catch(error=>{
-                this.isLoading=false;
-                console.error(error)
-                this.$notifyError(error)
-            })
+                .then(result=>{
+                    this.isLoading=false;
+                    this.$router.push('/app')
+                    console.log("evaluate update docket result: " + JSON.stringify(result))
+                })
+                .catch(error=>{
+                    this.isLoading=false;
+                    console.error(error)
+                    this.$notifyError(error)
+                })
             }else{
                 //set initial activity
-            this.docket.activities = [{stage:0,status:5,user:{
-          username: this.ser_data.username,
-          first_name: this.user_data.name.first,
-          last_name: this.user_data.name.last,
-          middle_name: this.user_data.name.middle,
-          email: this.user_data.email
-        }   }]
+                this.docket.activities = [
+                    {stage:0,status:5,
+                        user:{
+                            username: this.user_data.username,
+                            first_name: this.user_data.name.first,
+                            last_name: this.user_data.name.last,
+                            middle_name: this.user_data.name.middle,
+                            email: this.user_data.email
+                        }   
+                    }]
             this.$store.dispatch('NEW_DOCKET',{docket: this.docket, documents:this.formData})
             .then(results=>{   
                 this.isLoading=false;             
                 console.log('RESULTS: ' +JSON.stringify(results))
-                this.$notify({message:'New Case Created! \n Docket Number: ' + results.dtn})
+                this.$notify({message:'New Case Created! \n Docket Number: 2019-00' + results.dtn, color:"success"})
                 this.$router.push('/app')
             })
             .catch(error=>{

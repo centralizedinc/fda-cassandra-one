@@ -147,38 +147,9 @@
             </v-card-text>
           </v-card>
         </v-tab-item>
-             <v-tab ripple>Recent Activity</v-tab>
-        <v-tab-item>
-          <v-card flat>
-            <v-card-text>
-              <v-list three-line>
-                <template v-for="(item, index) in docket.activities">
-                  <v-list-tile :key="`a${index}`" avatar>
-                  <v-list-tile-avatar>
-                            <v-avatar size="40" color="teal">
-                                <span
-                                class="subheading white--text "
-                                >{{item.user.first_name.substring(0,1) + item.user.last_name.substring(0,1)}}</span>
-                            </v-avatar>
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                          <v-list-tile-title>
-                                <span class="body-2">{{getCaseStatus(item.user.status)}}</span>
-                            </v-list-tile-title>
-                            <v-list-tile-title>
-                                <span class="body-2">{{item.user.username}}</span> - <i class="body-1">{{formatDate(item.date_created)}}</i>
-                            </v-list-tile-title>
-                            <v-list-tile-sub-title>{{item.user.comment}}</v-list-tile-sub-title>
-                        </v-list-tile-content>
-                  </v-list-tile>
-                  <v-divider inset :key="index"></v-divider>
-                </template>
-              </v-list>
-            </v-card-text>
-          </v-card>
-</v-tab-item>
+
         <v-tab ripple>
-          Comments
+          Proceedings
         </v-tab>
         <v-tab-item>
           <comments></comments>
@@ -208,10 +179,10 @@
               v-model="value"
               autocomplete
             ></v-select>
-            <v-text-field outline label="Notes" name="name" textarea multi-line counter></v-text-field>
+            <v-text-field outline label="Notes" name="name" textarea multi-line counter v-model="remarks"></v-text-field>
             <span class="subheading font-weight-light primary--text">Add Supporting Documents</span>
             <v-divider class="mb-3"></v-divider>
-            <uploader class="caption"></uploader>
+            <uploader class="caption" @upload="upload"></uploader>
             <!-- fab button save -->
             <v-tooltip top>
               <v-btn
@@ -230,7 +201,14 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn block color="primary" @click="save()">Save</v-btn>
+            <v-layout row wrap>
+              <v-flex xs12 mb-2>
+                <v-btn block color="primary" @click="save()">Save</v-btn>
+              </v-flex>
+              <v-flex xs12>
+                <v-btn block color="success" @click="comment()">Add to Comment</v-btn>
+              </v-flex>
+            </v-layout>
           </v-card-actions>
         </v-card>
       </v-navigation-drawer>
@@ -241,7 +219,7 @@
 <script>
 import Uploader from "@/components/Uploader";
 import FabButtons from "@/components/FabButton";
-import Comments from '../comment/Comment'
+import Comments from "../comment/Comment";
 export default {
   components: {
     Uploader,
@@ -254,6 +232,8 @@ export default {
       execute: ["Served", "Not Served"],
       execute_details: [],
       selected_execute: "",
+      remarks: "",
+      value: "",
       user_data: {},
       items: [
         // {
@@ -296,7 +276,8 @@ export default {
         //     "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
         // }
       ],
-      docket: {}
+      docket: {},
+      formData: null
     };
   },
   watch: {
@@ -351,9 +332,11 @@ export default {
     viewFile(url) {
       window.open(url, "_blank");
     },
-    save(){
-      var stage_case = 0
-      console.log("this is docket execute details: " + JSON.stringify(this.docket))
+    save() {
+      var stage_case = 0;
+      console.log(
+        "this is docket execute details: " + JSON.stringify(this.docket)
+      );
       this.docket.activities.forEach(element => {
         if (element.status === 4) stage_case = 1;
       });
@@ -374,6 +357,39 @@ export default {
         .then(result => {
           console.log("review update docket result: " + JSON.stringify(result));
           this.$notify({ message: "Success to Save!" });
+          this.$router.push("/app/cases/execute");
+        })
+        .catch(error => {
+          console.error(error);
+          this.$notifyError(error);
+        });
+    },
+    upload(data) {
+      this.formData = data.formData;
+    },
+    comment() {
+      var comment = {
+        details: {
+          action: this.selected_execute,
+          sub_action: this.value,
+          comment: this.remarks
+        },
+        dtn: this.docket.dtn,
+        created_by: this.user_data.username,
+        user: {
+          username: this.user_data.username,
+          first_name: this.user_data.name.first,
+          last_name: this.user_data.name.last,
+          middle_name: this.user_data.name.middle,
+          email: this.user_data.email
+        },
+        date_created: new Date()
+      };
+      this.$store
+        .dispatch("ADD_COMMENT", { comment, formData: this.formData })
+        .then(result => {
+          console.log("comment docket result: " + JSON.stringify(result));
+          this.$notify({ message: "Success to Added a comment!" });
           this.$router.push("/app/cases/execute");
         })
         .catch(error => {
