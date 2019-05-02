@@ -41,14 +41,25 @@ const actions = {
         });
     },
 
-    ADD_COMMENT(context, data) {
+    ADD_COMMENT(context, {
+        comment,
+        formData
+    }) {
         return new Promise((resolve, reject) => {
-            api
-                .addNewComment(data)
+            api.uploadFile({
+                    dtn: comment.dtn,
+                    formData
+                })
+                .then((result) => {
+                    var files = result.data.model
+                    console.log('files :', files);
+                    comment.details.files = files
+                    return api.addNewComment(comment)
+                })
                 .then(results => {
                     if (results.data.success) {
                         context.dispatch('GET_COMMENTS', {
-                            dtn: data.dtn,
+                            dtn: comment.dtn,
                             refresh: true
                         })
                         resolve(context.state.comments);

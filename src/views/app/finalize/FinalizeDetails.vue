@@ -199,7 +199,7 @@
             ></v-text-field>
             <span class="subheading font-weight-light primary--text">Add Supporting Documents</span>
             <v-divider class="mb-3"></v-divider>
-            <uploader class="caption"></uploader>
+            <uploader class="caption" @upload="upload"></uploader>
             <!-- fab button save -->
             <v-tooltip top>
               <v-btn
@@ -218,7 +218,14 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn block color="primary" @click="printSummon()">Print</v-btn>
+            <v-layout row wrap>
+              <v-flex xs12 mb-2>
+                <v-btn block color="primary" @click="printSummon()">Print</v-btn>
+              </v-flex>
+              <v-flex xs12>
+                <v-btn block color="success" @click="comment()">Add to Comment</v-btn>
+              </v-flex>
+            </v-layout>
           </v-card-actions>
         </v-card>
       </v-navigation-drawer>
@@ -227,10 +234,10 @@
 </template>
 
 <script>
-import pdf from 'vue-pdf'
+import pdf from "vue-pdf";
 import Uploader from "@/components/Uploader";
 import FabButtons from "@/components/FabButton";
-import Comments from '../comment/Comment'
+import Comments from "../comment/Comment";
 export default {
   components: {
     Uploader,
@@ -285,7 +292,8 @@ export default {
         //   subtitle:
         //     "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
         // }
-      ]
+      ],
+      formData: null
     };
   },
   created() {

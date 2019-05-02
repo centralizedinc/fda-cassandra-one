@@ -233,7 +233,7 @@
             <v-textarea outline label="Remarks" name="name" v-model="remarks"></v-textarea>
             <span class="subheading font-weight-light primary--text">Add Supporting Documents</span>
             <v-divider class="mb-3"></v-divider>
-            <uploader class="caption"></uploader>
+            <uploader class="caption" @upload="upload"></uploader>
             <!-- fab button save -->
             <!-- <v-tooltip top>
               <v-btn
@@ -271,7 +271,7 @@
 <script>
 import Uploader from "@/components/Uploader";
 import pdf from "vue-pdf";
-import Comments from '../comment/Comment'
+import Comments from "../comment/Comment";
 
 export default {
   props: {
@@ -301,7 +301,8 @@ export default {
       value: "",
       items: [],
       remarks: "",
-      user_data: {}
+      user_data: {},
+      formData: null
     };
   },
   created() {
@@ -454,7 +455,10 @@ export default {
           this.$notifyError(error);
         });
     },
-    comment(){
+    upload(data) {
+      this.formData = data.formData;
+    },
+    comment() {
       var comment = {
         details: {
           action: this.selected_action,
@@ -471,12 +475,11 @@ export default {
           email: this.user_data.email
         },
         date_created: new Date()
-      }
-      this.$store.dispatch('ADD_COMMENT', comment)
+      };
+      this.$store
+        .dispatch("ADD_COMMENT", { comment, formData: this.formData })
         .then(result => {
-          console.log(
-            "comment docket result: " + JSON.stringify(result)
-          );
+          console.log("comment docket result: " + JSON.stringify(result));
           this.$notify({ message: "Success to Added a comment!" });
           this.$router.push("/app/cases/evaluate");
         })

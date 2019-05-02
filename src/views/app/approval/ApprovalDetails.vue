@@ -229,7 +229,7 @@
             ></v-text-field>
             <span class="subheading font-weight-light primary--text">Add Supporting Documents</span>
             <v-divider class="mb-3"></v-divider>
-            <uploader class="caption"></uploader>
+            <uploader class="caption" @upload="upload"></uploader>
             <!-- fab button save -->
             <v-tooltip top>
               <v-btn
@@ -248,7 +248,14 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn block color="primary" @click="final()">Submit for Finalization</v-btn>
+            <v-layout row wrap>
+              <v-flex xs12 mb-2>
+                <v-btn block color="primary" @click="final()" mb-2>Submit for Finalization</v-btn>
+              </v-flex>
+              <v-flex xs12>
+                <v-btn block color="success" @click="comment()">Add to Comment</v-btn>
+              </v-flex>
+            </v-layout>
           </v-card-actions>
         </v-card>
       </v-navigation-drawer>
@@ -259,7 +266,7 @@
 <script>
 import Uploader from "@/components/Uploader";
 import FabButtons from "@/components/FabButton";
-import Comments from '../comment/Comment'
+import Comments from "../comment/Comment";
 export default {
   components: {
     Uploader,
@@ -314,7 +321,8 @@ export default {
         //   subtitle:
         //     "<span class='text--primary'>about 15 hours ago</span> &mdash;  Received and Docketed "
         // }
-      ]
+      ],
+      formData: null
     };
   },
   created() {
@@ -380,6 +388,39 @@ export default {
         .then(result => {
           console.log("review update docket result: " + JSON.stringify(result));
           this.$notify({ message: "Success to Finalize!" });
+          this.$router.push("/app/cases/approve");
+        })
+        .catch(error => {
+          console.error(error);
+          this.$notifyError(error);
+        });
+    },
+    upload(data) {
+      this.formData = data.formData;
+    },
+    comment() {
+      var comment = {
+        details: {
+          action: this.selected_action,
+          // sub_action: this.value,
+          comment: this.remarks
+        },
+        dtn: this.docket.dtn,
+        created_by: this.user_data.username,
+        user: {
+          username: this.user_data.username,
+          first_name: this.user_data.name.first,
+          last_name: this.user_data.name.last,
+          middle_name: this.user_data.name.middle,
+          email: this.user_data.email
+        },
+        date_created: new Date()
+      };
+      this.$store
+        .dispatch("ADD_COMMENT", { comment, formData: this.formData })
+        .then(result => {
+          console.log("comment docket result: " + JSON.stringify(result));
+          this.$notify({ message: "Success to Added a comment!" });
           this.$router.push("/app/cases/approve");
         })
         .catch(error => {
