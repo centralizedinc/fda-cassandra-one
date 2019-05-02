@@ -159,6 +159,7 @@ export default {
     data(){
         return{
             isEdit:false,
+            isLoading: false,
             selection_list:[],
             init_selection_list:[
                 {name:'Docket Creation', value:'DOCKET_CREATE'},
@@ -216,23 +217,28 @@ export default {
             })
         },
         save(){
+            this.isLoading = true
             this.$store.dispatch('ADD_ROLE', this.role)
             .then(results=>{
                 this.$notify({message: 'New Role created.', color:'success'})
                 this.add_dialog = false;
+                this.isLoading = false
                 this.init()
             })
             .catch(error =>{
                 console.error(error)
                 this.add_dialog = false;
+                this.isLoading = false
                 this.$notifyError(error)
             })
         },
         edit(){
+            this.isLoading = true
             this.$store.dispatch('EDIT_ROLE', this.role)
             .then(results=>{
                 this.$notify({message: 'Role edited.', color:'success'})
                 this.add_dialog = false;
+                this.isLoading = false
                 this.init()
             })
             .catch(error =>{
