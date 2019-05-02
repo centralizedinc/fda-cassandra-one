@@ -17,4 +17,7 @@ export default class CommentsAPI {
         return axios.post('/comments', details);
     }
 
+    static uploadFile(comply) {
+        return axios.post('/upload?account_id=' + comply.dtn, comply.formData)
+    }
 }
