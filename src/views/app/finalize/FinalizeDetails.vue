@@ -339,20 +339,20 @@ export default {
           email: this.user_data.email
         }  
       })
-      // this.docket.current_status=4;
+      this.docket.current_status=4;
       this.$store.dispatch('UPDATE_DOCKET', this.docket)
       .then(result=>{
          var details ={};
          console.log("review update docket result: " + JSON.stringify(result))
-         if(stage_case===0){
+         if(stage_case === 0){
           this.$print(this.docket, "SUMMON");
+          this.$notify({ message: "Summon for this case has been printed" });
+          this.$router.push("/app/cases/finalize");
          }else{           
            this.$print(this.docket, "DECISION");
-         }
-         
-         this.$notify({ message: "Summon for this case has been printed" });
+           this.$notify({ message: "Decision for this case has been printed" });
           this.$router.push("/app/cases/finalize");
-      //  this.$download(this.docket, "RCPT", "fda-receipt.pdf");
+         }
       })
       .catch(error=>{
         console.error(error)
