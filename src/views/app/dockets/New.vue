@@ -280,7 +280,8 @@ export default {
             references:{},
             formData:{},
             uploadedFiles:[],
-            update: false            
+            update: false,
+            user_data: {}
         }
     },
     created(){
@@ -300,6 +301,7 @@ export default {
                 this.docket.license_validity = formatDate(this.docket.license_validity)
                 this.docket.inspection_date = formatDate(this.docket.inspection_date)
             }
+            this.user_data = this.$store.state.user_session.user;
             })  
             .catch(error=>{
                 console.error(error)
@@ -311,17 +313,18 @@ export default {
         },
         submit(){
             this.isLoading=true;
-            this.docket.activities.push({
+            
+            if(this.update){
+                this.docket.activities.push({
                 comment:"Edit form",    
                 user:{
-                username: this.ser_data.username,
+                username: this.user_data.username,
                 first_name: this.user_data.name.first,
                 last_name: this.user_data.name.last,
                 middle_name: this.user_data.name.middle,
                 email: this.user_data.email
                 }     
             })
-            if(this.update){
                 this.$store.dispatch('UPDATE_DOCKET', this.docket)
             .then(result=>{
                  this.isLoading=false;
@@ -336,7 +339,7 @@ export default {
             }else{
                 //set initial activity
             this.docket.activities = [{stage:0,status:5,user:{
-          username: this.ser_data.username,
+          username: this.user_data.username,
           first_name: this.user_data.name.first,
           last_name: this.user_data.name.last,
           middle_name: this.user_data.name.middle,
