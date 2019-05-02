@@ -3,7 +3,7 @@
     <notification></notification>
     <v-toolbar height="80" dark app color="primary" style="background-image: url('https://pixinvent.com/materialize-material-design-admin-template/app-assets/images/gallery/breadcrumb-bg.jpg');  background-size: cover">
       <v-layout row wrap>
-        <v-flex xs12 mt-4>
+        <v-flex xs12 mt-4>          
           <span class="headline font-weight-light pa-2">{{page_name}}</span>
         </v-flex>
         <v-flex xs12>
@@ -67,14 +67,16 @@
           <v-list-tile class="pa-1 bg" avatar style=" height: 100px;">
             <v-list-tile-avatar class="mt-4">
               <v-btn fab icon slot="activator" @click="$defaultNavbar()">
-                <v-avatar size="50px" color="teal">
+                <v-avatar v-if="!$store.state.navbar.mini" size="50px" color="teal">
                   <span class="white--text title">{{user.name.first.substring(0,1) + user.name.last.substring(0,1)}}</span>
                 </v-avatar>
+                <v-icon v-else>menu</v-icon>
               </v-btn>
             </v-list-tile-avatar>
+            
             <v-spacer></v-spacer>
             <v-list-tile-content class="mt-4">
-              <v-list-tile-title class="body-2">{{user.username}}</v-list-tile-title>
+              <v-list-tile-title class="body-2">{{user.username}} - {{user_role}}</v-list-tile-title>
               <v-list-tile-sub-title class="caption">Last Logged in:</v-list-tile-sub-title>
               <v-list-tile-sub-title class="caption">{{formatDate(user.last_login)}}</v-list-tile-sub-title>
             </v-list-tile-content>
@@ -405,7 +407,7 @@
     },
     data() {
       return {
-        
+        user_role:"",
         isLoading: false,
         searchDialog: false,
         miniNav: false,
@@ -427,7 +429,8 @@
         this.user = this.$store.state.user_session.user;
         //find access
         this.$store.dispatch('FIND_ROLE', this.user.role)
-        .then(results=>{          
+        .then(results=>{   
+          this.user_role = results.data.model.name
           this.$store.commit('SET_USER_PERMISSIONS',results.data.model.permissions)
         })
       },
