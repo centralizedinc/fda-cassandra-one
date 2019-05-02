@@ -166,7 +166,7 @@
                 <template v-for="(item, index) in docket.activities">
                   <v-list-tile :key="index" avatar>
                     <v-list-tile-avatar size="40" color="teal">
-                      <v-img :src="item.user + item.user"></v-img>
+                      <v-img :src="item.user.user + item.user"></v-img>
                     </v-list-tile-avatar>
                     <!-- <v-list-tile-avatar size="40" color="teal">
                       <v-img :src="item.user.first_name.substring(0,1) + item.user.last_name.substring(0,1)"></v-img>

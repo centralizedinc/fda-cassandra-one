@@ -345,61 +345,27 @@ export default {
           last_name: this.user_data.name.last,
           middle_name: this.user_data.name.middle,
           email: this.user_data.email
-        }
-      });
-      // this.docket.current_status=4;
-      this.$store
-        .dispatch("UPDATE_DOCKET", this.docket)
-        .then(result => {
-          var details = {};
-          console.log("review update docket result: " + JSON.stringify(result));
-          if (stage_case === 0) {
-            this.$print(this.docket, "SUMMON");
-          } else {
-            this.$print(this.docket, "DECISION");
-          }
-
+        }  
+      })
+      this.docket.current_status=4;
+      this.$store.dispatch('UPDATE_DOCKET', this.docket)
+      .then(result=>{
+         var details ={};
+         console.log("review update docket result: " + JSON.stringify(result))
+         if(stage_case === 0){
+          this.$print(this.docket, "SUMMON");
           this.$notify({ message: "Summon for this case has been printed" });
           this.$router.push("/app/cases/finalize");
-          //  this.$download(this.docket, "RCPT", "fda-receipt.pdf");
-        })
-        .catch(error => {
-          console.error(error);
-          this.$notifyError(error);
-        });
-    },
-    upload(data) {
-      this.formData = data.formData;
-    },
-    comment() {
-      var comment = {
-        details: {
-          // action: this.selected_action,
-          // sub_action: this.value,
-          comment: this.remarks
-        },
-        dtn: this.docket.dtn,
-        created_by: this.user_data.username,
-        user: {
-          username: this.user_data.username,
-          first_name: this.user_data.name.first,
-          last_name: this.user_data.name.last,
-          middle_name: this.user_data.name.middle,
-          email: this.user_data.email
-        },
-        date_created: new Date()
-      };
-      this.$store
-        .dispatch("ADD_COMMENT", { comment, formData: this.formData })
-        .then(result => {
-          console.log("comment docket result: " + JSON.stringify(result));
-          this.$notify({ message: "Success to Added a comment!" });
+         }else{           
+           this.$print(this.docket, "DECISION");
+           this.$notify({ message: "Decision for this case has been printed" });
           this.$router.push("/app/cases/finalize");
-        })
-        .catch(error => {
-          console.error(error);
-          this.$notifyError(error);
-        });
+         }
+      })
+      .catch(error=>{
+        console.error(error)
+        this.$notifyError(error)
+      })
     }
   }
 };
