@@ -26,6 +26,8 @@ export default {
             return "Docketed"
           } else if (status = 0) {
             return "Evaluated"
+          } else if (status = 1) {
+            return "Reviewed"
           } else if (status = 2) {
             return "Approved"
           } else if (status = 3) {
@@ -72,7 +74,7 @@ export default {
         },
         createActivityDesc(item) {
 
-          return "<span class='primary--text'>" + this.formatDate(item.date_created) + "</span> &mdash; " + this.caseStatus(item.status) + " by " + item.username + "   Remarks: " + item.comment + "  Type: " + this.getCaseType(item.stage) + ""
+          return "<span class='primary--text'>" + this.formatDate(item.date_created) + "</span> &mdash; " + this.caseStatus(item.status) + " by " + item.user.username + " Type: " + this.getCaseType(item.stage) + ""
         }
         //   console.log("Item#########" + JSON.stringify(item))
         //   return "<span class='primary--text'>"+this.formatDate(item.date_created)+"</span> &mdash;  Created Case Docket (Docket Number: "+this.docket.dtn+")  Date Modified "+this.formatDate(item.date_modified)+""

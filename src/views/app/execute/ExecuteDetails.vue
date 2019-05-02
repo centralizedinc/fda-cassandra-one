@@ -147,45 +147,29 @@
             </v-card-text>
           </v-card>
         </v-tab-item>
-        <!--recent activity  -->
-        <!-- <v-tab ripple>Recent Activity</v-tab>
-        <v-tab-item>
-          <v-card flat>
-            <v-card-text>
-              <v-list three-line>
-                <template v-for="(item, index) in items.slice(0, 8)">
-                  <v-subheader v-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
-                  <v-divider v-else-if="item.divider" :key="index" :inset="item.inset"></v-divider>
-                  <v-list-tile v-else :key="item.title" avatar>
-                    <v-list-tile-avatar>
-                      <img :src="item.avatar">
-                    </v-list-tile-avatar>
-                    <v-list-tile-content>
-                      <v-list-tile-title v-html="item.title"></v-list-tile-title>
-                      <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                </template>
-              </v-list>
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
-      </v-tabs> -->
-
-       <v-tab ripple>Recent Activity</v-tab>
+             <v-tab ripple>Recent Activity</v-tab>
         <v-tab-item>
           <v-card flat>
             <v-card-text>
               <v-list three-line>
                 <template v-for="(item, index) in docket.activities">
-                  <v-list-tile :key="index" avatar>
-                   <v-list-tile-avatar size="40" color="teal">
-                      <v-img :src="item.user + item.user"></v-img>
-                    </v-list-tile-avatar>
-                    <v-list-tile-content>
-                      <v-list-tile-title v-html="item.user"></v-list-tile-title>
-                      <v-list-tile-sub-title v-html="createActivityDesc(item)"></v-list-tile-sub-title>
-                    </v-list-tile-content>
+                  <v-list-tile :key="`a${index}`" avatar>
+                  <v-list-tile-avatar>
+                            <v-avatar size="40" color="teal">
+                                <span
+                                class="subheading white--text "
+                                >{{item.user.first_name.substring(0,1) + item.user.last_name.substring(0,1)}}</span>
+                            </v-avatar>
+                        </v-list-tile-avatar>
+                        <v-list-tile-content>
+                          <v-list-tile-title>
+                                <span class="body-2">{{getCaseStatus(item.user.status)}}</span>
+                            </v-list-tile-title>
+                            <v-list-tile-title>
+                                <span class="body-2">{{item.user.username}}</span> - <i class="body-1">{{formatDate(item.date_created)}}</i>
+                            </v-list-tile-title>
+                            <v-list-tile-sub-title>{{item.user.comment}}</v-list-tile-sub-title>
+                        </v-list-tile-content>
                   </v-list-tile>
                   <v-divider inset :key="index"></v-divider>
                 </template>
