@@ -76,7 +76,8 @@
             
             <v-spacer></v-spacer>
             <v-list-tile-content class="mt-4">
-              <v-list-tile-title class="body-2">{{user.username}} - {{user_role}}</v-list-tile-title>
+              <v-list-tile-title class="body-2">{{user.username}} <p>{{user_role}}</p></v-list-tile-title>              
+              <v-list-tile-sub-title class="caption">{{user_role}}</v-list-tile-sub-title>
               <v-list-tile-sub-title class="caption">Last Logged in:</v-list-tile-sub-title>
               <v-list-tile-sub-title class="caption">{{formatDate(user.last_login)}}</v-list-tile-sub-title>
             </v-list-tile-content>
