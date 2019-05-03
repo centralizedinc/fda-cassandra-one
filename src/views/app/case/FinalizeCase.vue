@@ -95,15 +95,28 @@
         <v-divider></v-divider>
         <v-card-actions>
           <!-- <v-spacer></v-spacer> -->
-          <v-btn color="primary" block @click="view">View Details</v-btn>
+          <v-layout row wrap>
+            <v-flex xs12 mb-2>
+              <v-btn color="primary" block @click="view">View Details</v-btn>
+            </v-flex>
+            <v-flex xs12>
+              <v-btn color="success" block @click="show_assign=true">Assign to</v-btn>
+            </v-flex>
+          </v-layout>
         </v-card-actions>
       </v-card>
     </v-navigation-drawer>
+    <assign-dialog :show="show_assign" @close="show_assign=false"></assign-dialog>
   </v-layout>
 </template>
 
 <script>
+import AssignDialog from "@/components/AssignDialog";
+
 export default {
+  components: {
+    AssignDialog
+  },
   data() {
     return {
       isLoading: false,
@@ -158,7 +171,8 @@ export default {
           value: "stage"
         }
       ],
-      items: []
+      items: [],
+      show_assign: false
     };
   },
   created() {

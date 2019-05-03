@@ -90,8 +90,10 @@ export default {
             'fiber_new'
           ]
           return icons[status]
+        },
+        deepCopy(obj) {
+          return JSON.parse(JSON.stringify(obj))
         }
-
       }
     })
   }

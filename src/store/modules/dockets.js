@@ -9,7 +9,8 @@ const initialState = {
   execution_list: [],
   appeal_list: [],
   active: {},
-  session_token: ""
+  session_token: "",
+  inbox: []
 };
 
 const state = initialState;
@@ -24,6 +25,9 @@ const mutations = {
   },
   SET_ACTIVE_DOCKET(state, data) {
     state.active = data;
+  },
+  SET_INBOX(state, data) {
+    state.inbox = data;
   }
 };
 
@@ -242,7 +246,7 @@ const actions = {
         .then(results => {
           if (results.data.success) {
             context.dispatch('GET_DOCKETS_APPROVAL', true)
-            resolve();
+            resolve(results.data.model);
           } else {
             reject(results.data.errors);
           }
@@ -295,6 +299,30 @@ const actions = {
           .catch(error => {
             reject(error);
           });
+      }
+    });
+  },
+
+  GET_INBOX(context, refresh) {
+    return new Promise((resolve, reject) => {
+      if (refresh || !context.state.inbox.length) {
+        api
+          .getDocketsByUser(context.rootState.user_session.user.username)
+          .then(result => {
+            if (result.data.success) {
+              context.commit("SET_INBOX", result.data.model);
+              resolve(result.data.model);
+            } else {
+              context.commit("SET_INBOX", context.state.inbox);
+              reject(result.data.errors);
+            }
+          })
+          .catch(error => {
+            context.commit("SET_INBOX", context.state.inbox);
+            reject(error);
+          });
+      } else {
+        resolve(context.state.inbox)
       }
     });
   }

@@ -57,4 +57,8 @@ export default class DocketAPI {
     static uploadFile(data) {
         return axios.post('/upload?account_id=' + data.dtn, data.formData)
     }
+
+    static getDocketsByUser(username) {
+        return axios.get('/dockets/user/' + username);
+    }
 }
