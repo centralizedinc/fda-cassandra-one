@@ -103,7 +103,7 @@
             <v-list-tile-title class="body-1 font-weight-light">Dashboard</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="goTo('/app')" :style="activeRoute(['Inbox'])">
+        <v-list-tile @click="goTo('/app/inbox')" :style="activeRoute(['Inbox'])">
           <v-list-tile-action>
             <v-tooltip right>
               <v-btn slot="activator" icon>

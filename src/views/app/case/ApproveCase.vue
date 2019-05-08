@@ -95,18 +95,31 @@
         <v-divider></v-divider>
         <v-card-actions>
           <!-- <v-spacer></v-spacer> -->
-          <v-btn color="primary" block @click="view">View Details</v-btn>
+          <v-layout row wrap>
+            <v-flex xs12 mb-2>
+              <v-btn color="primary" block @click="view">View Details</v-btn>
+            </v-flex>
+            <v-flex xs12>
+              <v-btn color="success" block @click="show_assign=true">Assign to</v-btn>
+            </v-flex>
+          </v-layout>
         </v-card-actions>
       </v-card>
     </v-navigation-drawer>
+    <assign-dialog :show="show_assign" @close="show_assign=false"></assign-dialog>
   </v-layout>
 </template>
 
 <script>
+import AssignDialog from "@/components/AssignDialog";
+
 export default {
+  components: {
+    AssignDialog
+  },
   data() {
     return {
-      isLoading:false,
+      isLoading: false,
       previewNav: false,
       selected_item: {},
       search: "",
@@ -168,7 +181,8 @@ export default {
           value: "stage"
         }
       ],
-      items: []
+      items: [],
+      show_assign: false
     };
   },
   created() {
@@ -176,15 +190,15 @@ export default {
   },
   methods: {
     init() {
-      this.isLoading = true
+      this.isLoading = true;
       this.$store
         .dispatch("GET_DOCKETS_APPROVAL", true)
         .then(results => {
-          this.isLoading = false
+          this.isLoading = false;
           this.items = results;
         })
         .catch(error => {
-          this.isLoading = false
+          this.isLoading = false;
         });
     },
     view() {
