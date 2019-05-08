@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'production') {
    */
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready (registration) {
-      console.log('Notification.permission: ', JSON.stringify(Notification.permission))
+      console.log('Notification.permission: ', JSON.stringify(Notification.permission)) 
       if(!Notification.permission || Notification.permission === 'default'){
         Notification.requestPermission(result => {
           console.log('result from permission question', result);
