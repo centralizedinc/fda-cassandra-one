@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "serve": "vue-cli-service serve",
+    "build-local": "vue-cli-service build",
     "build": "vue-cli-service build --mode heroku",
     "test:unit": "vue-cli-service test:unit"
   },

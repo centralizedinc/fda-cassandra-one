@@ -1,6 +1,6 @@
 {
-  "name": "fda-cassandra-one",
-  "short_name": "fda-cassandra-one",
+  "name": "FDA Cassandra One",
+  "short_name": "Cassandra 1.0",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",

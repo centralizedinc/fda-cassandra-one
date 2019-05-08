@@ -1,35 +1,73 @@
 <template>
   <v-app>
-    <!-- <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>open_in_new</v-icon>
-      </v-btn>
-    </v-toolbar> -->
-
     <v-content>
       <router-view/>
+      <v-snackbar
+        v-model="snackWithButtons"
+        :timeout="timeout"
+        bottom
+        left
+        class="snack"
+      >
+        {{ snackWithBtnText }}
+        <v-spacer />
+        <v-btn
+          dark
+          flat
+          color="#00f500"
+          @click.native="refreshApp"
+        >
+          {{ snackBtnText }}
+        </v-btn>
+        <v-btn
+          icon
+          @click="snackWithButtons = false"
+        >
+          <v-icon>close</v-icon>
+        </v-btn>
+      </v-snackbar>
     </v-content>
   </v-app>
 </template>
 
 <script>
-
 export default {
-  name: 'App',
-  data () {
+  name: "App",
+  data() {
     return {
       //
-    }
+      refreshing: false,
+      registration: null,
+      snackBtnText: '',
+      snackWithBtnText: '',
+      snackWithButtons: false,
+      timeout: 0,
+    };
+  },
+  created() {
+    this.init();
+  },
+  methods: {
+    init() {
+      document.addEventListener("swUpdated", this.showRefreshUI, {once: true});
+
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (this.refreshing) return;
+        this.refreshing = true;
+        window.location.reload();
+      });
+    },
+    showRefreshUI(e) {
+      this.registration = e.detail;
+      this.snackBtnText = 'Refresh';
+      this.snackWithBtnText = 'New version available!';
+      this.snackWithButtons = true;
+    },
+    refreshApp () {
+      this.updateExists = false;
+      if (!this.registration || !this.registration.waiting) { return; }
+      this.registration.waiting.postMessage('skipWaiting');
+    },
   }
-}
+};
 </script>
